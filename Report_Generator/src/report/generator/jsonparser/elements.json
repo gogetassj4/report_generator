@@ -1,0 +1,1306 @@
+{
+    "apiVersion": "1.0",
+    "data": {
+        "item": {
+            "bug_type": {
+                "access_control": {
+                    "dasp": "Access control",
+                    "description": "Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:\n* Contracts use the deprecated tx.origin to validate callers\n* Handling large authorization logic with lengthy require\n* Making reckless use of delegatecall in proxy libraries or proxy contracts. Delegate calling into untrusted contracts is very dangerous, as the code at the target address can change any storage values of the caller and has full control over the caller's balance.\n* Due to missing or insufficient access controls, malicious parties can withdraw some or all Ether from the contract account.\n* Due to missing or insufficient access controls, malicious parties can self-destruct the contract.\n",
+                    "example": "contract TestContract is MultiOwnable {\n\n  function withdrawAll(){\n    msg.sender.transfer(this.balance);\n  }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        }
+                    ],
+                    "swc_id": [
+                        105,
+                        106,
+                        115
+                    ]
+                },
+                "address_hardcoded": {
+                    "dasp": "Unknown unknowns",
+                    "description": "The contract contains unknown address. This address might be used for some malicious activity. Please check hardcoded address and it's usage.\n",
+                    "example": "In the following contract, the address is specified in the source code:\n\npragma solidity 0.4.24;\ncontract C {\n  function f(uint a, uint b) pure returns (address) {\n    address public multisig = 0xf64B584972FE6055a770477670208d737Fff282f;\n    return multisig;\n        }\n}\n\nDo not forget to check the contract at the address 0xf64B584972FE6055a770477670208d737Fff282f for vulnerabilities.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "arbitrary_from_in_transferFrom": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Something wrong happens when msg.sender is not used as `from` in transferFrom.\n",
+                    "example": "function a(address from, address to, uint256 amount) public {\n  erc20.transferFrom(from, to, am);\n}\n\nAlice approves this contract to spend her ERC20 tokens. Bob can call a and specify Alice's address as the from parameter in transferFrom, allowing him to transfer Alice's tokens to himself.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "arithmetic": {
+                    "dasp": "Arithmetic",
+                    "description": "This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .\n* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2^8-1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits \u2013 either larger than the maximum or lower than the minimum representable value.\n* Division issues. Some wrong will happen when integer or float numbers are divided by zero.\n* Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).\n",
+                    "example": "Integer overflow/underflow\n/*\n* @source: https://capturetheether.com/challenges/math/token-sale/\n* @author: Steve Marx\n*/\npragma solidity ^0.4.21;\ncontract TokenSaleChallenge {\n    mapping(address => uint256) public balanceOf;\n    uint256 constant PRICE_PER_TOKEN = 1 ether;\n\n    function TokenSaleChallenge(address _player) public payable {\n        require(msg.value == 1 ether);\n    }\n\n    function isComplete() public view returns (bool) {\n        return address(this).balance < 1 ether;\n    }\n\n    function buy(uint256 numTokens) public payable {\n        require(msg.value == numTokens * PRICE_PER_TOKEN);\n\n        balanceOf[msg.sender] += numTokens;\n    }\n}\n\nDivision issues\ncontract Division {\n\n    /*function unsigned_division(uint32 x, uint32 y) returns (int r) {\n      //if (y == 0) { throw; }\n      r = x / y;\n    }*/\n\n    function signed_division(int x, int y) returns (int) {\n      //if ((y == 0) || ((x == -2**255) && (y == -1))) { throw; }\n      return x / y;\n    }\n\n}\n\nType deduction overflow\ncontract For_Test {\n...\n  function Test () payable public {\n    if ( msg . value > 0.1 ether ) {\n      uint256 multi = 0;\n      uint256 amountToTransfer = 0;\n      for ( var i = 0; i < 2* msg . value ; i ++) {\n        multi = i *2;\n        if ( multi < amountToTransfer ) {\n          break ;\n        amountToTransfer = multi ;\n      }\n      msg.sender.transfer( amountToTransfer );\n    }\n  }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 1,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-1"
+                        },
+                        {
+                            "checker_id": 5,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-5"
+                        },
+                        {
+                            "checker_id": 6,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-6"
+                        },
+                        {
+                            "checker_id": 6,
+                            "lines": [
+                                {
+                                    "code": "      credit[msg.sender]-=amount;\n",
+                                    "function_name": "",
+                                    "line_no": 20
+                                }
+                            ],
+                            "tool": "metasecurelabs-6"
+                        },
+                        {
+                            "checker_id": 7,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-7"
+                        }
+                    ],
+                    "swc_id": [
+                        101
+                    ]
+                },
+                "array_length_manipulation": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The length of the dynamic array is changed directly. In the following case, the appearance of gigantic arrays is possible and it can lead to a storage overlap attack (collisions with other data in storage).\n",
+                    "example": "pragma solidity 0.4.24;\n\ncontract dataStorage {\n    uint[] public data;\n\n    function writeData(uint[] _data) external {\n        for(uint i = data.length; i < _data.length; i++) {\n            data.length++;\n            data[i]=_data[i];\n        }\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        124
+                    ]
+                },
+                "assert_state_change": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Incorrect use of assert(). See Solidity best practices.\n",
+                    "example": "contract A {\n  uint s_a;\n\n  function bad() public {\n    assert((s_a += 1) > 10);\n  }\n}\nThe assert in bad() increments the state variable s_a while checking for the condition.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        110
+                    ]
+                },
+                "benign_reentrancy": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Some re-entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.\n",
+                    "example": "function callme(){\n  if( ! (msg.sender.call()() ) ){\n    throw;\n  }\n  counter += 1\n}\n\ncallme() contains a benign reentrancy.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "blockhash_current": {
+                    "dasp": "Unknown unknowns",
+                    "description": "blockhash function returns a non-zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.\n",
+                    "example": "In the following example, currentBlockBlockhash function always returns 0:\n\npragma solidity 0.4.25;\n\ncontract MyContract {\n    function currentBlockHash() public view returns(bytes32) {\n        return blockhash(block.number);\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "builtin_symbol_shadowing": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Something wrong may happen when built-in symbols are shadowed by local variables, state variables, functions, modifiers, or events.\n",
+                    "example": "pragma solidity ^0.4.24;\n\ncontract Bug {\n    uint now; // Overshadows current time stamp.\n\n    function assert(bool condition) public {\n        // Overshadows built-in symbol for providing assertions.\n    }\n\n    function get_next_expiration(uint earlier_time) private returns (uint) {\n        return now + 259200; // References overshadowed timestamp.\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "byte_array_instead_bytes": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Use bytes instead of byte[] for lower gas consumption.\n",
+                    "example": "In the following example, byte array is used:\n\npragma solidity 0.4.24;\n\n#contract C {\n#    byte[] someVariable;\n#    ...\n#}\n\nAlternative:\n\npragma solidity 0.4.24;\n\ncontract C {\n    bytes someVariable;\n    ...\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "call_without_data": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Using low-level call function with no arguments provided.\n",
+                    "example": "In the following example, call function is used for ETH transfer:\npragma solidity 0.4.24;\n\ncontract MyContract {\n\n    function withdraw() {\n        if (msg.sender.call.value(1)()) {\n        /*...*/\n        }\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "constant_state_variable": {
+                    "dasp": "Unknown unknowns",
+                    "description": "There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.\n",
+                    "example": "pragma solidity ^0.4.0;\n\ncontract A{\n    uint num = 5;\n    constructor(uint x) public{\n        num += x;\n    }\n}\n\ncontract B is A{\n    constructor() A(2) public { /* ... */ }\n}\n\ncontract C is A {\n    constructor() A(3) public { /* ... */ }\n}\n\ncontract D is B, C {\n    constructor() public { /* ... */ }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "controlled_lowlevel_call": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Low-level call with a user-controlled data field\n",
+                    "example": "address token;\n\nfunction call_token(bytes data){\n  token.call(data);\n}\n\ntoken` points to an ERC20 token. Bob uses call_token to call the transfer function of token to withdraw all tokens held by the contract.\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 5,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-5"
+                        }
+                    ],
+                    "swc_id": []
+                },
+                "costly_ops_in_loop": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Costly operations inside a loop might waste gas, so optimizations are justified.\n",
+                    "example": "contract CostlyOperationsInLoop{\n\n    uint loop_count = 100;\n    uint state_variable=0;\n\n    function bad() external{\n        for (uint i=0; i < loop_count; i++){\n            state_variable++;\n        }\n    }\n\n    function good() external{\n      uint local_variable = state_variable;\n      for (uint i=0; i < loop_count; i++){\n        local_variable++;\n      }\n      state_variable = local_variable;\n    }\n}\nIncrementing state_variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out-of-gas.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "dangerous_enum_conversion": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "out-of-range enum conversion may occur (solc < 0.4.5).\n",
+                    "example": "pragma solidity 0.4.2;\ncontract Test{\n  enum E{a}\n  function bug(uint a) public returns(E){\n        return E(a);\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "dead_code": {
+                    "dasp": "Unknown unknowns",
+                    "description": "In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect-free code. This can lead to the introduction of \"dead\" code that does not properly performing an intended action.\n\nFor example, it\u2019s easy to miss the trailing parentheses in msg.sender.call.value(xx)(\"\");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead\u2019 when they are not invoked.\n",
+                    "example": "pragma solidity ^0.5.0;\n\ncontract DepositBox {\n    mapping(address => uint) balance;\n\n    // Accept deposit\n    function deposit(uint amount) public payable {\n        require(msg.value == amount, 'incorrect amount');\n        // Should update user balance\n        balance[msg.sender] = amount;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        135
+                    ]
+                },
+                "del_structure_containing_mapping": {
+                    "dasp": "Unknown unknowns",
+                    "description": "A deletion in a structure containing a mapping will not delete the mapping (see the Solidity documentation). The remaining data may be used to compromise the contract.\n",
+                    "example": "struct BalancesStruct{\n    address owner;\n    mapping(address => uint) balances;\n}\nmapping(address => BalancesStruct) public stackBalance;\n\nfunction remove() internal{\n      delete stackBalance[msg.sender];\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "denial_of_service": {
+                    "dasp": "Denial of Services",
+                    "description": "Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:\n* External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.\n* A large number of loops may consume gas, so it is possible that the function exceeds the block gas limit, and transactions calling it will never be confirmed.\n* An inappropriate type inference in the loop (e.g., literal -> uint8) may cause a infinite loop.\n* Recursive external calls may consume a large number of callstacks, which may lead to DoS.\n",
+                    "example": "for (var i = 0; i < array.length; i++) { /* ... */\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 6,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-6"
+                        },
+                        {
+                            "checker_id": 7,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-7"
+                        }
+                    ],
+                    "swc_id": [
+                        113,
+                        128
+                    ]
+                },
+                "deprecated_standards": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Several functions and operators in Solidity are deprecated. Using them leads to reduced code quality. With new major versions of the Solidity compiler, deprecated functions and operators may result in side effects and compile errors.\n  Deprecated              Alternative\n  suicide(address)        selfdestruct(address)\n  block.blockhash(uint)   blockhash(uint)\n  sha3(...)               keccak256(...)\n  callcode(...)           delegatecall(...)\n  throw                   revert()\n  msg.gas                 gasleft\n  constant                view\n  var                     corresponding type name\n",
+                    "example": "pragma solidity 0.4.24;\n\ncontract BreakThisHash {\n    bytes32 hash;\n    uint birthday;\n    constructor(bytes32 _hash) public payable {\n        hash = _hash;\n        birthday = now;\n    }\n\n    function kill(bytes password) external {\n        if (sha3(password) != hash) {\n            throw;\n        }\n        suicide(msg.sender);\n    }\n\n    function hashAge() public constant returns(uint) {\n        return(now - birthday);\n    }\n}\n\nUse keccak256, selfdestruct, revert() instead.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        111,
+                        118
+                    ]
+                },
+                "divide_before_multiply": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Solidity operates only with integers. Thus, if the division is done before the multiplication, the rounding errors can increase dramatically. Vulnerability type by SmartDec classification: Precision issues.\n",
+                    "example": "In the following example, amount variable is divided by DELIMITER and then multiplied by BONUS. Thus, a rounding error appears (consider amount = 9000):\n\npragma solidity 0.4.25;\n\ncontract MyContract {\n\n    uint constant BONUS = 500;\n    uint constant DELIMITER = 10000;\n\n    function calculateBonus(uint amount) returns (uint) {\n        return amount/DELIMITER*BONUS;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "do_while_continue": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Prior to version 0.5.0, Solidity compiler handles continue inside do-while loop incorrectly: it ignores while condition.\n",
+                    "example": "The following loop is infinite:\n\ndo {\n    continue;\n} while(false);\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "erc20_event_not_indexed": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Events defined by the ERC20 specification that should have some parameters as indexed.\n",
+                    "example": "contract ERC20Bad {\n    // ...\n    event Transfer(address from, address to, uint value);\n    event Approval(address owner, address spender, uint value);\n\n    // ...\n}\n\nTransfer and Approval events should have the 'indexed' keyword on their two first parameters, as defined by the ERC20 specification. Failure to include these keywords will exclude the parameter data in the transaction/block's bloom filter, so external tooling searching for these parameters may overlook them and fail to index logs from this token contract.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "extra_gas_in_loops": {
+                    "dasp": "Unknown unknowns",
+                    "description": "State variable, .balance, or .length of non-memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.\n",
+                    "example": "In the following example, limiter variable is accessed on every for-loop iteration:\n\npragma solidity 0.4.25;\n\ncontract NewContract {\n    uint limiter = 100;\n\n    function longLoop() {\n        for(uint i = 0; i < limiter; i++) {\n            /* ... */\n        }\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "func_modifying_storage_array_by_value": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Arrays passed to a function that expects reference to a storage array.\n",
+                    "example": "contract Memory {\n    uint[1] public x; // storage\n\n    function f() public {\n        f1(x); // update x\n        f2(x); // do not update x\n    }\n\n    function f1(uint[1] storage arr) internal { // by reference\n        arr[0] = 1;\n    }\n\n    function f2(uint[1] arr) internal { // by value\n        arr[0] = 2;\n    }\n}\n\nBob calls f(). Bob assumes that at the end of the call x[0] is 2, but it is 1. As a result, Bob's usage of the contract is incorrect.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "function_declared_return_but_no_return": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Function doesn't initialize return value. As result default value will be returned.\n",
+                    "example": "In the following example, the function's signature only denotes the type of the return value, but the function's body does not contain return statement:\n\npragma solidity 0.4.25;\n\ncontract NewContract {\n    uint minimumBuy;\n\n    function setMinimumBuy(uint256 newMinimumBuy) returns (bool){\n        minimumBuy = newMinimumBuy;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "ignore": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Other trivial bug types.\n",
+                    "example": "",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 8,
+                            "lines": [
+                                {
+                                    "code": "\n",
+                                    "function_name": "",
+                                    "line_no": 23
+                                },
+                                {
+                                    "code": "contract SimpleDAO {\n",
+                                    "function_name": "",
+                                    "line_no": 9
+                                },
+                                {
+                                    "code": "\n",
+                                    "function_name": "",
+                                    "line_no": 11
+                                },
+                                {
+                                    "code": "\n",
+                                    "function_name": "",
+                                    "line_no": 15
+                                }
+                            ],
+                            "tool": "metasecurelabs-8"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [
+                                {
+                                    "code": "pragma solidity ^0.4.2;\n",
+                                    "function_name": "",
+                                    "line_no": 7
+                                }
+                            ],
+                            "tool": "metasecurelabs-9"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [],
+                            "tool": "metasecurelabs-9"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-9"
+                        },
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "call.value(amount)()",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        },
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "^",
+                                    "function_name": "",
+                                    "line_no": 7
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        },
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "call.value(amount)()",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  mapping (address => uint) public credit;\n",
+                                    "function_name": "",
+                                    "line_no": 10
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  function donate(address to) payable {\n",
+                                    "function_name": "",
+                                    "line_no": 12
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  }\n",
+                                    "function_name": "",
+                                    "line_no": 14
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  function withdraw(uint amount) {\n",
+                                    "function_name": "",
+                                    "line_no": 16
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "    if (credit[msg.sender]>= amount) {\n",
+                                    "function_name": "",
+                                    "line_no": 17
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "      credit[msg.sender]-=amount;\n",
+                                    "function_name": "",
+                                    "line_no": 20
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "    }\n",
+                                    "function_name": "",
+                                    "line_no": 21
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  }\n",
+                                    "function_name": "",
+                                    "line_no": 22
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  function queryCredit(address to) returns (uint){\n",
+                                    "function_name": "",
+                                    "line_no": 24
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "    return credit[to];\n",
+                                    "function_name": "",
+                                    "line_no": 25
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        },
+                        {
+                            "checker_id": 11,
+                            "lines": [
+                                {
+                                    "code": "  }\n",
+                                    "function_name": "",
+                                    "line_no": 26
+                                }
+                            ],
+                            "tool": "metasecurelabs-11"
+                        }
+                    ],
+                    "swc_id": []
+                },
+                "incorrect_ERC20_interface": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.\n",
+                    "example": "contract Token{\n    function transfer(address to, uint value) external;\n    //...\n}\n\nToken.transfer does not return a boolean. Bob deploys the token. Alice creates a contract that interacts with it but assumes a correct ERC20 interface implementation. Alice's contract is unable to interact with Bob's contract.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "incorrect_ERC721_interface": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Incorrect return values for ERC721 functions. A contract compiled with solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.\n",
+                    "example": "contract Token{\n    function ownerOf(uint256 _tokenId) external view returns (bool);\n    //...\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "incorrect_modifier": {
+                    "dasp": "Unknown unknowns",
+                    "description": "If a modifier does not execute _ or revert, the execution of the function will return the default value, which can be misleading for the caller.\n",
+                    "example": "modidfier myModif(){\n    if(..){\n      _;\n    }\n}\nfunction get() myModif returns(uint){}\n\nIf the condition in myModif is false, the execution of get() will return 0.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "incorrect_shift_in_assembly": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The values in a shift operation could be reversed (in a wrong order)\n",
+                    "example": "contract C {\n  function f() internal returns (uint a) {\n    assembly {\n        a := shr(a, 8)\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "incorrect_using_balance_and_msg.value": {
+                    "dasp": "Unknown unknowns",
+                    "description": "this.balance will include the value sent by msg.value, which might lead to incorrect computation.\n",
+                    "example": "contract Bug{\n  function buy() public payable{\n    uint minted = msg.value * (1000 / address(this).balance);\n    // ...\n  }\n}\n\nbuy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "local_variable_shadowing": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Something wrong may happen when local variables shadowing state variables or other local variables.\n",
+                    "example": "pragma solidity ^0.4.24;\n\ncontract Bug {\n    uint owner;\n\n    function sensitive_function(address owner) public {\n        // ...\n        require(owner == msg.sender);\n    }\n\n    function alternate_sensitive_function() public {\n        address owner = msg.sender;\n        // ...\n        require(owner == msg.sender);\n    }\n}\n\nsensitive_function.owner shadows Bug.owner. As a result, the use of owner in sensitive_function might be incorrect.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "locked_money": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Contracts programmed to receive ether should implement a way to withdraw it, i.e., call transfer (recommended), send, or call.value at least once..\n",
+                    "example": "In the following example, contracts programmed to receive ether does not call transfer, send, or call.value function:\n\npragma solidity 0.4.25;\n\ncontract BadMarketPlace {\n    function deposit() payable {\n        require(msg.value > 0);\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "modifier_like_Sol_keyword": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "A contract may contain modifier that looks similar to Solidity keyword\n",
+                    "example": "contract Contract{\n    modifier pub1ic() {\n    }\n\n    function doSomething() pub1ic {\n        require(owner == msg.sender);\n        owner = newOwner;\n    }\n}\n\npublic is a modifier meant to look like a Solidity keyword.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "msg.value_equals_zero": {
+                    "dasp": "Unknown unknowns",
+                    "description": "The msg.value == 0 condition check is meaningless in most cases.\n",
+                    "example": "msg.value == 0\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "msg.value_in_loop": {
+                    "dasp": "Unknown unknowns",
+                    "description": "It is error-prone to use msg.value inside a loop.\n",
+                    "example": "contract MsgValueInLoop{\n    mapping (address => uint256) balances;\n\n    function bad(address[] memory receivers) public payable {\n        for (uint256 i=0; i < receivers.length; i++) {\n            balances[receivers[i]] += msg.value;\n        }\n    }\n}\n\nmsg.value should be tracked through a local variable and decrease its amount on every iteration/usage.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "multiple_constructor_schemes": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Multiple constructor definitions in the same contract (using new and old schemes).\n",
+                    "example": "contract A {\n    uint x;\n    constructor() public {\n        x = 0;\n    }\n    function A() public {\n        x = 1;\n    }\n\n    function test() public returns(uint) {\n        return x;\n    }\n}\n\nIn Solidity 0.4.22, a contract with both constructor schemes will compile. The first constructor will take precedence over the second, which may be unintended.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "overpowered_role": {
+                    "dasp": "Unknown unknowns",
+                    "description": "This function is callable only from one address. Therefore, the system depends heavily on this address. In this case, there are scenarios that may lead to undesirable consequences for investors, e.g. if the private key of this address becomes compromised.\n",
+                    "example": "pragma solidity 0.4.25;\n\ncontract Crowdsale {\n\n    address public owner;\n\n    uint rate;\n    uint cap;\n\n    constructor() {\n        owner = msg.sender;\n    }\n\n    function setRate(_rate) public onlyOwner {\n        rate = _rate;\n    }\n\n    function setCap(_cap) public {\n        require (msg.sender == owner);\n        cap = _cap;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "pausable_modifier_absence": {
+                    "dasp": "Unknown unknowns",
+                    "description": "ERC20 balance/allowance is modified without whenNotPaused modifier (in pausable contract).x\n",
+                    "example": "function buggyTransfer(address to, uint256 value) external returns (bool){\n        balanceOf[msg.sender] -= value;\n        balanceOf[to] += value;\n        return true;\n    }\n\nIn a pausable contract, buggyTransfer performs a token transfer but does not use Pausable's whenNotPaused modifier. If the token admin/owner pauses the ERC20 contract to trigger an emergency stop, it will not apply to this function. This results in Txs transferring even in a paused state, which corrupts the contract balance state and affects recovery.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "payable_func_using_delegatecall_in_loop": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The same msg.value amount may be incorrectly accredited multiple times when using delegatecall inside a loop in a payable function.\n",
+                    "example": "contract DelegatecallInLoop{\n\n    mapping (address => uint256) balances;\n\n    function bad(address[] memory receivers) public payable {\n        for (uint256 i = 0; i < receivers.length; i++) {\n            address(this).delegatecall(abi.encodeWithSignature(\"addBalance(address)\", receivers[i]));\n        }\n    }\n\n    function addBalance(address a) public payable {\n        balances[a] += msg.value;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "pre-declare_usage_of_local": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Using a variable before the declaration is stepped over (either because it is later declared, or declared in another scope).\n",
+                    "example": "contract C {\n    function f(uint z) public returns (uint) {\n        uint y = x + 9 + z; // 'z' is used pre-declaration\n        uint x = 7;\n\n        if (z % 2 == 0) {\n            uint max = 5;\n            // ...\n        }\n\n        // 'max' was intended to be 5, but it was mistakenly declared in a scope and not assigned (so it is zero).\n        for (uint i = 0; i < max; i++) {\n            x += 1;\n        }\n\n        return x;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "race_condition": {
+                    "dasp": "Front Running",
+                    "description": "Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front-running attacks.\n",
+                    "example": "In this example, one can front-run transactions to claim his/her reward before the owner reduces the reward amount.\n\npragma solidity ^0.4.16;\n\ncontract EthTxOrderDependenceMinimal {\n    address public owner;\n    bool public claimed;\n    uint public reward;\n\n    function EthTxOrderDependenceMinimal() public {\n        owner = msg.sender;\n    }\n\n    function setReward() public payable {\n        require (!claimed);\n        require(msg.sender == owner);\n        owner.transfer(reward);\n        reward = msg.value;\n    }\n\n    function claimReward(uint256 submission) {\n        require (!claimed);\n        require(submission < 10);\n        msg.sender.transfer(reward);\n        claimed = true;\n    }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 8,
+                            "lines": [
+                                {
+                                    "code": "      // <yes> <report> REENTRANCY\n",
+                                    "function_name": "",
+                                    "line_no": 18
+                                }
+                            ],
+                            "tool": "metasecurelabs-8"
+                        },
+                        {
+                            "checker_id": 8,
+                            "lines": [
+                                {
+                                    "code": "      // <yes> <report> REENTRANCY\n",
+                                    "function_name": "",
+                                    "line_no": 18
+                                }
+                            ],
+                            "tool": "metasecurelabs-8"
+                        }
+                    ],
+                    "swc_id": [
+                        114
+                    ]
+                },
+                "redundant_code": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Redundant statements may have no effect.\n",
+                    "example": "contract RedundantStatementsContract {\n\n    constructor() public {\n        uint; // Elementary Type Name\n        bool; // Elementary Type Name\n        RedundantStatementsContract; // Identifier\n    }\n\n    function test() public returns (uint) {\n        uint; // Elementary Type Name\n        assert; // Identifier\n        test; // Identifier\n        return 777;\n    }\n}\n\nEach commented line references types/identifiers, but performs no action with them, so no code will be generated for such statements and they can be removed.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "reentrancy": {
+                    "dasp": "Reentrancy",
+                    "description": "One of the major dangers of calling external contracts is that they can take over the control flow. In the reentrancy attack (a.k.a. recursive call attack), a malicious contract calls back into the calling contract before the first invocation of the function is finished. This may cause the different invocations of the function to interact in undesirable ways.\n",
+                    "example": "/*\n* @source: http://blockchain.unica.it/projects/ethereum-survey/attacks.html#simpledao\n* @author: -\n* @vulnerable_at_lines: 19\n*/\n\npragma solidity ^0.4.2;\n\ncontract SimpleDAO {\n  mapping (address => uint) public credit;\n\n  function donate(address to) payable {\n    credit[to] += msg.value;\n  }\n\n  function withdraw(uint amount) {\n    if (credit[msg.sender]>= amount) {\n      // <yes> <report> REENTRANCY\n      bool res = msg.sender.call.value(amount)();\n      credit[msg.sender]-=amount;\n    }\n  }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 1,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-1"
+                        },
+                        {
+                            "checker_id": 5,
+                            "lines": [
+                                {
+                                    "code": "      credit[msg.sender]-=amount;\n",
+                                    "function_name": "",
+                                    "line_no": 20
+                                }
+                            ],
+                            "tool": "metasecurelabs-5"
+                        },
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        },
+                        {
+                            "checker_id": 6,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-6"
+                        },
+                        {
+                            "checker_id": 7,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-7"
+                        },
+                        {
+                            "checker_id": 8,
+                            "lines": [
+                                {
+                                    "code": "      // <yes> <report> REENTRANCY\n",
+                                    "function_name": "",
+                                    "line_no": 18
+                                }
+                            ],
+                            "tool": "metasecurelabs-8"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [
+                                {
+                                    "code": "      credit[msg.sender]-=amount;\n",
+                                    "function_name": "",
+                                    "line_no": 20
+                                },
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-9"
+                        }
+                    ],
+                    "swc_id": [
+                        107
+                    ]
+                },
+                "reused_base_constructors": {
+                    "dasp": "Unknown unknowns",
+                    "description": "There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.\n",
+                    "example": "pragma solidity ^0.4.0;\n\ncontract A{\n    uint num = 5;\n    constructor(uint x) public{\n        num += x;\n    }\n}\n\ncontract B is A{\n    constructor() A(2) public { /* ... */ }\n}\n\ncontract C is A {\n    constructor() A(3) public { /* ... */ }\n}\n\ncontract D is B, C {\n    constructor() public { /* ... */ }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "right_to_left_char": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Malicious actors can use the Right-To-Left-Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.\n",
+                    "example": "/*\n* @source: https://youtu.be/P_Mtd5Fc_3E\n* @author: Shahar Zini\n*/\npragma solidity ^0.5.0;\n\ncontract GuessTheNumber\n{\n    uint _secretNumber;\n    address payable _owner;\n    event success(string);\nevent wrongNumber(string);\n\n    function guess(uint n) payable public\n    {\n        require(msg.value == 1 ether);\n\n        uint p = address(this).balance;\n        checkAndTransferPrize(/*The prize/*rebmun desseug*/n , p/*\n                /*The user who should benefit */,msg.sender);\n    }\n\n    function checkAndTransferPrize(uint p, uint n, address payable guesser) internal returns(bool)\n    {\n        if(n == _secretNumber)\n        {\n            guesser.transfer(p);\n            emit success(\"You guessed the correct number!\");\n        }\n        else\n        {\n            emit wrongNumber(\"You've made an incorrect guess!\");\n        }\n    }\n  }\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        130
+                    ]
+                },
+                "short_addresses": {
+                    "dasp": "Unknown unknowns",
+                    "description": "MISSING\n",
+                    "example": "MISSING\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "should_be_pure": {
+                    "dasp": "Unknown unknowns",
+                    "description": "In Solidity, function that do not read from the state or modify it can be declared as pure.\n",
+                    "example": "Here is the example of correct pure-function:\n\npragma solidity ^0.4.16;\n\ncontract C {\n    function f(uint a, uint b) pure returns (uint) {\n        return a * (b + 42) + now;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "should_be_view": {
+                    "dasp": "Unknown unknowns",
+                    "description": "In Solidity, functions that do not read from the state or modify it can be declared as view.\n",
+                    "example": "Here is the example of correct view-function:\n\ncontract C {\n    function f(uint a, uint b) view returns (uint) {\n        return a * (b + 42) + now;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "state_variable_shadowing": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "Solidity allows for ambiguous naming of state variables when inheritance is used. Contract A with a variable x could inherit contract B that also has a state variable x defined. This would result in two separate versions of x, one of them being accessed from contract A and the other one from contract B. In more complex contract systems this condition could go unnoticed and subsequently lead to security issues.\n",
+                    "example": "pragma solidity 0.4.25;\n\ncontract Tokensale {\n    uint public hardcap = 10000 ether;\n\n    function Tokensale() {}\n\n    function fetchCap() public constant returns(uint) {\n        return hardcap;\n    }\n}\n\ncontract Presale is Tokensale {\n    //uint hardcap = 1000 ether;\n    //If the hardcap variables were both needed we would have to rename one to fix this.\n    function Presale() Tokensale() {\n        hardcap = 1000 ether;\n    }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        119
+                    ]
+                },
+                "storage_ABIEncoderV2_array": {
+                    "dasp": "Unknown unknowns",
+                    "description": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.\n",
+                    "example": "contract A {\n    uint[2][3] bad_arr = [[1, 2], [3, 4], [5, 6]];\n\n    /* Array of arrays passed to abi.encode is vulnerable */\n    function bad() public {\n        bytes memory b = abi.encode(bad_arr);\n    }\n}\n\nabi.encode(bad_arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "storage_signed_integer_array": {
+                    "dasp": "Unknown unknowns",
+                    "description": "solc versions 0.4.7-0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.\n",
+                    "example": "contract A {\n  int[3] ether_balances; // storage signed integer array\n  function bad0() private {\n    // ...\n    ether_balances = [-1, -1, -1];\n    // ...\n  }\n}\n\nbad0() uses a (storage-allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "strict_balance_equality": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Contracts can behave erroneously when they strictly assume a specific Ether balance. It is always possible to forcibly send ether to a contract (without triggering its fallback function), using selfdestruct, or by mining to the account. In the worst case scenario this could lead to DOS conditions that might render the contract unusable.\n",
+                    "example": "if (address(this).balance == 42 ether ) {\n    /* ... */\n}\n# secure alternative:\n\nif (address(this).balance >= 42 ether ) {\n  /* ... */\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        132
+                    ]
+                },
+                "time_manipulation": {
+                    "dasp": "Time Manipulation",
+                    "description": "From locking a token sale to unlocking funds at a specific time for a game, contracts sometimes need to rely on the current time. This is usually done via block.timestamp or its alias now in Solidity. But where does that value come from? From the miners! Because a transaction's miner has leeway in reporting the time at which the mining occurred, good smart contracts will avoid relying strongly on the time advertised.\n",
+                    "example": "contract TimedCrowdsale\n  event Finished();\n  event notFinished();\n\n  // Sale should finish exactly at January 1, 2019\n  function isSaleFinished() private returns (bool) {\n    return block.timestamp >= 1546300800;\n  }\n\n  function run() public {\n    if (isSaleFinished()) {\n        emit Finished();\n    } else {\n        emit notFinished();\n    }\n  }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        116
+                    ]
+                },
+                "unchecked_calls": {
+                    "dasp": "Unchecked Low Level Calls",
+                    "description": "The return value of a message call is not checked. Execution will resume even if the called contract throws an exception. If the call fails accidentally or an attacker forces the call to fail, this may cause unexpected behaviour in the subsequent program logic.\n",
+                    "example": "pragma solidity 0.4.25;\n\ncontract ReturnValue {\n\n#checked\n#function callchecked(address callee) public {\n  #  require(callee.call());\n  #}\n\n  function callnotchecked(address callee) public {\n    callee.call();\n  }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 1,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-1"
+                        },
+                        {
+                            "checker_id": 5,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-5"
+                        },
+                        {
+                            "checker_id": 8,
+                            "lines": [
+                                {
+                                    "code": "      // <yes> <report> REENTRANCY\n",
+                                    "function_name": "",
+                                    "line_no": 18
+                                }
+                            ],
+                            "tool": "metasecurelabs-8"
+                        }
+                    ],
+                    "swc_id": [
+                        104
+                    ]
+                },
+                "uninitialized_func_pointer": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "solc versions 0.4.5-0.4.26 and 0.5.0-0.5.8 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors.\n",
+                    "example": "contract bad0 {\n\n  constructor() public {\n    /* Uninitialized function pointer */\n    function(uint256) internal returns(uint256) a;\n    a(10);\n  }\n}\n\nThe call to a(10) will lead to unexpected behavior because function pointer a is not initialized in the constructor.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "uninitialized_local_variable": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Some unexpected error may happen when local variables are not uninitialized.\n",
+                    "example": "contract Uninitialized is Owner{\n    function withdraw() payable public onlyOwner{\n        address to;\n        to.transfer(this.balance)\n    }\n}\n\nBob calls transfer. As a result, all Ether is sent to the address 0x0 and is lost.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "uninitialized_state_variable": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Some unexpected error may happen when state variables are not uninitialized.\n",
+                    "example": "contract Uninitialized{\n    address destination;\n\n    function transfer() payable public{\n        destination.transfer(msg.value);\n    }\n}\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "    credit[to] += msg.value;\n",
+                                    "function_name": "",
+                                    "line_no": 13
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        },
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "      credit[msg.sender]-=amount;\n",
+                                    "function_name": "",
+                                    "line_no": 20
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        },
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "    return credit[to];\n",
+                                    "function_name": "",
+                                    "line_no": 25
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        },
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "  mapping (address => uint) public credit;\n",
+                                    "function_name": "",
+                                    "line_no": 10
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        },
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "    if (credit[msg.sender]>= amount) {\n",
+                                    "function_name": "",
+                                    "line_no": 17
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        }
+                    ],
+                    "swc_id": []
+                },
+                "uninitialized_storage_pointer": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "An uninitialized storage variable will act as a reference to the first state variable, and can override a critical variable.\n",
+                    "example": "contract Uninitialized{\n    address owner = msg.sender;\n\n    struct St{\n        uint a;\n    }\n\n    function func() {\n        St st;\n        st.a = 0x0;\n    }\n}\nBob calls func. As a result, owner is overridden to 0.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        109
+                    ]
+                },
+                "unused_function_should_be_external": {
+                    "dasp": "Unknown unknowns",
+                    "description": "A function with public visibility modifier that is not called internally. Changing visibility level to external increases code readability. Moreover, in many cases functions with external visibility modifier spend less gas comparing to functions with public visibility modifier.\n",
+                    "example": "In the following example, functions with both public and external visibility modifiers are used:\n\ncontract Token {\n\n    mapping (address => uint256) internal _balances;\n\n    function transfer_public(address to, uint256 value) public {\n        require(value <= _balances[msg.sender]);\n\n        _balances[msg.sender] -= value;\n        _balances[to] += value;\n    }\n\n    function transfer_external(address to, uint256 value) external {\n        require(value <= _balances[msg.sender]);\n\n        _balances[msg.sender] -= value;\n        _balances[to] += value;\n    }\n}\n\nThe second function requires less gas.\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 9,
+                            "lines": [],
+                            "tool": "metasecurelabs-9"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [],
+                            "tool": "metasecurelabs-9"
+                        },
+                        {
+                            "checker_id": 9,
+                            "lines": [],
+                            "tool": "metasecurelabs-9"
+                        }
+                    ],
+                    "swc_id": []
+                },
+                "unused_retval": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The return value of an external call is not stored in a local or state variable.\n",
+                    "example": "contract MyConc{\n    using SafeMath for uint;\n    function my_func(uint a, uint b) public{\n        a.add(b);\n    }\n}\n\nMyConc calls add of SafeMath, but does not store the result in a. As a result, the computation has no effect.\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 4,
+                            "lines": [
+                                {
+                                    "code": "      bool res = msg.sender.call.value(amount)();\n",
+                                    "function_name": "",
+                                    "line_no": 19
+                                }
+                            ],
+                            "tool": "metasecurelabs-4"
+                        }
+                    ],
+                    "swc_id": []
+                },
+                "unused_state_variables": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Unused variables are allowed in Solidity and they do not pose a direct security issue. It is best practice though to avoid them as they can:\n* cause an increase in computations (and unnecessary gas consumption)\n* indicate bugs or malformed data structures and they are generally a sign of poor code quality\n* cause code noise and decrease readability of the code\n",
+                    "example": "pragma solidity >=0.5.0;\npragma experimental ABIEncoderV2;\n\nimport \"./base.sol\";\n\ncontract DerivedA is Base {\n    // i is not used in the current contract\n    A i = A(1);\n\n    int internal j = 500;\n\n    function call(int a) public {\n        assign1(a);\n    }\n\n    function assign3(A memory x) public returns (uint) {\n        return g[1] + x.a + uint(j);\n    }\n\n    function ret() public returns (int){\n        return this.e();\n\n    }\n  int internal j = 500;\nfunction call(int a) public {\n        assign1(a);\n    }\n\n    function assign3(A memory x) public returns (uint) {\n        return g[1] + x.a + uint(j);\n    }\n\n    function ret() public returns (int){\n        return this.e();\n  }\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": [
+                        131
+                    ]
+                },
+                "use_after_delete": {
+                    "dasp": "Unknown unknowns",
+                    "description": "Using values of variables after they have been explicitly deleted may lead to unexpected behavior or compromise.\n",
+                    "example": "mapping(address => uint) public balances;\nfunction f() public {\n    delete balances[msg.sender];\n    msg.sender.transfer(balances[msg.sender]);\n}\n\nbalances[msg.sender] is deleted before it's sent to the caller, leading the transfer to always send zero.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "useless_compare": {
+                    "dasp": "Unknown unknowns",
+                    "description": "A variable compared to itself is probably an error as it will always return true for ==, >=, <= and always false for <, > and !=. In addition, some comparison are also tautologies or contradictions.\n",
+                    "example": "function check(uint a) external returns(bool){\n    return (a >= a);\n}\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "using_send": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The send function is called inside checks instead of using transfer. The recommended way to perform checked ether payments is addr.transfer(x), which automatically throws an exception if the transfer is unsuccessful.\n",
+                    "example": "In the following example, the send function is used:\n\n\nif(!addr.send(42 ether)) {\n    revert();\n}\n\nPreferred alternative:\n\naddr.transfer(42 ether);\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                },
+                "visibility": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "The default function visibility level in contracts is public, in interfaces - external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.\nAdditionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.\n",
+                    "example": "In this example, a specific modifier, such as public, is not used when declaring a function:\n\nfunction foo();\n\nPreferred alternatives:\n\nfunction foo() public;\nfunction foo() internal;\n",
+                    "found": true,
+                    "reported_by": [
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "functiondonate(addressto)payable{credit[to]+=msg.value;}",
+                                    "function_name": "",
+                                    "line_no": 12
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        },
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "functionwithdraw(uintamount){if(credit[msg.sender]>=amount){boolres=msg.sender.call.value(amount)();credit[msg.sender]-=amount;}}",
+                                    "function_name": "",
+                                    "line_no": 16
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        },
+                        {
+                            "checker_id": 10,
+                            "lines": [
+                                {
+                                    "code": "functionqueryCredit(addressto)returns(uint){returncredit[to];}",
+                                    "function_name": "",
+                                    "line_no": 24
+                                }
+                            ],
+                            "tool": "metasecurelabs-10"
+                        }
+                    ],
+                    "swc_id": [
+                        100,
+                        108
+                    ]
+                },
+                "wrong_signature": {
+                    "dasp": "Unknown Unknowns",
+                    "description": "In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma - no spaces are used. This means one should use uint256 and int256 instead of uint or int.\n",
+                    "example": "This code uses incorrect function signature:\n\npragma solidity ^0.5.1;\ncontract Signature {\n    function callFoo(address addr, uint value) public returns (bool) {\n        bytes memory data = abi.encodeWithSignature(\"foo(uint)\", value);\n        (bool status, ) = addr.call(data);\n        return status;\n    }\n}\n\nUse \"foo(uint256)\" instead.\n",
+                    "found": false,
+                    "reported_by": [],
+                    "swc_id": []
+                }
+            },
+            "checker_status": {
+                "metasecurelabs-1": {
+                    "checker_id": 1,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 1.6949436664581299,
+                    "end": 1663215830.2616966,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215828.566753,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-1"
+                },
+                "metasecurelabs-10": {
+                    "checker_id": 10,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 2.2849550247192383,
+                    "end": 1663215867.9453666,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215865.6604116,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-10"
+                },
+                "metasecurelabs-11": {
+                    "checker_id": 11,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 0.5078604221343994,
+                    "end": 1663215867.4787123,
+                    "exit_code": 1,
+                    "msg": "",
+                    "start": 1663215866.970852,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-11"
+                },
+                "metasecurelabs-2": {
+                    "checker_id": 2,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 1.322314977645874,
+                    "end": 1663215853.490288,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215852.167973,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-2"
+                },
+                "metasecurelabs-3": {
+                    "checker_id": 3,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 34.70247173309326,
+                    "end": 1663215899.1532726,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215864.450801,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-3"
+                },
+                "metasecurelabs-4": {
+                    "checker_id": 4,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 30.11093235015869,
+                    "end": 1663215864.3829153,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215834.271983,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-4"
+                },
+                "metasecurelabs-5": {
+                    "checker_id": 5,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 2.7285823822021484,
+                    "end": 1663215874.0033002,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215871.2747178,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-5"
+                },
+                "metasecurelabs-6": {
+                    "checker_id": 6,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 0.861823320388794,
+                    "end": 1663215871.6586127,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215870.7967894,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-6"
+                },
+                "metasecurelabs-7": {
+                    "checker_id": 7,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 1.2479884624481201,
+                    "end": 1663215865.1333911,
+                    "exit_code": 1,
+                    "msg": "",
+                    "start": 1663215863.8854027,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-7"
+                },
+                "metasecurelabs-8": {
+                    "checker_id": 8,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 7.089657783508301,
+                    "end": 1663215879.3739848,
+                    "exit_code": 0,
+                    "msg": "",
+                    "start": 1663215872.284327,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-8"
+                },
+                "metasecurelabs-9": {
+                    "checker_id": 9,
+                    "contract": "/simple_dao/simple_dao.sol",
+                    "duration": 0.4321141242980957,
+                    "end": 1663215864.655363,
+                    "exit_code": 7,
+                    "msg": "",
+                    "start": 1663215864.223249,
+                    "status": "SUCCESS",
+                    "tool": "metasecurelabs-9"
+                }
+            },
+            "created_at": 1663215826,
+            "finished_at": 1663215899,
+            "id": 1,
+            "status": "SUCCESS"
+        },
+        "itemsPerPage": 0,
+        "startIndex": 0,
+        "status": 0,
+        "totalItems": 0
+    }
+}
