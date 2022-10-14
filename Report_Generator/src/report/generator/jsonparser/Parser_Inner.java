@@ -12,7 +12,7 @@ public class Parser_Inner {
 		
 	public static void main(String[] args) {
 		try {
-			JsonObject jsonObject = JsonParser.parseReader(new FileReader("C:\\Users\\jyoth\\Documents\\SE_Project\\report_generator\\Report_Generator\\src\\report\\generator\\jsonparser\\elements.json"))
+			JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/vishakhasingh/git/report_generatorr/Report_Generator/src/report/generator/jsonparser/elements.json"))
 					.getAsJsonObject();
 			
 			List<Object> inner_elements = null;
@@ -1052,7 +1052,46 @@ public class Parser_Inner {
 			
 			
 			
-			System.out.print(jsonMap);
+			//System.out.print(jsonMap);
+			
+
+			
+			
+		
+			
+			File myObj = new File("json_data.txt");
+		      if (myObj.createNewFile()) {
+		        System.out.println("File created: " + myObj.getName());
+		      } else {
+		        System.out.println("File already exists.");
+		      }
+		      
+		      FileWriter myWriter = new FileWriter("json_data.txt");
+		      myWriter.write("Json file data \n");
+		      
+		      
+		      
+		  	for(String key : jsonMap.keySet())
+			{
+		  		myWriter.write("Key: "+key+"\n");
+		  		myWriter.write("");
+				List<Object> inner = new ArrayList<>();
+				inner = jsonMap.get(key);
+				myWriter.write("dasp: "+ inner.get(0)+"\n");
+				myWriter.write("");
+				myWriter.write("description: "+ inner.get(1)+"\n");
+				myWriter.write("");
+				myWriter.write("example: "+ inner.get(2)+"\n");
+				myWriter.write("");
+				myWriter.write("found: "+ inner.get(3)+"\n");
+				myWriter.write("\n");
+				myWriter.write("\n");
+				
+				
+			}
+		  	System.out.println("Successfully wrote to the file.");
+		  	myWriter.close();
+
 			
 			
 			
@@ -1065,7 +1104,10 @@ public class Parser_Inner {
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} catch (IOException e) {
+		      System.out.println("An error occurred.");
+		      e.printStackTrace();
+		    }
 
 	}
 
