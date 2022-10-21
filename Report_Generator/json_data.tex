@@ -1,0 +1,38 @@
+\documentclass{article} 
+\usepackage[utf8]{inputenc} 
+
+\title{Metasecurelabs analysis report}
+\author{metasecurelabs.io }
+\date{\today} 
+
+\begin{document} 
+
+\maketitle 
+
+\section{Introduction} 
+\subsection{dangerous \textunderscore enum \textunderscore conversion} 
+\textbf{SWC \textunderscore  ID:} 
+
+\textbf{Description}: out-of-range enum conversion may occur(solc 0.4.5  
+
+\textbf{Example:} 
+
+\emph {pragma solidity 0.4.2;} 
+
+ \emph{ contract Test}{ 
+
+ \emph{ enum E{a}} 
+
+ \emph{ function bug(unit a) public returns (E)} { 
+
+\emph    {return E(a);} 
+
+\} 
+
+\} 
+
+	extbf{DASP} : Unknown Unknowns 
+
+	extbf{Found}: false 
+
+\end{document}

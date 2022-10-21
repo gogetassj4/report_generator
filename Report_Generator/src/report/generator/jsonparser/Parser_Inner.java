@@ -10,9 +10,9 @@ import com.google.gson.JsonSyntaxException;
 
 public class Parser_Inner {
 		
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 		try {
-			JsonObject jsonObject = JsonParser.parseReader(new FileReader("/Users/vishakhasingh/git/report_generatorr/Report_Generator/src/report/generator/jsonparser/elements.json"))
+			JsonObject jsonObject = JsonParser.parseReader(new FileReader("C:\\Users\\jyoth\\Documents\\SE_Project\\report_generator\\Report_Generator\\src\\report\\generator\\jsonparser\\elements.json"))
 					.getAsJsonObject();
 			
 			List<Object> inner_elements = null;
@@ -1054,24 +1054,66 @@ public class Parser_Inner {
 			
 			//System.out.print(jsonMap);
 			
+			  
+		    
+		     String latex = "\\documentclass{article} \r\n";
+		        latex += "\\usepackage[utf8]{inputenc} \r\n";
+		        latex += "\r\n";
+		        latex += "\\title{Metasecurelabs analysis report}\r\n";
+		        latex += "\\author{metasecurelabs.io }\r\n";
+		        latex += "\\date{\\today} \r\n";
+		        latex += "\r\n";
+		        latex += "\\begin{document} \r\n";
+		        latex += "\r\n";
+		        latex += "\\maketitle \r\n";
+		        latex += "\r\n";
+		        latex += "\\section{Introduction} \r\n";
+		        latex += "\\subsection{dangerous \\textunderscore enum \\textunderscore conversion} \r\n";
+		        latex += "\\textbf{SWC \\textunderscore  ID:} \r\n";
+		        latex += "\r\n";
+		        latex += "\\textbf{Description}: out-of-range enum conversion may occur(solc 0.4.5  \r\n";
+		        latex += "\r\n";
+		        latex += "\\textbf{Example:} \r\n";
+		        latex += "\r\n";
+		        latex += "\\emph {pragma solidity 0.4.2;} \r\n";
+		        latex += "\r\n";
+		        latex += " \\emph{ contract Test}{ \r\n";
+		        latex += "\r\n";
+		        latex += " \\emph{ enum E{a}} \r\n";
+		        latex += "\r\n";
+		        latex += " \\emph{ function bug(unit a) public returns (E)} { \r\n";
+		        latex += "\r\n";
+		        latex += "\\emph    {return E(a);} \r\n";
+		        latex += "\r\n";
+		        latex += "\\} \r\n";
+		        latex += "\r\n";
+		        latex += "\\} \r\n";
+		        latex += "\r\n";
+		        latex += "\textbf{DASP} : Unknown Unknowns \r\n";
+		        latex += "\r\n";
+		        latex += "\textbf{Found}: false \r\n";
+		        latex += "\r\n";
+		        latex += "\\end{document}";
+			
 
 			
 			
 		
 			
-			File myObj = new File("json_data.txt");
+			File myObj = new File("json_data.tex");
 		      if (myObj.createNewFile()) {
 		        System.out.println("File created: " + myObj.getName());
 		      } else {
 		        System.out.println("File already exists.");
 		      }
 		      
-		      FileWriter myWriter = new FileWriter("json_data.txt");
-		      myWriter.write("Json file data \n");
+		      FileWriter myWriter = new FileWriter("json_data.tex");
+		      myWriter.write(latex);
+		      //myWriter.write(latex);)
 		      
 		      
 		      
-		  	for(String key : jsonMap.keySet())
+		  /*	for(String key : jsonMap.keySet())
 			{
 		  		myWriter.write("Key: "+key+"\n");
 		  		myWriter.write("");
@@ -1088,9 +1130,10 @@ public class Parser_Inner {
 				myWriter.write("\n");
 				
 				
-			}
+			}*/
 		  	System.out.println("Successfully wrote to the file.");
 		  	myWriter.close();
+		  
 
 			
 			
