@@ -45,7 +45,7 @@
                 },
                 "arithmetic": {
                     "dasp": "Arithmetic",
-                    "description": "This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .\n* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2^8-1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits \u2013 either larger than the maximum or lower than the minimum representable value.\n* Division issues. Some wrong will happen when integer or float numbers are divided by zero.\n* Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).\n",
+                    "description": "This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .\n* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2^8-1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.\n* Division issues. Some wrong will happen when integer or float numbers are divided by zero.\n* Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).\n",
                     "example": "Integer overflow/underflow\n/*\n* @source: https://capturetheether.com/challenges/math/token-sale/\n* @author: Steve Marx\n*/\npragma solidity ^0.4.21;\ncontract TokenSaleChallenge {\n    mapping(address => uint256) public balanceOf;\n    uint256 constant PRICE_PER_TOKEN = 1 ether;\n\n    function TokenSaleChallenge(address _player) public payable {\n        require(msg.value == 1 ether);\n    }\n\n    function isComplete() public view returns (bool) {\n        return address(this).balance < 1 ether;\n    }\n\n    function buy(uint256 numTokens) public payable {\n        require(msg.value == numTokens * PRICE_PER_TOKEN);\n\n        balanceOf[msg.sender] += numTokens;\n    }\n}\n\nDivision issues\ncontract Division {\n\n    /*function unsigned_division(uint32 x, uint32 y) returns (int r) {\n      //if (y == 0) { throw; }\n      r = x / y;\n    }*/\n\n    function signed_division(int x, int y) returns (int) {\n      //if ((y == 0) || ((x == -2**255) && (y == -1))) { throw; }\n      return x / y;\n    }\n\n}\n\nType deduction overflow\ncontract For_Test {\n...\n  function Test () payable public {\n    if ( msg . value > 0.1 ether ) {\n      uint256 multi = 0;\n      uint256 amountToTransfer = 0;\n      for ( var i = 0; i < 2* msg . value ; i ++) {\n        multi = i *2;\n        if ( multi < amountToTransfer ) {\n          break ;\n        amountToTransfer = multi ;\n      }\n      msg.sender.transfer( amountToTransfer );\n    }\n  }\n}\n",
                     "found": true,
                     "reported_by": [
@@ -156,7 +156,7 @@
                 "byte_array_instead_bytes": {
                     "dasp": "Unknown Unknowns",
                     "description": "Use bytes instead of byte[] for lower gas consumption.\n",
-                    "example": "In the following example, byte array is used:\n\npragma solidity 0.4.24;\n\n#contract C {\n#    byte[] someVariable;\n#    ...\n#}\n\nAlternative:\n\npragma solidity 0.4.24;\n\ncontract C {\n    bytes someVariable;\n    ...\n}\n",
+                    "example": "In the following example, byte array is used:\n\npragma solidity 0.4.24;\n\ncontract C {\n    byte[] someVariable;\n    ...\n}\n\nAlternative:\n\npragma solidity 0.4.24;\n\ncontract C {\n    bytes someVariable;\n    ...\n}\n",
                     "found": false,
                     "reported_by": [],
                     "swc_id": []
@@ -215,7 +215,7 @@
                 },
                 "dead_code": {
                     "dasp": "Unknown unknowns",
-                    "description": "In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect-free code. This can lead to the introduction of \"dead\" code that does not properly performing an intended action.\n\nFor example, it\u2019s easy to miss the trailing parentheses in msg.sender.call.value(xx)(\"\");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead\u2019 when they are not invoked.\n",
+                    "description": "In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect-free code. This can lead to the introduction of \"dead\" code that does not properly performing an intended action.\n\nFor example, it's easy to miss the trailing parentheses in msg.sender.call.value(xx)(\"\");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead` when they are not invoked.\n",
                     "example": "pragma solidity ^0.5.0;\n\ncontract DepositBox {\n    mapping(address => uint) balance;\n\n    // Accept deposit\n    function deposit(uint amount) public payable {\n        require(msg.value == amount, 'incorrect amount');\n        // Should update user balance\n        balance[msg.sender] = amount;\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -726,7 +726,7 @@
                 "reentrancy": {
                     "dasp": "Reentrancy",
                     "description": "One of the major dangers of calling external contracts is that they can take over the control flow. In the reentrancy attack (a.k.a. recursive call attack), a malicious contract calls back into the calling contract before the first invocation of the function is finished. This may cause the different invocations of the function to interact in undesirable ways.\n",
-                    "example": "/*\n* @source: http://blockchain.unica.it/projects/ethereum-survey/attacks.html#simpledao\n* @author: -\n* @vulnerable_at_lines: 19\n*/\n\npragma solidity ^0.4.2;\n\ncontract SimpleDAO {\n  mapping (address => uint) public credit;\n\n  function donate(address to) payable {\n    credit[to] += msg.value;\n  }\n\n  function withdraw(uint amount) {\n    if (credit[msg.sender]>= amount) {\n      // <yes> <report> REENTRANCY\n      bool res = msg.sender.call.value(amount)();\n      credit[msg.sender]-=amount;\n    }\n  }\n}\n",
+                    "example": "/*\n* @source: http://blockchain.unica.it/projects/ethereum-survey/attacks.htmlsimpledao\n* @author: -\n* @vulnerable_at_lines: 19\n*/\n\npragma solidity ^0.4.2;\n\ncontract SimpleDAO {\n  mapping (address => uint) public credit;\n\n  function donate(address to) payable {\n    credit[to] += msg.value;\n  }\n\n  function withdraw(uint amount) {\n    if (credit[msg.sender]>= amount) {\n      // <yes> <report> REENTRANCY\n      bool res = msg.sender.call.value(amount)();\n      credit[msg.sender]-=amount;\n    }\n  }\n}\n",
                     "found": true,
                     "reported_by": [
                         {
@@ -887,7 +887,7 @@
                 "strict_balance_equality": {
                     "dasp": "Unknown unknowns",
                     "description": "Contracts can behave erroneously when they strictly assume a specific Ether balance. It is always possible to forcibly send ether to a contract (without triggering its fallback function), using selfdestruct, or by mining to the account. In the worst case scenario this could lead to DOS conditions that might render the contract unusable.\n",
-                    "example": "if (address(this).balance == 42 ether ) {\n    /* ... */\n}\n# secure alternative:\n\nif (address(this).balance >= 42 ether ) {\n  /* ... */\n}\n",
+                    "example": "if (address(this).balance == 42 ether ) {\n    /* ... */\n}\n secure alternative:\n\nif (address(this).balance >= 42 ether ) {\n  /* ... */\n}\n",
                     "found": false,
                     "reported_by": [],
                     "swc_id": [
@@ -907,7 +907,7 @@
                 "unchecked_calls": {
                     "dasp": "Unchecked Low Level Calls",
                     "description": "The return value of a message call is not checked. Execution will resume even if the called contract throws an exception. If the call fails accidentally or an attacker forces the call to fail, this may cause unexpected behaviour in the subsequent program logic.\n",
-                    "example": "pragma solidity 0.4.25;\n\ncontract ReturnValue {\n\n#checked\n#function callchecked(address callee) public {\n  #  require(callee.call());\n  #}\n\n  function callnotchecked(address callee) public {\n    callee.call();\n  }\n}\n",
+                    "example": "pragma solidity 0.4.25;\n\ncontract ReturnValue {\n\nchecked\nfunction callchecked(address callee) public {\n    require(callee.call());\n  }\n\n  function callnotchecked(address callee) public {\n    callee.call();\n  }\n}\n",
                     "found": true,
                     "reported_by": [
                         {

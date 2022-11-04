@@ -23,10 +23,10 @@ public class Parser_Inner {
 			JsonObject item = (JsonObject) data.get("item");
 			JsonObject bug_type = (JsonObject) item.get("bug_type");
 			
-			JsonObject dangerous_enum_conversion_value = (JsonObject) bug_type.get("dangerous_enum_conversion");
+			JsonObject dangerous_enum_conversion_value= (JsonObject) bug_type.get("dangerous_enum_conversion");
 			String dasp_decv = (String)dangerous_enum_conversion_value.get("dasp").getAsString();
 			String description_decv = (String)dangerous_enum_conversion_value.get("description").getAsString();
-			String example_decv = (String) dangerous_enum_conversion_value.get("example").getAsString();
+			String example_decv = (String)dangerous_enum_conversion_value.get("example").getAsString();
 			boolean found_decv = (boolean) dangerous_enum_conversion_value.get("found").getAsBoolean();
 			
 			//storing values for dangerous_enum_conversion_value
@@ -36,7 +36,7 @@ public class Parser_Inner {
 			inner_elements.add(example_decv);
 			inner_elements.add(found_decv);
 			
-			jsonMap.put("dangerous_enum_conversion", inner_elements);
+			jsonMap.put("dangerous\\_enum\\_conversion", inner_elements);
 			
 			JsonObject constant_state_variable_value = (JsonObject) bug_type.get("constant_state_variable");
 			String dasp_csvv = (String) constant_state_variable_value.get("dasp").getAsString();
@@ -51,7 +51,7 @@ public class Parser_Inner {
 			inner_elements.add(example_csvv);
 			inner_elements.add(found_csvv);
 			
-			jsonMap.put("constant_state_variable", inner_elements);
+			jsonMap.put("constant\\_state\\_variable", inner_elements);
 			
 			JsonObject arbitrary_from_in_transferFrom_value = (JsonObject) bug_type.get("arbitrary_from_in_transferFrom");
 			String dasp_afit = (String) arbitrary_from_in_transferFrom_value.get("dasp").getAsString();
@@ -66,7 +66,7 @@ public class Parser_Inner {
 			inner_elements.add(example_afit);
 			inner_elements.add(found_afit);
 			
-			jsonMap.put("arbitrary_from_in_transferFrom", inner_elements);
+			jsonMap.put("arbitrary\\_from\\_in\\_transferFrom", inner_elements);
 			
 			JsonObject del_structure_containing_mapping_value = (JsonObject) bug_type.get("del_structure_containing_mapping");
 			String dasp_dscmv = (String) del_structure_containing_mapping_value.get("dasp").getAsString();
@@ -81,7 +81,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dscmv);
 			inner_elements.add(found_dscmv);
 			
-			jsonMap.put("del_structure_containing_mapping", inner_elements);
+			jsonMap.put("del\\_structure\\_containing\\_mapping", inner_elements);
 			
 			
 			JsonObject erc20_event_not_indexed_value = (JsonObject) bug_type.get("erc20_event_not_indexed");
@@ -97,7 +97,7 @@ public class Parser_Inner {
 			inner_elements.add(example_eeniv);
 			inner_elements.add(found_eeniv);
 			
-			jsonMap.put("erc20_event_not_indexed", inner_elements);
+			jsonMap.put("erc20\\_event\\_not\\_indexed", inner_elements);
 			
 			
 			JsonObject use_after_delete_value = (JsonObject) bug_type.get("use_after_delete");
@@ -113,7 +113,7 @@ public class Parser_Inner {
 			inner_elements.add(example_uadv);
 			inner_elements.add(found_uadv);
 			
-			jsonMap.put("use_after_delete", inner_elements);
+			jsonMap.put("use\\_after\\_delete", inner_elements);
 			
 			JsonObject call_without_data_value = (JsonObject) bug_type.get("call_without_data");
 			String dasp_cwdv = (String) call_without_data_value.get("dasp").getAsString();
@@ -128,7 +128,7 @@ public class Parser_Inner {
 			inner_elements.add(example_cwdv);
 			inner_elements.add(found_cwdv);
 			
-			jsonMap.put("call_without_data", inner_elements);
+			jsonMap.put("call\\_without\\_data", inner_elements);
 			
 			JsonObject visibility_value = (JsonObject) bug_type.get("visibility");
 			String dasp_vv = (String) visibility_value.get("dasp").getAsString();
@@ -160,7 +160,7 @@ public class Parser_Inner {
 			inner_elements.add(example_isiav);
 			inner_elements.add(found_isiav);
 			
-			jsonMap.put("incorrect_shift_in_assembly", inner_elements);
+			jsonMap.put("incorrect\\_shift\\_in\\_assembly", inner_elements);
 			
 			
 			JsonObject short_addresses_value = (JsonObject) bug_type.get("short_addresses");
@@ -176,7 +176,7 @@ public class Parser_Inner {
 			inner_elements.add(example_sav);
 			inner_elements.add(found_sav);
 			
-			jsonMap.put("short_addresses", inner_elements);
+			jsonMap.put("short\\_addresses", inner_elements);
 			
 			JsonObject incorrect_modifier_value = (JsonObject) bug_type.get("incorrect_modifier");
 			String dasp_imv = (String) incorrect_modifier_value.get("dasp").getAsString();
@@ -192,7 +192,7 @@ public class Parser_Inner {
 			inner_elements.add(example_imv);
 			inner_elements.add(found_imv);
 			
-			jsonMap.put("incorrect_modifier", inner_elements);
+			jsonMap.put("incorrect\\_modifier", inner_elements);
 			
 			JsonObject wrong_signature_value = (JsonObject) bug_type.get("wrong_signature");
 			String dasp_wsv = (String) wrong_signature_value.get("dasp").getAsString();
@@ -207,7 +207,7 @@ public class Parser_Inner {
 			inner_elements.add(example_wsv);
 			inner_elements.add(found_wsv);
 			
-			jsonMap.put("wrong_signature", inner_elements);
+			jsonMap.put("wrong\\_signature", inner_elements);
 			
 			JsonObject function_declared_return_but_no_return_value = (JsonObject) bug_type.get("function_declared_return_but_no_return");
 			String dasp_fdrbnrv = (String) function_declared_return_but_no_return_value.get("dasp").getAsString();
@@ -223,7 +223,7 @@ public class Parser_Inner {
 			inner_elements.add(example_fdrbnrv);
 			inner_elements.add(found_fdrbnrv);
 			
-			jsonMap.put("function_declared_return_but_no_return", inner_elements);
+			jsonMap.put("function\\_declared\\_return\\_but\\_no\\_return", inner_elements);
 			
 			JsonObject storage_ABIEncoderV2_array_value = (JsonObject) bug_type.get("storage_ABIEncoderV2_array");
 			String dasp_saav = (String) storage_ABIEncoderV2_array_value.get("dasp").getAsString();
@@ -238,7 +238,7 @@ public class Parser_Inner {
 			inner_elements.add(example_saav);
 			inner_elements.add(found_saav);
 			
-			jsonMap.put("storage_ABIEncoderV2_array", inner_elements);
+			jsonMap.put("storage\\_ABIEncoderV2\\_array", inner_elements);
 			
 			JsonObject deprecated_standards_value = (JsonObject) bug_type.get("deprecated_standards");
 			String dasp_dsv = (String) deprecated_standards_value.get("dasp").getAsString();
@@ -253,7 +253,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dsv);
 			inner_elements.add(found_dsv);
 			
-			jsonMap.put("deprecated_standards", inner_elements);
+			jsonMap.put("deprecated\\_standards", inner_elements);
 			
 			JsonObject unused_state_variables_value = (JsonObject) bug_type.get("unused_state_variables");
 			String dasp_usvv = (String) unused_state_variables_value.get("dasp").getAsString();
@@ -269,7 +269,7 @@ public class Parser_Inner {
 			inner_elements.add(example_usvv);
 			inner_elements.add(found_usvv);
 			
-			jsonMap.put("unused_state_variables", inner_elements);
+			jsonMap.put("unused\\_state\\_variables", inner_elements);
 			
 			JsonObject ignore_value = (JsonObject) bug_type.get("ignore");
 			String dasp_iv = (String) ignore_value.get("dasp").getAsString();
@@ -300,7 +300,7 @@ public class Parser_Inner {
 			inner_elements.add(example_almv);
 			inner_elements.add(found_almv);
 			
-			jsonMap.put("array_length_manipulation", inner_elements);
+			jsonMap.put("array\\_length\\_manipulation", inner_elements);
 			
 			JsonObject storage_signed_integer_array_value = (JsonObject) bug_type.get("storage_signed_integer_array");
 			String dasp_ssiav = (String) storage_signed_integer_array_value.get("dasp").getAsString();
@@ -315,7 +315,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ssiav);
 			inner_elements.add(found_ssiav);
 			
-			jsonMap.put("storage_signed_integer_array", inner_elements);
+			jsonMap.put("storage\\_signed\\_integer\\_array", inner_elements);
 			
 			JsonObject dead_code_value = (JsonObject) bug_type.get("dead_code");
 			String dasp_dcv = (String) dead_code_value.get("dasp").getAsString();
@@ -330,7 +330,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dcv);
 			inner_elements.add(found_dcv);
 			
-			jsonMap.put("dead_code", inner_elements);
+			jsonMap.put("dead\\_code", inner_elements);
 			
 			JsonObject multiple_constructor_schemes_value = (JsonObject) bug_type.get("multiple_constructor_schemes");
 			String dasp_mcsv = (String) multiple_constructor_schemes_value.get("dasp").getAsString();
@@ -345,7 +345,7 @@ public class Parser_Inner {
 			inner_elements.add(example_mcsv);
 			inner_elements.add(found_mcsv);
 			
-			jsonMap.put("multiple_constructor_schemes", inner_elements);
+			jsonMap.put("multiple\\_constructor\\_schemes", inner_elements);
 			
 			JsonObject unchecked_calls_value = (JsonObject) bug_type.get("unchecked_calls");
 			String dasp_ucv = (String) unchecked_calls_value.get("dasp").getAsString();
@@ -360,7 +360,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ucv);
 			inner_elements.add(found_ucv);
 			
-			jsonMap.put("unchecked_calls", inner_elements);
+			jsonMap.put("unchecked\\_calls", inner_elements);
 			
 			JsonObject uninitialized_func_pointer_value = (JsonObject) bug_type.get("uninitialized_func_pointer");
 			String dasp_ufpv = (String) uninitialized_func_pointer_value.get("dasp").getAsString();
@@ -375,7 +375,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ufpv);
 			inner_elements.add(found_ufpv);
 			
-			jsonMap.put("uninitialized_func_pointer", inner_elements);
+			jsonMap.put("uninitialized\\_func\\_pointer", inner_elements);
 			
 			
 			JsonObject incorrect_using_balance_and_msg_value = (JsonObject) bug_type.get("incorrect_using_balance_and_msg.value");
@@ -392,7 +392,7 @@ public class Parser_Inner {
 			inner_elements.add(example_iubamv);
 			inner_elements.add(found_iubamv);
 			
-			jsonMap.put("uninitialized_func_pointer", inner_elements);
+			jsonMap.put("uninitialized\\_func\\_pointer", inner_elements);
 			
 			JsonObject blockhash_current_value = (JsonObject) bug_type.get("blockhash_current");
 			String dasp_bcv = (String) blockhash_current_value.get("dasp").getAsString();
@@ -407,7 +407,7 @@ public class Parser_Inner {
 			inner_elements.add(example_bcv);
 			inner_elements.add(found_bcv);
 			
-			jsonMap.put("blockhash_current", inner_elements);
+			jsonMap.put("blockhash\\_current", inner_elements);
 			
 			JsonObject strict_balance_equality_value = (JsonObject) bug_type.get("strict_balance_equality");
 			String dasp_sbev = (String) strict_balance_equality_value.get("dasp").getAsString();
@@ -422,7 +422,7 @@ public class Parser_Inner {
 			inner_elements.add(example_sbev);
 			inner_elements.add(found_sbev);
 			
-			jsonMap.put("strict_balance_equality", inner_elements);
+			jsonMap.put("strict\\_balance\\_equality", inner_elements);
 			
 			JsonObject redundant_code_value = (JsonObject) bug_type.get("redundant_code");
 			String dasp_rcv = (String) redundant_code_value.get("dasp").getAsString();
@@ -437,7 +437,7 @@ public class Parser_Inner {
 			inner_elements.add(example_rcv);
 			inner_elements.add(found_rcv);
 			
-			jsonMap.put("redundant_code", inner_elements);
+			jsonMap.put("redundant\\_code", inner_elements);
 			
 			JsonObject uninitialized_state_variable_value = (JsonObject) bug_type.get("uninitialized_state_variable");
 			String dasp_usvv2 = (String) uninitialized_state_variable_value.get("dasp").getAsString();
@@ -453,7 +453,7 @@ public class Parser_Inner {
 			inner_elements.add(example_usvv2);
 			inner_elements.add(found_usvv2);
 			
-			jsonMap.put("uninitialized_state_variable", inner_elements);
+			jsonMap.put("uninitialized\\_state\\_variable", inner_elements);
 			
 			JsonObject using_send_value = (JsonObject) bug_type.get("using_send");
 			String dasp_usv = (String) using_send_value.get("dasp").getAsString();
@@ -468,7 +468,7 @@ public class Parser_Inner {
 			inner_elements.add(example_usv);
 			inner_elements.add(found_usv);
 			
-			jsonMap.put("using_send", inner_elements);
+			jsonMap.put("using\\_send", inner_elements);
 			
 			JsonObject costly_ops_in_loop_value = (JsonObject) bug_type.get("costly_ops_in_loop");
 			String dasp_coilv = (String) costly_ops_in_loop_value.get("dasp").getAsString();
@@ -483,7 +483,7 @@ public class Parser_Inner {
 			inner_elements.add(example_coilv);
 			inner_elements.add(found_coilv);
 			
-			jsonMap.put("costly_ops_in_loop", inner_elements);
+			jsonMap.put("costly\\_ops\\_in\\_loop", inner_elements);
 			
 			
 			JsonObject byte_array_instead_bytes_value = (JsonObject) bug_type.get("byte_array_instead_bytes");
@@ -499,7 +499,7 @@ public class Parser_Inner {
 			inner_elements.add(example_baibv);
 			inner_elements.add(found_baibv);
 			
-			jsonMap.put("byte_array_instead_bytes", inner_elements);
+			jsonMap.put("byte\\_array\\_instead\\_bytes", inner_elements);
 			
 			
 			JsonObject func_modifying_storage_array_by_value = (JsonObject) bug_type.get("func_modifying_storage_array_by_value");
@@ -515,7 +515,7 @@ public class Parser_Inner {
 			inner_elements.add(example_fmsabv);
 			inner_elements.add(found_fmsabv);
 			
-			jsonMap.put("func_modifying_storage_array_by_value", inner_elements);
+			jsonMap.put("func\\_modifying\\_storage\\_array\\_by\\_value", inner_elements);
 			
 			JsonObject divide_before_multiply_value = (JsonObject) bug_type.get("divide_before_multiply");
 			String dasp_dbmv = (String) divide_before_multiply_value.get("dasp").getAsString();
@@ -530,7 +530,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dbmv);
 			inner_elements.add(found_dbmv);
 			
-			jsonMap.put("divide_before_multiply", inner_elements);
+			jsonMap.put("divide\\_before\\_multiply", inner_elements);
 			
 			JsonObject builtin_symbol_shadowing_value = (JsonObject) bug_type.get("builtin_symbol_shadowing");
 			String dasp_bssv = (String) builtin_symbol_shadowing_value.get("dasp").getAsString();
@@ -545,7 +545,7 @@ public class Parser_Inner {
 			inner_elements.add(example_bssv);
 			inner_elements.add(found_bssv);
 			
-			jsonMap.put("builtin_symbol_shadowing", inner_elements);
+			jsonMap.put("builtin\\_symbol\\_shadowing", inner_elements);
 			
 			JsonObject modifier_like_Sol_keyword_value = (JsonObject) bug_type.get("modifier_like_Sol_keyword");
 			String dasp_mlskv = (String) modifier_like_Sol_keyword_value.get("dasp").getAsString();
@@ -560,7 +560,7 @@ public class Parser_Inner {
 			inner_elements.add(example_mlskv);
 			inner_elements.add(found_mlskv);
 			
-			jsonMap.put("modifier_like_Sol_keyword", inner_elements);
+			jsonMap.put("modifier\\_like\\_Sol\\_keyword", inner_elements);
 			
 			JsonObject msg_value_equals_zero = (JsonObject) bug_type.get("msg.value_equals_zero");
 			String dasp_mvez = (String) msg_value_equals_zero.get("dasp").getAsString();
@@ -575,7 +575,7 @@ public class Parser_Inner {
 			inner_elements.add(example_mvez);
 			inner_elements.add(found_mvez);
 			
-			jsonMap.put("msg.value_equals_zero", inner_elements);
+			jsonMap.put("msg.value\\_equals\\_zero", inner_elements);
 			
 			JsonObject uninitialized_local_variable_value = (JsonObject) bug_type.get("uninitialized_local_variable");
 			String dasp_ulvv = (String) uninitialized_local_variable_value.get("dasp").getAsString();
@@ -590,7 +590,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ulvv);
 			inner_elements.add(found_ulvv);
 			
-			jsonMap.put("uninitialized_local_variable", inner_elements);
+			jsonMap.put("uninitialized\\_local\\_variable", inner_elements);
 			
 			JsonObject race_condition_value = (JsonObject) bug_type.get("race_condition");
 			String dasp_rcv2 = (String) race_condition_value.get("dasp").getAsString();
@@ -605,7 +605,7 @@ public class Parser_Inner {
 			inner_elements.add(example_rcv2);
 			inner_elements.add(found_rcv2);
 			
-			jsonMap.put("race_condition", inner_elements);
+			jsonMap.put("race\\_condition", inner_elements);
 			
 			JsonObject state_variable_shadowing_value = (JsonObject) bug_type.get("state_variable_shadowing");
 			String dasp_svsv = (String) state_variable_shadowing_value.get("dasp").getAsString();
@@ -620,7 +620,7 @@ public class Parser_Inner {
 			inner_elements.add(example_svsv);
 			inner_elements.add(found_svsv);
 			
-			jsonMap.put("state_variable_shadowing", inner_elements);
+			jsonMap.put("state\\_variable\\_shadowing", inner_elements);
 			
 			JsonObject useless_compare_value = (JsonObject) bug_type.get("useless_compare");
 			String dasp_ucv2 = (String) useless_compare_value.get("dasp").getAsString();
@@ -635,7 +635,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ucv2);
 			inner_elements.add(found_ucv2);
 			
-			jsonMap.put("useless_compare", inner_elements);
+			jsonMap.put("useless\\_compare", inner_elements);
 			
 			JsonObject arithmetic_value = (JsonObject) bug_type.get("arithmetic");
 			String dasp_av = (String) arithmetic_value.get("dasp").getAsString();
@@ -666,7 +666,7 @@ public class Parser_Inner {
 			inner_elements.add(example_acv);
 			inner_elements.add(found_acv);
 			
-			jsonMap.put("access_control", inner_elements);
+			jsonMap.put("access\\_control", inner_elements);
 			
 			JsonObject uninitialized_storage_pointer_value = (JsonObject) bug_type.get("uninitialized_storage_pointer");
 			String dasp_uspv = (String) uninitialized_storage_pointer_value.get("dasp").getAsString();
@@ -681,7 +681,7 @@ public class Parser_Inner {
 			inner_elements.add(example_uspv);
 			inner_elements.add(found_uspv);
 			
-			jsonMap.put("uninitialized_storage_pointer", inner_elements);
+			jsonMap.put("uninitialized\\_storage\\_pointer", inner_elements);
 			
 			JsonObject address_hardcoded_value = (JsonObject) bug_type.get("address_hardcoded");
 			String dasp_ahv = (String) address_hardcoded_value.get("dasp").getAsString();
@@ -696,7 +696,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ahv);
 			inner_elements.add(found_ahv);
 			
-			jsonMap.put("address_hardcoded", inner_elements);
+			jsonMap.put("address\\_hardcoded", inner_elements);
 			
 			JsonObject benign_reentrancy_value = (JsonObject) bug_type.get("benign_reentrancy");
 			String dasp_brv = (String) benign_reentrancy_value.get("dasp").getAsString();
@@ -711,7 +711,7 @@ public class Parser_Inner {
 			inner_elements.add(example_brv);
 			inner_elements.add(found_brv);
 			
-			jsonMap.put("benign_reentrancy", inner_elements);
+			jsonMap.put("benign\\_reentrancy", inner_elements);
 			
 			JsonObject incorrect_ERC721_interface_value = (JsonObject) bug_type.get("incorrect_ERC721_interface");
 			String dasp_ieiv = (String) incorrect_ERC721_interface_value.get("dasp").getAsString();
@@ -726,7 +726,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ieiv);
 			inner_elements.add(found_ieiv);
 			
-			jsonMap.put("incorrect_ERC721_interface", inner_elements);
+			jsonMap.put("incorrect\\_ERC721\\_interface", inner_elements);
 			
 			JsonObject msg_value_in_loop = (JsonObject) bug_type.get("msg.value_in_loop");
 			String dasp_mvil = (String) msg_value_in_loop.get("dasp").getAsString();
@@ -742,7 +742,7 @@ public class Parser_Inner {
 			inner_elements.add(example_mvil);
 			inner_elements.add(found_mvil);
 			
-			jsonMap.put("msg.value_in_loop", inner_elements);
+			jsonMap.put("msg.value\\_in\\_loop", inner_elements);
 			
 			JsonObject time_manipulation_value = (JsonObject) bug_type.get("time_manipulation");
 			String dasp_tmv = (String) time_manipulation_value.get("dasp").getAsString();
@@ -758,7 +758,7 @@ public class Parser_Inner {
 			inner_elements.add(example_tmv);
 			inner_elements.add(found_tmv);
 			
-			jsonMap.put("time_manipulation", inner_elements);
+			jsonMap.put("time\\_manipulation", inner_elements);
 			
 			JsonObject overpowered_role_value = (JsonObject) bug_type.get("overpowered_role");
 			String dasp_orv = (String) overpowered_role_value.get("dasp").getAsString();
@@ -773,7 +773,7 @@ public class Parser_Inner {
 			inner_elements.add(example_orv);
 			inner_elements.add(found_orv);
 			
-			jsonMap.put("overpowered_role", inner_elements);
+			jsonMap.put("overpowered\\_role", inner_elements);
 			
 			JsonObject should_be_pure_value = (JsonObject) bug_type.get("should_be_pure");
 			String dasp_sbpv = (String) should_be_pure_value.get("dasp").getAsString();
@@ -788,7 +788,7 @@ public class Parser_Inner {
 			inner_elements.add(example_sbpv);
 			inner_elements.add(found_sbpv);
 			
-			jsonMap.put("should_be_pure", inner_elements);
+			jsonMap.put("should\\_be\\_pure", inner_elements);
 			
 			JsonObject controlled_lowlevel_call_value = (JsonObject) bug_type.get("controlled_lowlevel_call");
 			String dasp_clcv = (String) controlled_lowlevel_call_value.get("dasp").getAsString();
@@ -803,7 +803,7 @@ public class Parser_Inner {
 			inner_elements.add(example_clcv);
 			inner_elements.add(found_clcv);
 			
-			jsonMap.put("controlled_lowlevel_call", inner_elements);
+			jsonMap.put("controlled\\_lowlevel\\_call", inner_elements);
 			
 			JsonObject pre_declare_usage_of_local_value = (JsonObject) bug_type.get("pre-declare_usage_of_local");
 			String dasp_pduolv = (String) pre_declare_usage_of_local_value.get("dasp").getAsString();
@@ -819,7 +819,7 @@ public class Parser_Inner {
 			inner_elements.add(example_pduolv);
 			inner_elements.add(found_pduolv);
 			
-			jsonMap.put("pre-declare_usage_of_local", inner_elements);
+			jsonMap.put("pre-declare\\_usage\\_of\\_local", inner_elements);
 			
 			JsonObject reentrancy_value = (JsonObject) bug_type.get("reentrancy");
 			String dasp_rv = (String) reentrancy_value.get("dasp").getAsString();
@@ -849,7 +849,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dwcv);
 			inner_elements.add(found_dwcv);
 			
-			jsonMap.put("do_while_continue", inner_elements);
+			jsonMap.put("do\\_while\\_continue", inner_elements);
 			
 			JsonObject payable_func_using_delegatecall_in_loop_value = (JsonObject) bug_type.get("payable_func_using_delegatecall_in_loop");
 			String dasp_pfudilv = (String) payable_func_using_delegatecall_in_loop_value.get("dasp").getAsString();
@@ -864,7 +864,7 @@ public class Parser_Inner {
 			inner_elements.add(example_pfudilv);
 			inner_elements.add(found_pfudilv);
 			
-			jsonMap.put("payable_func_using_delegatecall_in_loop", inner_elements);
+			jsonMap.put("payable\\_func\\_using\\_delegatecall\\_in\\_loop", inner_elements);
 			
 			JsonObject right_to_left_char_value = (JsonObject) bug_type.get("right_to_left_char");
 			String dasp_rtlcv = (String) right_to_left_char_value.get("dasp").getAsString();
@@ -879,7 +879,7 @@ public class Parser_Inner {
 			inner_elements.add(example_rtlcv);
 			inner_elements.add(found_rtlcv);
 			
-			jsonMap.put("right_to_left_char", inner_elements);
+			jsonMap.put("right\\_to\\_left\\_char", inner_elements);
 			
 			JsonObject assert_state_change_value = (JsonObject) bug_type.get("assert_state_change");
 			String dasp_ascv = (String) assert_state_change_value.get("dasp").getAsString();
@@ -894,7 +894,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ascv);
 			inner_elements.add(found_ascv);
 			
-			jsonMap.put("assert_state_change", inner_elements);
+			jsonMap.put("assert\\_state\\_change", inner_elements);
 			
 			JsonObject locked_money_value = (JsonObject) bug_type.get("locked_money");
 			String dasp_lmv = (String) locked_money_value.get("dasp").getAsString();
@@ -909,7 +909,7 @@ public class Parser_Inner {
 			inner_elements.add(example_lmv);
 			inner_elements.add(found_lmv);
 			
-			jsonMap.put("locked_money", inner_elements);
+			jsonMap.put("locked\\_money", inner_elements);
 			
 			JsonObject pausable_modifier_absence_value = (JsonObject) bug_type.get("pausable_modifier_absence");
 			String dasp_pmav = (String) pausable_modifier_absence_value.get("dasp").getAsString();
@@ -924,7 +924,7 @@ public class Parser_Inner {
 			inner_elements.add(example_pmav);
 			inner_elements.add(found_pmav);
 			
-			jsonMap.put("pausable_modifier_absence", inner_elements);
+			jsonMap.put("pausable\\_modifier\\_absence", inner_elements);
 			
 			JsonObject extra_gas_in_loops_value = (JsonObject) bug_type.get("extra_gas_in_loops");
 			String dasp_egilv = (String) extra_gas_in_loops_value.get("dasp").getAsString();
@@ -939,7 +939,7 @@ public class Parser_Inner {
 			inner_elements.add(example_egilv);
 			inner_elements.add(found_egilv);
 			
-			jsonMap.put("extra_gas_in_loops", inner_elements);
+			jsonMap.put("extra\\_gas\\_in\\_loops", inner_elements);
 			
 			JsonObject incorrect_ERC20_interface_value = (JsonObject) bug_type.get("incorrect_ERC20_interface");
 			String dasp_ieiv2 = (String) incorrect_ERC20_interface_value.get("dasp").getAsString();
@@ -954,7 +954,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ieiv2);
 			inner_elements.add(found_ieiv2);
 			
-			jsonMap.put("incorrect_ERC20_interface", inner_elements);
+			jsonMap.put("incorrect\\_ERC20\\_interface", inner_elements);
 			
 			JsonObject denial_of_service_value = (JsonObject) bug_type.get("denial_of_service");
 			String dasp_dosv = (String) denial_of_service_value.get("dasp").getAsString();
@@ -969,7 +969,7 @@ public class Parser_Inner {
 			inner_elements.add(example_dosv);
 			inner_elements.add(found_dosv);
 			
-			jsonMap.put("denial_of_service", inner_elements);
+			jsonMap.put("denial\\_of\\_service", inner_elements);
 			
 			JsonObject unused_function_should_be_external_value = (JsonObject) bug_type.get("unused_function_should_be_external");
 			String dasp_ufsbev = (String) unused_function_should_be_external_value.get("dasp").getAsString();
@@ -985,7 +985,7 @@ public class Parser_Inner {
 			inner_elements.add(example_ufsbev);
 			inner_elements.add(found_ufsbev);
 			
-			jsonMap.put("unused_function_should_be_external", inner_elements);
+			jsonMap.put("unused\\_function\\_should\\_be\\_external", inner_elements);
 			
 			JsonObject unused_retval_value = (JsonObject) bug_type.get("unused_retval");
 			String dasp_urv = (String) unused_retval_value.get("dasp").getAsString();
@@ -1000,7 +1000,7 @@ public class Parser_Inner {
 			inner_elements.add(example_urv);
 			inner_elements.add(found_urv);
 			
-			jsonMap.put("unused_retval", inner_elements);
+			jsonMap.put("unused\\_retval", inner_elements);
 			
 			JsonObject local_variable_shadowing_value = (JsonObject) bug_type.get("local_variable_shadowing");
 			String dasp_lvsv = (String) local_variable_shadowing_value.get("dasp").getAsString();
@@ -1015,7 +1015,7 @@ public class Parser_Inner {
 			inner_elements.add(example_lvsv);
 			inner_elements.add(found_lvsv);
 			
-			jsonMap.put("local_variable_shadowing", inner_elements);
+			jsonMap.put("local\\_variable\\_shadowing", inner_elements);
 			
 			JsonObject reused_base_constructors_value = (JsonObject) bug_type.get("reused_base_constructors");
 			String dasp_rbcv = (String) reused_base_constructors_value.get("dasp").getAsString();
@@ -1030,7 +1030,7 @@ public class Parser_Inner {
 			inner_elements.add(example_rbcv);
 			inner_elements.add(found_rbcv);
 			
-			jsonMap.put("reused_base_constructors", inner_elements);
+			jsonMap.put("reused\\_base\\_constructors", inner_elements);
 			
 			
 			JsonObject should_be_view_value = (JsonObject) bug_type.get("should_be_view");
@@ -1047,7 +1047,7 @@ public class Parser_Inner {
 			inner_elements.add(example_sbvv);
 			inner_elements.add(found_sbvv);
 			
-			jsonMap.put("should_be_view", inner_elements);
+			jsonMap.put("should\\_be\\_view", inner_elements);
 			
 			
 			
@@ -1068,8 +1068,8 @@ public class Parser_Inner {
 		        latex += "\\maketitle \r\n";
 		        latex += "\r\n";
 		        latex += "\\section{Introduction} \r\n";
-		        latex += "\\subsection{dangerous \\textunderscore enum \\textunderscore conversion} \r\n";
-		        latex += "\\textbf{SWC \\textunderscore  ID:} \r\n";
+		       /* latex += "\\subsection{dangerous \_enum \_conversion} \r\n";
+		        latex += "\\textbf{SWC \_ ID:} \r\n";
 		        latex += "\r\n";
 		        latex += "\\textbf{Description}: out-of-range enum conversion may occur(solc 0.4.5  \r\n";
 		        latex += "\r\n";
@@ -1093,7 +1093,7 @@ public class Parser_Inner {
 		        latex += "\r\n";
 		        latex += "\textbf{Found}: false \r\n";
 		        latex += "\r\n";
-		        latex += "\\end{document}";
+		        latex += "\\end{document}";*/
 			
 
 			
@@ -1107,19 +1107,43 @@ public class Parser_Inner {
 		        System.out.println("File already exists.");
 		      }
 		      
-		      FileWriter myWriter = new FileWriter("json_data.tex");
-		      myWriter.write(latex);
+		      FileWriter myWriter = new FileWriter(myObj);
+		      //myWriter.write(latex);
 		      //myWriter.write(latex);)
 		      
 		      
 		      
-		  /*	for(String key : jsonMap.keySet())
+		  	for(String key : jsonMap.keySet())
 			{
-		  		myWriter.write("Key: "+key+"\n");
-		  		myWriter.write("");
+		  		/*myWriter.write("Key: "+key+"\n");
+		  		myWriter.write("");*/
 				List<Object> inner = new ArrayList<>();
 				inner = jsonMap.get(key);
-				myWriter.write("dasp: "+ inner.get(0)+"\n");
+				
+				 latex += "\\subsection{" + key + "} \r\n";
+			        latex += "\\textbf{SWC \\textunderscore ID:} \r\n";
+			        latex += "\r\n";
+			        latex += "\\textbf{Description}:" + inner.get(1) + "\r\n";
+			        latex += "\r\n";
+			        latex += "\\textbf{Example:} \r\n";
+			        latex += "\r\n";
+			        latex += inner.get(2);
+			        latex += "\r\n";
+			        latex += "\\} \r\n";
+			        latex += "\r\n";
+			        latex += "\\} \r\n";
+			        latex += "\r\n";
+			        latex += "\\textbf{DASP} : " + inner.get(0) + "\r\n";
+			        latex += "\r\n";
+			        latex += "\\textbf{Found}: " + inner.get(3) +  "\r\n";
+			        latex += "\r\n";
+			       
+				
+				
+				
+				
+				
+				/*myWriter.write("dasp: "+ inner.get(0)+"\n");
 				myWriter.write("");
 				myWriter.write("description: "+ inner.get(1)+"\n");
 				myWriter.write("");
@@ -1127,13 +1151,85 @@ public class Parser_Inner {
 				myWriter.write("");
 				myWriter.write("found: "+ inner.get(3)+"\n");
 				myWriter.write("\n");
-				myWriter.write("\n");
+				myWriter.write("\n");*/
 				
 				
-			}*/
+			}
+		  	latex += "\\end{document}";
+		  	myWriter.write(latex);
 		  	System.out.println("Successfully wrote to the file.");
-		  	myWriter.close();
+		    myWriter.close();
+		   
+		    
+		  	//Scanner in = new Scanner(myObj);
+		  	
+		  	Reader fr = new FileReader(myObj);
+		  	 File tex = new File("latex.tex");
+		  	 FileWriter fw = new FileWriter(tex);
+		    BufferedReader br = new BufferedReader(fr);
+
+		     while(br.ready()) {
+		    	 fw.write(br.readLine().replace("_", "\\textunderscore ") + "\n");
+		     }
+		     
 		  
+		  
+		     fw.close();
+		     br.close();
+		     fr.close();
+
+		     Reader fr2 = new FileReader(tex);
+		     BufferedReader br2 = new BufferedReader(fr2);
+		     File tex2 = new File("latex_rev.tex");
+		 	 FileWriter fw2 = new FileWriter(tex2);
+		     
+		     while(br2.ready()) {
+		    	 fw2.write(br2.readLine().replace("\\\\textunderscore", "\\textunderscore") + "\n");
+		     }
+		     
+		     fw2.close();
+		     br2.close();
+		     fr2.close();
+		     
+		     Reader fr3 = new FileReader(tex2);
+		     BufferedReader br3 = new BufferedReader(fr3);
+		     File tex3 = new File("latex_rev2.tex");
+		 	 FileWriter fw3 = new FileWriter(tex3);
+		     
+		     while(br3.ready()) {
+		    	 fw3.write(br3.readLine().replace("^", "\\textsuperscript") + "\n");
+		     }
+		     
+		     fw3.close();
+		     br3.close();
+		     fr3.close();
+		     
+		     Reader fr4 = new FileReader(tex3);
+		     BufferedReader br4 = new BufferedReader(fr4);
+		     File tex4 = new File("latex_rev3.tex");
+		 	 FileWriter fw4 = new FileWriter(tex4);
+		     
+		     while(br4.ready()) {
+		    	 fw4.write(br4.readLine().replace("-", "\\textendash ") + "\n");
+		     }
+		     
+		     fw4.close();
+		     br4.close();
+		     fr4.close();
+		     
+		     Reader fr5 = new FileReader(tex4);
+		     BufferedReader br5 = new BufferedReader(fr5);
+		     File tex5 = new File("latex_rev4.tex");
+		 	 FileWriter fw5 = new FileWriter(tex5);
+		     
+		     while(br5.ready()) {
+		    	 fw5.write(br5.readLine().replace("&", "\\& ") + "\n");
+		     }
+		     
+		     fw5.close();
+		     br5.close();
+		     fr5.close();
+
 
 			
 			
