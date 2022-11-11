@@ -17,7 +17,7 @@
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract A {
   int[3] ether\textunderscore balances; // storage signed integer array
   function bad0() private {
@@ -29,7 +29,7 @@ contract A {
 
 bad0() uses a (storage\textendash allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -44,7 +44,7 @@ bad0() uses a (storage\textendash allocated) signed integer array state variable
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Contract{
     modifier pub1ic() {
     }
@@ -57,7 +57,7 @@ contract Contract{
 
 public is a modifier meant to look like a Solidity keyword.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -72,14 +72,14 @@ public is a modifier meant to look like a Solidity keyword.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 function a(address from, address to, uint256 amount) public {
   erc20.transferFrom(from, to, am);
 }
 
 Alice approves this contract to spend her ERC20 tokens. Bob can call a and specify Alice's address as the from parameter in transferFrom, allowing him to transfer Alice's tokens to himself.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -97,7 +97,7 @@ Alice approves this contract to spend her ERC20 tokens. Bob can call a and speci
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 Integer overflow/underflow
 /*
 * @source: https://capturetheether.com/challenges/math/token\textendash sale/
@@ -156,7 +156,7 @@ contract For\textunderscore Test {
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -171,7 +171,7 @@ contract For\textunderscore Test {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract A {
     uint[2][3] bad\textunderscore arr = [[1, 2], [3, 4], [5, 6]];
 
@@ -183,7 +183,7 @@ contract A {
 
 abi.encode(bad\textunderscore arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -200,7 +200,7 @@ For example, it's easy to miss the trailing parentheses in msg.sender.call.value
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity \textsuperscript0.5.0;
 
 contract DepositBox {
@@ -214,7 +214,7 @@ contract DepositBox {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -229,7 +229,7 @@ contract DepositBox {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Memory {
     uint[1] public x; // storage
 
@@ -249,7 +249,7 @@ contract Memory {
 
 Bob calls f(). Bob assumes that at the end of the call x[0] is 2, but it is 1. As a result, Bob's usage of the contract is incorrect.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -264,7 +264,7 @@ Bob calls f(). Bob assumes that at the end of the call x[0] is 2, but it is 1. A
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 if (address(this).balance == 42 ether ) {
     /* ... */
 }
@@ -274,7 +274,7 @@ if (address(this).balance >= 42 ether ) {
   /* ... */
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -289,7 +289,7 @@ if (address(this).balance >= 42 ether ) {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.25;
 
 contract Crowdsale {
@@ -313,7 +313,7 @@ contract Crowdsale {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -328,7 +328,7 @@ contract Crowdsale {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract ERC20Bad {
     // ...
     event Transfer(address from, address to, uint value);
@@ -339,7 +339,7 @@ contract ERC20Bad {
 
 Transfer and Approval events should have the 'indexed' keyword on their two first parameters, as defined by the ERC20 specification. Failure to include these keywords will exclude the parameter data in the transaction/block's bloom filter, so external tooling searching for these parameters may overlook them and fail to index logs from this token contract.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -354,7 +354,7 @@ Transfer and Approval events should have the 'indexed' keyword on their two firs
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract MyConc{
     using SafeMath for uint;
     function my\textunderscore func(uint a, uint b) public{
@@ -364,7 +364,7 @@ contract MyConc{
 
 MyConc calls add of SafeMath, but does not store the result in a. As a result, the computation has no effect.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -379,7 +379,7 @@ MyConc calls add of SafeMath, but does not store the result in a. As a result, t
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, limiter variable is accessed on every for\textendash loop iteration:
 
 pragma solidity 0.4.25;
@@ -394,7 +394,7 @@ contract NewContract {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -409,7 +409,7 @@ contract NewContract {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Uninitialized{
     address destination;
 
@@ -418,7 +418,7 @@ contract Uninitialized{
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -433,7 +433,7 @@ contract Uninitialized{
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract C {
     function f(uint z) public returns (uint) {
         uint y = x + 9 + z; // 'z' is used pre\textendash declaration
@@ -453,7 +453,7 @@ contract C {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -468,7 +468,7 @@ contract C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In this example, one can front\textendash run transactions to claim his/her reward before the owner reduces the reward amount.
 
 pragma solidity \textsuperscript0.4.16;
@@ -497,7 +497,7 @@ contract EthTxOrderDependenceMinimal {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -512,7 +512,7 @@ contract EthTxOrderDependenceMinimal {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.25;
 
 contract ReturnValue {
@@ -527,7 +527,7 @@ function callchecked(address callee) public {
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -542,7 +542,7 @@ function callchecked(address callee) public {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, contracts programmed to receive ether does not call transfer, send, or call.value function:
 
 pragma solidity 0.4.25;
@@ -553,7 +553,7 @@ contract BadMarketPlace {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -568,7 +568,7 @@ contract BadMarketPlace {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Token{
     function transfer(address to, uint value) external;
     //...
@@ -576,7 +576,7 @@ contract Token{
 
 Token.transfer does not return a boolean. Bob deploys the token. Alice creates a contract that interacts with it but assumes a correct ERC20 interface implementation. Alice's contract is unable to interact with Bob's contract.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -591,7 +591,7 @@ Token.transfer does not return a boolean. Bob deploys the token. Alice creates a
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, functions with both public and external visibility modifiers are used:
 
 contract Token {
@@ -615,7 +615,7 @@ contract Token {
 
 The second function requires less gas.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -630,7 +630,7 @@ The second function requires less gas.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Bug{
   function buy() public payable{
     uint minted = msg.value * (1000 / address(this).balance);
@@ -640,7 +640,7 @@ contract Bug{
 
 buy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -655,7 +655,7 @@ buy is meant to compute a price that changes a ratio over the contract's balance
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 /*
 * @source: http://blockchain.unica.it/projects/ethereum\textendash survey/attacks.htmlsimpledao
 * @author: \textendash 
@@ -680,7 +680,7 @@ contract SimpleDAO {
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -696,7 +696,7 @@ Additionally, the visibility of state variables could be a problem. labeling the
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In this example, a specific modifier, such as public, is not used when declaring a function:
 
 function foo();
@@ -706,7 +706,7 @@ Preferred alternatives:
 function foo() public;
 function foo() internal;
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -721,7 +721,7 @@ function foo() internal;
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.25;
 
 contract Tokensale {
@@ -742,7 +742,7 @@ contract Presale is Tokensale {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -757,7 +757,7 @@ contract Presale is Tokensale {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, call function is used for ETH transfer:
 pragma solidity 0.4.24;
 
@@ -770,7 +770,7 @@ contract MyContract {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -785,7 +785,7 @@ contract MyContract {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 modidfier myModif(){
     if(..){
       \textunderscore ;
@@ -795,7 +795,7 @@ function get() myModif returns(uint){}
 
 If the condition in myModif is false, the execution of get() will return 0.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -810,7 +810,7 @@ If the condition in myModif is false, the execution of get() will return 0.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity \textsuperscript0.4.24;
 
 contract Bug {
@@ -825,7 +825,7 @@ contract Bug {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -840,7 +840,7 @@ contract Bug {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following contract, the address is specified in the source code:
 
 pragma solidity 0.4.24;
@@ -853,7 +853,7 @@ contract C {
 
 Do not forget to check the contract at the address 0xf64B584972FE6055a770477670208d737Fff282f for vulnerabilities.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -868,7 +868,7 @@ Do not forget to check the contract at the address 0xf64B584972FE6055a7704776702
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 This code uses incorrect function signature:
 
 pragma solidity \textsuperscript0.5.1;
@@ -882,7 +882,7 @@ contract Signature {
 
 Use "foo(uint256)" instead.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -897,7 +897,7 @@ Use "foo(uint256)" instead.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract MsgValueInLoop{
     mapping (address => uint256) balances;
 
@@ -910,7 +910,7 @@ contract MsgValueInLoop{
 
 msg.value should be tracked through a local variable and decrease its amount on every iteration/usage.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -925,7 +925,7 @@ msg.value should be tracked through a local variable and decrease its amount on 
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 /*
 * @source: https://youtu.be/P\textunderscore Mtd5Fc\textunderscore 3E
 * @author: Shahar Zini
@@ -962,7 +962,7 @@ event wrongNumber(string);
     }
   }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -977,7 +977,7 @@ event wrongNumber(string);
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity \textsuperscript0.4.24;
 
 contract Bug {
@@ -997,7 +997,7 @@ contract Bug {
 
 sensitive\textunderscore function.owner shadows Bug.owner. As a result, the use of owner in sensitive\textunderscore function might be incorrect.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1012,7 +1012,7 @@ sensitive\textunderscore function.owner shadows Bug.owner. As a result, the use 
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 mapping(address => uint) public balances;
 function f() public {
     delete balances[msg.sender];
@@ -1021,7 +1021,7 @@ function f() public {
 
 balances[msg.sender] is deleted before it's sent to the caller, leading the transfer to always send zero.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1036,7 +1036,7 @@ balances[msg.sender] is deleted before it's sent to the caller, leading the tran
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract C {
   function f() internal returns (uint a) {
     assembly {
@@ -1044,7 +1044,7 @@ contract C {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1068,7 +1068,7 @@ contract C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.24;
 
 contract BreakThisHash {
@@ -1093,7 +1093,7 @@ contract BreakThisHash {
 
 Use keccak256, selfdestruct, revert() instead.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1108,7 +1108,7 @@ Use keccak256, selfdestruct, revert() instead.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract CostlyOperationsInLoop{
 
     uint loop\textunderscore count = 100;
@@ -1130,7 +1130,7 @@ contract CostlyOperationsInLoop{
 }
 Incrementing state\textunderscore variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out\textendash of\textendash gas.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1145,7 +1145,7 @@ Incrementing state\textunderscore variable in a loop incurs a lot of gas because
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, the function's signature only denotes the type of the return value, but the function's body does not contain return statement:
 
 pragma solidity 0.4.25;
@@ -1158,7 +1158,7 @@ contract NewContract {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1173,7 +1173,7 @@ contract NewContract {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract A {
     uint x;
     constructor() public {
@@ -1190,7 +1190,7 @@ contract A {
 
 In Solidity 0.4.22, a contract with both constructor schemes will compile. The first constructor will take precedence over the second, which may be unintended.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1205,7 +1205,7 @@ In Solidity 0.4.22, a contract with both constructor schemes will compile. The f
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, byte array is used:
 
 pragma solidity 0.4.24;
@@ -1224,7 +1224,7 @@ contract C {
     ...
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1239,10 +1239,10 @@ contract C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 MISSING
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1257,7 +1257,7 @@ MISSING
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Uninitialized{
     address owner = msg.sender;
 
@@ -1272,7 +1272,7 @@ contract Uninitialized{
 }
 Bob calls func. As a result, owner is overridden to 0.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1287,7 +1287,7 @@ Bob calls func. As a result, owner is overridden to 0.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 function buggyTransfer(address to, uint256 value) external returns (bool){
         balanceOf[msg.sender] \textendash = value;
         balanceOf[to] += value;
@@ -1296,7 +1296,7 @@ function buggyTransfer(address to, uint256 value) external returns (bool){
 
 In a pausable contract, buggyTransfer performs a token transfer but does not use Pausable's whenNotPaused modifier. If the token admin/owner pauses the ERC20 contract to trigger an emergency stop, it will not apply to this function. This results in Txs transferring even in a paused state, which corrupts the contract balance state and affects recovery.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1311,12 +1311,12 @@ In a pausable contract, buggyTransfer performs a token transfer but does not use
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 function check(uint a) external returns(bool){
     return (a >= a);
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1331,7 +1331,7 @@ function check(uint a) external returns(bool){
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 function callme(){
   if( ! (msg.sender.call()() ) ){
     throw;
@@ -1341,7 +1341,7 @@ function callme(){
 
 callme() contains a benign reentrancy.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1356,7 +1356,7 @@ callme() contains a benign reentrancy.
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, amount variable is divided by DELIMITER and then multiplied by BONUS. Thus, a rounding error appears (consider amount = 9000):
 
 pragma solidity 0.4.25;
@@ -1371,7 +1371,7 @@ contract MyContract {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1386,7 +1386,7 @@ contract MyContract {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 Here is the example of correct pure\textendash function:
 
 pragma solidity \textsuperscript0.4.16;
@@ -1397,7 +1397,7 @@ contract C {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1412,7 +1412,7 @@ contract C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 struct BalancesStruct{
     address owner;
     mapping(address => uint) balances;
@@ -1423,7 +1423,7 @@ function remove() internal{
       delete stackBalance[msg.sender];
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1438,10 +1438,10 @@ function remove() internal{
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 msg.value == 0
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1459,7 +1459,7 @@ msg.value == 0
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity >=0.5.0;
 pragma experimental ABIEncoderV2;
 
@@ -1497,7 +1497,7 @@ function call(int a) public {
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1516,10 +1516,10 @@ function call(int a) public {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 for (var i = 0; i < array.length; i++) { /* ... */
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1534,7 +1534,7 @@ for (var i = 0; i < array.length; i++) { /* ... */
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.24;
 
 contract dataStorage {
@@ -1548,7 +1548,7 @@ contract dataStorage {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1563,7 +1563,7 @@ contract dataStorage {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity \textsuperscript0.4.0;
 
 contract A{
@@ -1585,7 +1585,7 @@ contract D is B, C {
     constructor() public { /* ... */ }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1605,7 +1605,7 @@ contract D is B, C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract TestContract is MultiOwnable {
 
   function withdrawAll(){
@@ -1613,7 +1613,7 @@ contract TestContract is MultiOwnable {
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1628,9 +1628,9 @@ contract TestContract is MultiOwnable {
 
 
 \textbf{Example:} 
+\begin{verbatim}
 
-
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1645,7 +1645,7 @@ contract TestContract is MultiOwnable {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 address token;
 
 function call\textunderscore token(bytes data){
@@ -1654,7 +1654,7 @@ function call\textunderscore token(bytes data){
 
 token` points to an ERC20 token. Bob uses call\textunderscore token to call the transfer function of token to withdraw all tokens held by the contract.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1669,7 +1669,7 @@ token` points to an ERC20 token. Bob uses call\textunderscore token to call the 
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity 0.4.2;
 contract Test{
   enum E{a}
@@ -1678,7 +1678,7 @@ contract Test{
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1693,7 +1693,7 @@ contract Test{
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 Here is the example of correct view\textendash function:
 
 contract C {
@@ -1702,7 +1702,7 @@ contract C {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1717,7 +1717,7 @@ contract C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Uninitialized is Owner{
     function withdraw() payable public onlyOwner{
         address to;
@@ -1727,7 +1727,7 @@ contract Uninitialized is Owner{
 
 Bob calls transfer. As a result, all Ether is sent to the address 0x0 and is lost.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1742,7 +1742,7 @@ Bob calls transfer. As a result, all Ether is sent to the address 0x0 and is los
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 pragma solidity \textsuperscript0.4.0;
 
 contract A{
@@ -1764,7 +1764,7 @@ contract D is B, C {
     constructor() public { /* ... */ }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1779,7 +1779,7 @@ contract D is B, C {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, currentBlockBlockhash function always returns 0:
 
 pragma solidity 0.4.25;
@@ -1790,7 +1790,7 @@ contract MyContract {
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1805,7 +1805,7 @@ contract MyContract {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract DelegatecallInLoop{
 
     mapping (address => uint256) balances;
@@ -1821,7 +1821,7 @@ contract DelegatecallInLoop{
     }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1836,7 +1836,7 @@ contract DelegatecallInLoop{
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 In the following example, the send function is used:
 
 
@@ -1848,7 +1848,7 @@ Preferred alternative:
 
 addr.transfer(42 ether);
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1863,7 +1863,7 @@ addr.transfer(42 ether);
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract TimedCrowdsale
   event Finished();
   event notFinished();
@@ -1882,7 +1882,7 @@ contract TimedCrowdsale
   }
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1897,13 +1897,13 @@ contract TimedCrowdsale
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract Token{
     function ownerOf(uint256 \textunderscore tokenId) external view returns (bool);
     //...
 }
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1918,7 +1918,7 @@ contract Token{
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract RedundantStatementsContract {
 
     constructor() public {
@@ -1937,7 +1937,7 @@ contract RedundantStatementsContract {
 
 Each commented line references types/identifiers, but performs no action with them, so no code will be generated for such statements and they can be removed.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1952,14 +1952,14 @@ Each commented line references types/identifiers, but performs no action with th
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 The following loop is infinite:
 
 do {
     continue;
 } while(false);
 
-\} 
+\end{verbatim}\} 
 
 \} 
 
@@ -1974,7 +1974,7 @@ do {
 
 
 \textbf{Example:} 
-
+\begin{verbatim}
 contract A {
   uint s\textunderscore a;
 
@@ -1984,7 +1984,7 @@ contract A {
 }
 The assert in bad() increments the state variable s\textunderscore a while checking for the condition.
 
-\} 
+\end{verbatim}\} 
 
 \} 
 

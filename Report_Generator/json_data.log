@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.10.17)  3 NOV 2022 20:39
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.10) (preloaded format=pdflatex 2022.10.17)  9 NOV 2022 10:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -57,40 +57,11 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 10.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.22   int[3] ether_
-                    balances; // storage signed integer array
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <7> on input line 22.
-LaTeX Font Info:    External font `cmex10' loaded for size
-(Font)              <5> on input line 22.
-! Extra }, or forgotten $.
-l.28 }
-      
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.29 
-     
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (206.09612pt too wide) in paragraph at lines 21--29
-[]\OT1/cmr/m/n/10 contract A  int[3] ether$[]\OML/cmm/m/it/10 alances\OT1/cmr/m
-/n/10 ; \OML/cmm/m/it/10 ==storagesignedintegerarrayfunctionbad\OT1/cmr/m/n/10 
-0()\OML/cmm/m/it/10 private[]$ 
+Overfull \hbox (935.98883pt too wide) in paragraph at lines 32--32
+[]\OT1/cmtt/m/n/10 bad0() uses a (storage-allocated) signed integer array state
+ variable to store the ether balances of three accounts. 1 is supposed to indic
+ate uninitialized values but the Solidity bug makes these as 1, which could be 
+exploited by the accounts.[] 
  []
 
 LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 3
@@ -104,9 +75,10 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
 [1
 
 {C:/Users/jyoth/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}]
-Overfull \hbox (39.973pt too wide) in paragraph at lines 76--79
-[]\OT1/cmr/m/n/10 function a(address from, ad-dress to, uint256 amount) pub-lic
-  erc20.transferFrom(from,
+Overfull \hbox (647.24135pt too wide) in paragraph at lines 82--82
+[]\OT1/cmtt/m/n/10 Alice approves this contract to spend her ERC20 tokens. Bob 
+can call a and specify Alice's address as the from parameter in transferFrom, a
+llowing him to transfer Alice's tokens to himself.[] 
  []
 
 ! Missing $ inserted.
@@ -117,6 +89,10 @@ l.94 ... bits unsigned number ranging from 0 to 2^
 I've inserted a begin-math/end-math symbol since I think
 you left one out. Proceed, with fingers crossed.
 
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 94.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 94.
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -149,268 +125,25 @@ opriate; anditcanincuroverflowbugslater\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 seethe
 example\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 :$ 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.106 pragma solidity ^
-                       0.4.21;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.110 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.110 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (82.83409pt too wide) in paragraph at lines 101--110
-[]\OT1/cmr/m/n/10 Integer over-flow/underflow /* * @source: https://capturethee
-ther.com/challenges/math/token-
- []
-
-
-Overfull \hbox (450.00888pt too wide) in paragraph at lines 101--110
-\OT1/cmr/m/n/10 sale/ * @au-thor: Steve Marx */ pragma so-lid-ity $[]\OML/cmm/m
-/it/10 :\OT1/cmr/m/n/10 4\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 21; \OML/cmm/m/it/10
- contractTokenSaleChallenge[]$ 
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.111     function TokenSaleChallenge(address _
-                                               player) public payable {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.114 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (62.60364pt too wide) in paragraph at lines 111--114
-[]\OT1/cmr/m/n/10 function To-ken-SaleChal-lenge(address $[]\OML/cmm/m/it/10 la
-yer\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 publicpayable[]$ 
- []
-
-
-Overfull \hbox (3.19508pt too wide) in paragraph at lines 115--118
-[]\OT1/cmr/m/n/10 function is-Com-plete() pub-lic view re-turns (bool)  re-turn
- ad-dress(this).balance
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.120 ...  require(msg.value == numTokens * PRICE_
-                                                  PER_TOKEN);
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.121 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.129     /*function unsigned_
-                              division(uint32 x, uint32 y) returns (int r) {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.133 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (62.49826pt too wide) in paragraph at lines 129--133
-[]\OT1/cmr/m/n/10 /*function unsigned$[]\OML/cmm/m/it/10 ivision\OT1/cmr/m/n/10
- (\OML/cmm/m/it/10 uint\OT1/cmr/m/n/10 32\OML/cmm/m/it/10 x; uint\OT1/cmr/m/n/1
-0 32\OML/cmm/m/it/10 y\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 returns\OT1/cmr/m/n/10 
-(\OML/cmm/m/it/10 intr\OT1/cmr/m/n/10 )[] \OMS/cmsy/m/n/10 ^^C
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.134     function signed_
-                          division(int x, int y) returns (int) {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Misplaced alignment tab character &.
-l.135       //if ((y == 0) || ((x == -2**255) &
-                                               & (y == -1))) { throw; }
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Misplaced alignment tab character &.
-l.135       //if ((y == 0) || ((x == -2**255) &&
-                                                 (y == -1))) { throw; }
-I can't figure out why you would want to use a tab mark
-here. If you just want an ampersand, the remedy is
-simple: Just type `I\&' now. But if some right brace
-up above has ended a previous alignment prematurely,
-you're probably due for more error messages, and you
-might try typing `S' now just to see what is salvageable.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.138 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (156.46468pt too wide) in paragraph at lines 134--138
-[]\OT1/cmr/m/n/10 function signed$[]\OML/cmm/m/it/10 ivision\OT1/cmr/m/n/10 (\O
-ML/cmm/m/it/10 intx; inty\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 returns\OT1/cmr/m/n/
-10 (\OML/cmm/m/it/10 int\OT1/cmr/m/n/10 )[]$ 
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.142 contract For_
-                   Test {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.158 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.158 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (1052.65285pt too wide) in paragraph at lines 141--158
-[]\OT1/cmr/m/n/10 Type de-duc-tion over-flow con-tract For$[]\OML/cmm/m/it/10 e
-st[]$ 
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 159--159
+[]\OT1/cmtt/m/n/10 * @source: https://capturetheether.com/challenges/math/token
+-sale/[] 
  []
 
 [2]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.176     uint[2][3] bad_
-                         arr = [[1, 2], [3, 4], [5, 6]];
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.177 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.180         bytes memory b = abi.encode(bad_
-                                              arr);
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.181     }
-           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.182 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.183 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.184 abi.encode(bad_
-                     arr) in a call to bad() will incorrectly encode the arr...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.185 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (170.1859pt too wide) in paragraph at lines 184--185
-[]\OT1/cmr/m/n/10 abi.encode(bad$[]\OML/cmm/m/it/10 rr\OT1/cmr/m/n/10 )\OML/cmm
-/m/it/10 inacalltobad\OT1/cmr/m/n/10 ()\OML/cmm/m/it/10 willincorrectlyencodeth
-earrayas\OT1/cmr/m/n/10 [[1\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 2]\OML/cmm/m/it/1
-0 ; \OT1/cmr/m/n/10 [2\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 3]\OML/cmm/m/it/10 ; \
-OT1/cmr/m/n/10 [3\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 4]]\OML/cmm/m/it/10 andlead
-tounintendedbehavior:$ 
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 159--159
+[]    \OT1/cmtt/m/n/10 /*function unsigned_division(uint32 x, uint32 y) returns
+ (int r) {[] 
  []
 
+[3]
+Overfull \hbox (353.24391pt too wide) in paragraph at lines 186--186
+[]\OT1/cmtt/m/n/10 abi.encode(bad_arr) in a call to bad() will incorrectly enco
+de the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.[] 
+ []
 
+[4]
 Overfull \hbox (42.58405pt too wide) in paragraph at lines 199--200
 []\OT1/cmr/m/n/10 For ex-am-ple, it's easy to miss the trail-ing paren-the-ses 
 in msg.sender.call.value(xx)("");,
@@ -422,322 +155,96 @@ Overfull \hbox (10.63956pt too wide) in paragraph at lines 199--200
 -ring funds to msg.sender.
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.204 pragma solidity ^
-                       0.5.0;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.205 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (23.83405pt too wide) in paragraph at lines 209--216
-[]\OT1/cmr/m/n/10 // Ac-cept de-posit func-tion de-posit(uint amount) pub-lic p
-ayable  re-quire(msg.value
+[5]
+Overfull \hbox (353.24391pt too wide) in paragraph at lines 252--252
+[]\OT1/cmtt/m/n/10 Bob calls f(). Bob assumes that at the end of the call x[0] 
+is 2, but it is 1. As a result, Bob's usage of the contract is incorrect.[] 
  []
 
-
-Overfull \hbox (17.81555pt too wide) in paragraph at lines 209--216
-\OT1/cmr/m/n/10 == amount, 'in-cor-rect amount'); // Should up-date user bal-an
-ce bal-ance[msg.sender]
- []
-
-[3]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.306     function setRate(_
-                            rate) public onlyOwner {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.309 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.310     function setCap(_
-                           cap) public {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.314 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.315 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[4]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.360     function my_
-                      func(uint a, uint b) public{
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.363 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.364 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (49.58282pt too wide) in paragraph at lines 358--364
-[]\OT1/cmr/m/n/10 contract My-Conc us-ing Safe-Math for uint; func-tion my$[]\O
-ML/cmm/m/it/10 unc\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uinta; uintb\OT1/cmr/m/n/10
- )\OML/cmm/m/it/10 public[]$ 
- []
-
-[5] [6]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.474 pragma solidity ^
-                       0.4.16;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.475 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (22.37105pt too wide) in paragraph at lines 492--499
-[]\OT1/cmr/m/n/10 function claim-Re-ward(uint256 sub-mis-sion)  re-quire (!clai
-med); re-quire(submission
+[6]
+Overfull \hbox (1529.23366pt too wide) in paragraph at lines 342--342
+[]\OT1/cmtt/m/n/10 Transfer and Approval events should have the 'indexed' keywo
+rd on their two first parameters, as defined by the ERC20 specification. Failur
+e to include these keywords will exclude the parameter data in the transaction/
+block's bloom filter, so external tooling searching for these parameters may ov
+erlook them and fail to index logs from this token contract.[] 
  []
 
 [7]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.599     mapping (address => uint256) internal _
-                                                 balances;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.600 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.601     function transfer_
-                            public(address to, uint256 value) public {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.603 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.603 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (89.37643pt too wide) in paragraph at lines 601--603
-[]\OT1/cmr/m/n/10 function transfer$[]\OML/cmm/m/it/10 ublic\OT1/cmr/m/n/10 (\O
-ML/cmm/m/it/10 addressto; uint\OT1/cmr/m/n/10 256\OML/cmm/m/it/10 value\OT1/cmr
-/m/n/10 )\OML/cmm/m/it/10 public[]$ 
+Overfull \hbox (227.24501pt too wide) in paragraph at lines 367--367
+[]\OT1/cmtt/m/n/10 MyConc calls add of SafeMath, but does not store the result 
+in a. As a result, the computation has no effect.[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.604         _
-               balances[msg.sender] -= value;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Extra }, or forgotten $.
-l.606     }
-           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.607 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.608     function transfer_
-                            external(address to, uint256 value) external {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.610 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing } inserted.
-<inserted text> 
-                }
-l.610 
-      
-I've inserted something that you may have forgotten.
-(See the <inserted text> above.)
-With luck, this will get me unwedged. But if you
-really didn't forget anything, try typing `2' now; then
-my insertion and my current dilemma will both disappear.
-
-
-Overfull \hbox (113.21588pt too wide) in paragraph at lines 608--610
-[]\OT1/cmr/m/n/10 function transfer$[]\OML/cmm/m/it/10 xternal\OT1/cmr/m/n/10 (
-\OML/cmm/m/it/10 addressto; uint\OT1/cmr/m/n/10 256\OML/cmm/m/it/10 value\OT1/c
-mr/m/n/10 )\OML/cmm/m/it/10 external[]$ 
+Overfull \hbox (90.7462pt too wide) in paragraph at lines 397--397
+[]\OT1/cmtt/m/n/10 In the following example, limiter variable is accessed on ev
+ery for-loop iteration:[] 
  []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.611         _
-               balances[msg.sender] -= value;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.613     }
-           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.614 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.615 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
 [8]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.662 * @vulnerable_
-                    at_lines: 19
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.664 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (63.44527pt too wide) in paragraph at lines 659--664
-[]\OT1/cmr/m/n/10 /* * @source: http://blockchain.unica.it/projects/ethereum-su
-rvey/attacks.htmlsimpledao
+Overfull \hbox (253.49478pt too wide) in paragraph at lines 456--456
+[]        \OT1/cmtt/m/n/10 // 'max' was intended to be 5, but it was mistakenly
+ declared in a scope and not assigned (so it is zero).[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.665 pragma solidity ^
-                       0.4.2;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.666 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (39.14777pt too wide) in paragraph at lines 674--682
-\OT1/cmr/m/n/10 <re-port> REEN-TRANCY bool res = msg.sender.call.value(amount)(
-); credit[msg.sender]-
+[9]
+Overfull \hbox (258.74474pt too wide) in paragraph at lines 500--500
+[]\OT1/cmtt/m/n/10 In this example, one can front-run transactions to claim his
+/her reward before the owner reduces the reward amount.[] 
  []
 
-[9] [10]
+[10]
+Overfull \hbox (269.24464pt too wide) in paragraph at lines 556--556
+[]\OT1/cmtt/m/n/10 In the following example, contracts programmed to receive et
+her does not call transfer, send, or call.value function:[] 
+ []
+
+[11]
+Overfull \hbox (841.48965pt too wide) in paragraph at lines 579--579
+[]\OT1/cmtt/m/n/10 Token.transfer does not return a boolean. Bob deploys the to
+ken. Alice creates a contract that interacts with it but assumes a correct ERC2
+0 interface implementation. Alice's contract is unable to interact with Bob's c
+ontract.[] 
+ []
+
+
+Overfull \hbox (158.9956pt too wide) in paragraph at lines 618--618
+[]\OT1/cmtt/m/n/10 In the following example, functions with both public and ext
+ernal visibility modifiers are used:[] 
+ []
+
+[12]
+Overfull \hbox (11.99689pt too wide) in paragraph at lines 618--618
+[]    \OT1/cmtt/m/n/10 function transfer_external(address to, uint256 value) ex
+ternal {[] 
+ []
+
+
+Overfull \hbox (479.24281pt too wide) in paragraph at lines 643--643
+[]\OT1/cmtt/m/n/10 buy is meant to compute a price that changes a ratio over th
+e contract's balance. .balance will include msg.value and lead to an incorrect 
+price computation.[] 
+ []
+
+[13]
+Overfull \hbox (95.99615pt too wide) in paragraph at lines 683--683
+[]\OT1/cmtt/m/n/10 * @source: http://blockchain.unica.it/projects/ethereum-surv
+ey/attacks.htmlsimpledao[] 
+ []
+
+[14]
+Overfull \hbox (137.99579pt too wide) in paragraph at lines 709--709
+[]\OT1/cmtt/m/n/10 In this example, a specific modifier, such as public, is not
+ used when declaring a function:[] 
+ []
+
+[15]
+Overfull \hbox (116.99597pt too wide) in paragraph at lines 745--745
+[]    \OT1/cmtt/m/n/10 //If the hardcap variables were both needed we would hav
+e to rename one to fix this.[] 
+ []
+
 ! Missing $ inserted.
 <inserted text> 
                 $
@@ -761,702 +268,212 @@ te $[]\OML/cmm/m/it/10 rrevert; theexecutionofthefunctionwillreturnthedefaultva
 lue; whichcanbemisleadingforthecaller:$ 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.791       _
-             ;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.792     }
-           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.793 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.795 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.814 pragma solidity ^
-                       0.4.24;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.815 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.823     function get_
-                       next_expiration(uint earlier_time) private returns (u...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.826 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.827 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (227.45023pt too wide) in paragraph at lines 823--827
-[]\OT1/cmr/m/n/10 function get$[]\OML/cmm/m/it/10 ext[]xpiration\OT1/cmr/m/n/10
- (\OML/cmm/m/it/10 uintearlier[]ime\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 privateret
-urns\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 uint\OT1/cmr/m/n/10 )[]$ 
+[16]
+Overfull \hbox (48.74657pt too wide) in paragraph at lines 798--798
+[]\OT1/cmtt/m/n/10 If the condition in myModif is false, the execution of get()
+ will return 0.[] 
  []
 
 
-Overfull \hbox (8.112pt too wide) in paragraph at lines 846--853
-\OT1/cmr/m/n/10 dress)  ad-dress pub-lic mul-ti-sig = 0xf64B584972FE6055a770477
-670208d737Fff282f;
+Overfull \hbox (53.99652pt too wide) in paragraph at lines 828--828
+[]    \OT1/cmtt/m/n/10 function get_next_expiration(uint earlier_time) private 
+returns (uint) {[] 
  []
 
 
-Overfull \hbox (91.72319pt too wide) in paragraph at lines 854--855
-[]\OT1/cmr/m/n/10 Do not for-get to check the con-tract at the ad-dress 0xf64B5
-84972FE6055a770477670208d737Fff282f
- []
-
-[11]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.874 pragma solidity ^
-                       0.5.1;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.882 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (614.11269pt too wide) in paragraph at lines 874--882
-[]\OT1/cmr/m/n/10 pragma so-lid-ity $[]\OML/cmm/m/it/10 :\OT1/cmr/m/n/10 5\OML/
-cmm/m/it/10 :\OT1/cmr/m/n/10 1; \OML/cmm/m/it/10 contractSignature[]$ 
- []
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.930 * @source: https://youtu.be/P_
-                                    Mtd5Fc_3E
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.934 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.937     uint _
-                secretNumber;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.941 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (202.94836pt too wide) in paragraph at lines 935--941
-[]\OT1/cmr/m/n/10 contract Guess-TheNum-ber  uint $[]\OML/cmm/m/it/10 ecretNumb
-er\OT1/cmr/m/n/10 ; \OML/cmm/m/it/10 addresspayable[]wner\OT1/cmr/m/n/10 ; \OML
-/cmm/m/it/10 eventsuccess\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 string\OT1/cmr/m/n/1
-0 ); \OML/cmm/m/it/10 eventwrongNumber\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 string\
-OT1/cmr/m/n/10 );$ 
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 828--828
+[]        \OT1/cmtt/m/n/10 return now + 259200; // References overshadowed time
+stamp.[] 
  []
 
 
-Overfull \hbox (3.12096pt too wide) in paragraph at lines 946--950
-[]\OT1/cmr/m/n/10 uint p = ad-dress(this).balance; checkAnd-Trans-fer-Prize(/*T
-he prize/*rebmun
+Overfull \hbox (27.74675pt too wide) in paragraph at lines 856--856
+[]\OT1/cmtt/m/n/10 In the following contract, the address is specified in the s
+ource code:[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.953         if(n == _
-                       secretNumber)
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.962     }
-           
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.963   }
-         
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.964 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (410.21114pt too wide) in paragraph at lines 951--964
-\OT1/cmr/m/n/10 ter-nal re-turns(bool)  if(n == $[]\OML/cmm/m/it/10 ecretNumber
-\OT1/cmr/m/n/10 )[]\OML/cmm/m/it/10 else[]$ 
+[17]
+Overfull \hbox (38.24666pt too wide) in paragraph at lines 856--856
+[]    \OT1/cmtt/m/n/10 address public multisig = 0xf64B584972FE6055a77047767020
+8d737Fff282f;[] 
  []
 
-[12]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.981 pragma solidity ^
-                       0.4.24;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.982 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.986     function sensitive_
-                             function(address owner) public {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.990 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (41.97398pt too wide) in paragraph at lines 986--990
-[]\OT1/cmr/m/n/10 function sensitive$[]\OML/cmm/m/it/10 unction\OT1/cmr/m/n/10 
-(\OML/cmm/m/it/10 addressowner\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 public[]$ 
+Overfull \hbox (253.49478pt too wide) in paragraph at lines 856--856
+[]\OT1/cmtt/m/n/10 Do not forget to check the contract at the address 0xf64B584
+972FE6055a770477670208d737Fff282f for vulnerabilities.[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.991     function alternate_
-                             sensitive_function() public {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Extra }, or forgotten $.
-l.996 }
-       
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.997 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (153.24512pt too wide) in paragraph at lines 991--997
-[]\OT1/cmr/m/n/10 function alternate$[]\OML/cmm/m/it/10 ensitive[]unction\OT1/c
-mr/m/n/10 ()\OML/cmm/m/it/10 public[]$ 
+Overfull \hbox (22.4968pt too wide) in paragraph at lines 885--885
+[]    \OT1/cmtt/m/n/10 function callFoo(address addr, uint value) public return
+s (bool) {[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.998 sensitive_
-                function.owner shadows Bug.owner. As a result, the use of ow...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.999 
-      
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (150.43431pt too wide) in paragraph at lines 998--999
-[]\OT1/cmr/m/n/10 sensitive$[]\OML/cmm/m/it/10 unction:ownershadowsBug:owner:As
-aresult; theuseofownerinsensitive[]unctionmightbeincorrect:$ 
+Overfull \hbox (32.9967pt too wide) in paragraph at lines 885--885
+[]        \OT1/cmtt/m/n/10 bytes memory data = abi.encodeWithSignature("foo(uin
+t)", value);[] 
  []
 
-[13]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1077     constructor(bytes32 _
-                                hash) public payable {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1081 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1114     uint loop_
-                     count = 100;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1116 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1118         for (uint i=0; i < loop_
-                                       count; i++){
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.1121     }
-            
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1122 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1124       uint local_
-                        variable = state_variable;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.1129     }
-            
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.1130 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1132 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (441.32549pt too wide) in paragraph at lines 1123--1132
-\OT1/cmr/m/n/10 0; \OML/cmm/m/it/10 i < loop[]ount\OT1/cmr/m/n/10 ; \OML/cmm/m/
-it/10 i \OT1/cmr/m/n/10 + +)[]\OML/cmm/m/it/10 state[]ariable \OT1/cmr/m/n/10 =
- \OML/cmm/m/it/10 local[]ariable\OT1/cmr/m/n/10 ; \OML/cmm/m/it/10 Incrementing
-state[]ariableinaloopincursalotofgasbecauseofexpensiveSSTOREs; whichmightleadto
-anout \OMS/cmsy/m/n/10 ^^@
+[18]
+Overfull \hbox (190.49533pt too wide) in paragraph at lines 913--913
+[]\OT1/cmtt/m/n/10 msg.value should be tracked through a local variable and dec
+rease its amount on every iteration/usage.[] 
  []
 
-[14] [15]
+[19]
+Overfull \hbox (1.49698pt too wide) in paragraph at lines 965--965
+[]        \OT1/cmtt/m/n/10 checkAndTransferPrize(/*The prize/*rebmun desseug*/n
+ , p/*[] 
+ []
+
+
+Overfull \hbox (169.49551pt too wide) in paragraph at lines 965--965
+[]    \OT1/cmtt/m/n/10 function checkAndTransferPrize(uint p, uint n, address p
+ayable guesser) internal returns(bool)[] 
+ []
+
+[20]
+Overfull \hbox (258.74474pt too wide) in paragraph at lines 1000--1000
+[]\OT1/cmtt/m/n/10 sensitive_function.owner shadows Bug.owner. As a result, the
+ use of owner in sensitive_function might be incorrect.[] 
+ []
+
+
+Overfull \hbox (206.2452pt too wide) in paragraph at lines 1024--1024
+[]\OT1/cmtt/m/n/10 balances[msg.sender] is deleted before it's sent to the call
+er, leading the transfer to always send zero.[] 
+ []
+
+[21] [22]
+Overfull \hbox (295.49442pt too wide) in paragraph at lines 1133--1133
+[]\OT1/cmtt/m/n/10 Incrementing state_variable in a loop incurs a lot of gas be
+cause of expensive SSTOREs, which might lead to an out-of-gas.[] 
+ []
+
+
+Overfull \hbox (452.99304pt too wide) in paragraph at lines 1161--1161
+[]\OT1/cmtt/m/n/10 In the following example, the function's signature only deno
+tes the type of the return value, but the function's body does not contain retu
+rn statement:[] 
+ []
+
+[23]
+Overfull \hbox (489.74272pt too wide) in paragraph at lines 1193--1193
+[]\OT1/cmtt/m/n/10 In Solidity 0.4.22, a contract with both constructor schemes
+ will compile. The first constructor will take precedence over the second, whic
+h may be unintended.[] 
+ []
+
+[24] [25]
 Overfull \hbox (0.6127pt too wide) in paragraph at lines 1286--1287
 []\OT1/cmr/bx/n/10 Description\OT1/cmr/m/n/10 :ERC20 bal-ance/allowance is mod-
 i-fied with-out when-Not-Paused
  []
 
-[16]
-Overfull \hbox (68.41751pt too wide) in paragraph at lines 1369--1373
-[]\OT1/cmr/m/n/10 function cal-cu-late-Bonus(uint amount) re-turns (uint)  re-t
-urn amount/DELIMITER*BONUS;
+
+Overfull \hbox (43.49661pt too wide) in paragraph at lines 1299--1299
+[]\OT1/cmtt/m/n/10 function buggyTransfer(address to, uint256 value) external r
+eturns (bool){[] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1369--1373
+Overfull \hbox (1508.23384pt too wide) in paragraph at lines 1299--1299
+[]\OT1/cmtt/m/n/10 In a pausable contract, buggyTransfer performs a token trans
+fer but does not use Pausable's whenNotPaused modifier. If the token admin/owne
+r pauses the ERC20 contract to trigger an emergency stop, it will not apply to 
+this function. This results in Txs transferring even in a paused state, which c
+orrupts the contract balance state and affects recovery.[] 
+ []
+
+[26]
+Overfull \hbox (452.99304pt too wide) in paragraph at lines 1374--1374
+[]\OT1/cmtt/m/n/10 In the following example, amount variable is divided by DELI
+MITER and then multiplied by BONUS. Thus, a rounding error appears (consider am
+ount = 9000):[] 
+ []
+
+[27] [28] [29] [30] [31] [32]
+Overfull \hbox (368.99377pt too wide) in paragraph at lines 1657--1657
+[]\OT1/cmtt/m/n/10 token` points to an ERC20 token. Bob uses call_token to call
+ the transfer function of token to withdraw all tokens held by the contract.[] 
 
  []
 
-[17]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1392 pragma solidity ^
-                        0.4.16;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1393 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[18] [19]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1543     function writeData(uint[] _
-                                      data) external {
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.1549 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1550 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (197.45839pt too wide) in paragraph at lines 1543--1550
-[]\OT1/cmr/m/n/10 function write-Data(uint[] $[]\OML/cmm/m/it/10 ata\OT1/cmr/m/
-n/10 )\OML/cmm/m/it/10 external[]$ 
+[33]
+Overfull \hbox (85.49625pt too wide) in paragraph at lines 1730--1730
+[]\OT1/cmtt/m/n/10 Bob calls transfer. As a result, all Ether is sent to the ad
+dress 0x0 and is lost.[] 
  []
 
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1567 pragma solidity ^
-                        0.4.0;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1568 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[20]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1651 function call_
-                     token(bytes data){
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1654 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1655 ...points to an ERC20 token. Bob uses call_
-                                                  token to call the transfer...
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1656 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (223.31288pt too wide) in paragraph at lines 1655--1656
-[]\OT1/cmr/m/n/10 token` points to an ERC20 to-ken. Bob uses call$[]\OML/cmm/m/
-it/10 okentocallthetransferfunctionoftokentowithdrawalltokensheldbythecontract:
-$ 
- []
-
-[21]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1746 pragma solidity ^
-                        0.4.0;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1747 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-[22]
+[34]
 Overfull \hbox (25.62106pt too wide) in paragraph at lines 1778--1779
 \OT1/cmr/m/n/10 blocks. Be-sides, it al-ways re-turns 0 for the cur-rent block,
  i.e. block-hash(block.number)
  []
 
-
-Overfull \hbox (14.36177pt too wide) in paragraph at lines 1787--1792
-[]\OT1/cmr/m/n/10 contract My-Con-tract  func-tion cur-rent-Block-Hash() pub-li
-c view re-turns(bytes32)
+[35]
+Overfull \hbox (43.49661pt too wide) in paragraph at lines 1793--1793
+[]\OT1/cmtt/m/n/10 In the following example, currentBlockBlockhash function alw
+ays returns 0:[] 
  []
 
 
-Overfull \hbox (90.14905pt too wide) in paragraph at lines 1813--1818
-\OT1/cmr/m/n/10 < re-ceivers.length; i++)  ad-dress(this).delegatecall(abi.enco
-deWithSignature("addBalance(address)",
+Overfull \hbox (185.24538pt too wide) in paragraph at lines 1824--1824
+[]            \OT1/cmtt/m/n/10 address(this).delegatecall(abi.encodeWithSignatu
+re("addBalance(address)", receivers[i]));[] 
  []
 
-
+[36]
 Overfull \hbox (6.96355pt too wide) in paragraph at lines 1835--1836
 \OT1/cmr/m/n/10 fer. The rec-om-mended way to per-form checked ether pay-ments 
 is addr.transfer(x),
  []
 
-[23]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1902     function ownerOf(uint256 _
-                                     tokenId) external view returns (bool);
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.1904 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1905 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (29.49333pt too wide) in paragraph at lines 1901--1905
-[]\OT1/cmr/m/n/10 contract To-ken func-tion ownerOf(uint256 $[]\OML/cmm/m/it/10
- okenId\OT1/cmr/m/n/10 )\OML/cmm/m/it/10 externalviewreturns\OT1/cmr/m/n/10 (\O
-ML/cmm/m/it/10 bool\OT1/cmr/m/n/10 ); \OML/cmm/m/it/10 ==:::$ 
+[37]
+Overfull \hbox (11.99689pt too wide) in paragraph at lines 1906--1906
+[]    \OT1/cmtt/m/n/10 function ownerOf(uint256 _tokenId) external view returns
+ (bool);[] 
  []
 
-[24]
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1979   uint s_
-                a;
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1980 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1982     assert((s_
-                     a += 1) > 10);
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-! Extra }, or forgotten $.
-l.1983   }
-          
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Extra }, or forgotten $.
-l.1984 }
-        
-I've deleted a group-closing symbol because it seems to be
-spurious, as in `$x}$'. But perhaps the } is legitimate and
-you forgot something else, as in `\hbox{$x}'. In such cases
-the way to recover is to insert both the forgotten and the
-deleted material, e.g., by typing `I$}'.
-
-! Missing $ inserted.
-<inserted text> 
-                $
-l.1986 
-       
-I've inserted a begin-math/end-math symbol since I think
-you left one out. Proceed, with fingers crossed.
-
-
-Overfull \hbox (216.31404pt too wide) in paragraph at lines 1981--1986
-[]\OT1/cmr/m/n/10 function bad() pub-lic  assert((s$[]+ = 1) \OML/cmm/m/it/10 >
- \OT1/cmr/m/n/10 10); \OML/cmm/m/it/10 Theassertinbad\OT1/cmr/m/n/10 ()\OML/cmm
-/m/it/10 incrementsthestatevariables[]whilecheckingforthecondition:$ 
+[38]
+Overfull \hbox (479.24281pt too wide) in paragraph at lines 1940--1940
+[]\OT1/cmtt/m/n/10 Each commented line references types/identifiers, but perfor
+ms no action with them, so no code will be generated for such statements and th
+ey can be removed.[] 
  []
 
-[25] (json_data.aux) )
-(\end occurred inside a group at level 18)
 
-### simple group (level 18) entered at line 1981 ({)
-### simple group (level 17) entered at line 1978 ({)
-### simple group (level 16) entered at line 1901 ({)
-### simple group (level 15) entered at line 1520 ({)
-### simple group (level 14) entered at line 1123 ({)
-### simple group (level 13) entered at line 1117 ({)
-### simple group (level 12) entered at line 1112 ({)
-### simple group (level 11) entered at line 1040 ({)
-### simple group (level 10) entered at line 983 ({)
-### simple group (level 9) entered at line 952 ({)
-### simple group (level 8) entered at line 936 ({)
-### simple group (level 7) entered at line 816 ({)
-### simple group (level 6) entered at line 790 ({)
-### simple group (level 5) entered at line 789 ({)
-### simple group (level 4) entered at line 597 ({)
-### simple group (level 3) entered at line 295 ({)
-### simple group (level 2) entered at line 179 ({)
-### simple group (level 1) entered at line 175 ({)
-### bottom level 
+Overfull \hbox (111.74602pt too wide) in paragraph at lines 1987--1987
+[]\OT1/cmtt/m/n/10 The assert in bad() increments the state variable s_a while 
+checking for the condition.[] 
+ []
+
+[39] [40] (json_data.aux) ) 
 Here is how much of TeX's memory you used:
- 510 strings out of 475385
- 10067 string characters out of 2776906
+ 513 strings out of 475385
+ 10097 string characters out of 2776906
  357964 words of memory out of 3000000
- 21955 multiletter control sequences out of 15000+600000
- 473514 words of font info for 42 fonts, out of 8000000 for 9000
+ 21957 multiletter control sequences out of 15000+600000
+ 473682 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 34i,6n,38p,692b,493s stack positions out of 10000i,1000n,20000p,200000b,80000s
-<C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/publi
-c/amsfonts/cm/cmbx10.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/ty
-pe1/public/amsfonts/cm/cmbx12.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX
-/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/jyoth/AppData/Local/Progra
-ms/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/jyoth/AppData/Loca
-l/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users/jyoth/AppD
-ata/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Users/jy
-oth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/
-Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr7.p
-fb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm
-/cmsy10.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/am
-sfonts/cm/cmsy7.pfb>
-Output written on json_data.pdf (25 pages, 196481 bytes).
+ 34i,6n,38p,692b,268s stack positions out of 10000i,1000n,20000p,200000b,80000s
+<C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/
+type1/public/amsfonts/cm/cmbx10.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKT
+eX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Users/jyoth/AppData/Local/Prog
+rams/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi10.pfb><C:/Users/jyoth/AppData/L
+ocal/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi7.pfb><C:/Users/jyoth/A
+ppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:/Users
+/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/cm/cmr
+17.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfont
+s/cm/cmr7.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type1/public/
+amsfonts/cm/cmsy10.pfb><C:/Users/jyoth/AppData/Local/Programs/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmtt10.pfb>
+Output written on json_data.pdf (40 pages, 208196 bytes).
 PDF statistics:
- 133 PDF objects out of 1000 (max. 8388607)
+ 182 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

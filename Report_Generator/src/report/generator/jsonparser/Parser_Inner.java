@@ -1126,9 +1126,11 @@ public class Parser_Inner {
 			        latex += "\\textbf{Description}:" + inner.get(1) + "\r\n";
 			        latex += "\r\n";
 			        latex += "\\textbf{Example:} \r\n";
+			        latex += "\\begin{verbatim}";
 			        latex += "\r\n";
 			        latex += inner.get(2);
 			        latex += "\r\n";
+			        latex += "\\end{verbatim}";
 			        latex += "\\} \r\n";
 			        latex += "\r\n";
 			        latex += "\\} \r\n";
