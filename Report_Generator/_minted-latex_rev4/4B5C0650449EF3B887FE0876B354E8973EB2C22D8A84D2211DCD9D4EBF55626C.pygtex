@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.24;
+
+contract BreakThisHash \PYGZob{}
+    bytes32 hash;
+    uint birthday;
+    constructor(bytes32 \PYGZbs{}textunderscore hash) public payable \PYGZob{}
+        hash = \PYGZbs{}textunderscore hash;
+        birthday = now;
+    \PYGZcb{}
+
+    function kill(bytes password) external \PYGZob{}
+        if (sha3(password) != hash) \PYGZob{}
+            throw;
+        \PYGZcb{}
+        suicide(msg.sender);
+    \PYGZcb{}
+
+    function hashAge() public constant returns(uint) \PYGZob{}
+        return(now \PYGZbs{}textendash  birthday);
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*Use keccak256, selfdestruct, revert() instead.*/
+\end{Verbatim}

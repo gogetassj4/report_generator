@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+modidfier myModif()\PYGZob{}
+    if(..)\PYGZob{}
+      \PYGZbs{}textunderscore ;
+    \PYGZcb{}
+\PYGZcb{}
+function get() myModif returns(uint)\PYGZob{}\PYGZcb{}
+
+ /*If the condition in myModif is false, the execution of get() will return 0.*/
+\end{Verbatim}

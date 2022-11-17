@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.2;
+contract Test\PYGZob{}
+  enum E\PYGZob{}a\PYGZcb{}
+  function bug(uint a) public returns(E)\PYGZob{}
+        return E(a);
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

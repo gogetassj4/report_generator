@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, contracts programmed to receive ether does not call transfer, send, or call.value function:
+
+pragma solidity 0.4.25;
+
+contract BadMarketPlace \PYGZob{}
+    function deposit() payable \PYGZob{}
+        require(msg.value \PYGZgt{} 0);
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

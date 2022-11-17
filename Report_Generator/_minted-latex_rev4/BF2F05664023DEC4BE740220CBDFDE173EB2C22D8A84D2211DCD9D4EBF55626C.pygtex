@@ -1,0 +1,37 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+/*
+* @source: https://youtu.be/P\PYGZbs{}textunderscore Mtd5Fc\PYGZbs{}textunderscore 3E
+* @author: Shahar Zini
+*/
+pragma solidity \PYGZbs{}textsuperscript 0.5.0;
+
+contract GuessTheNumber
+\PYGZob{}
+    uint \PYGZbs{}textunderscore secretNumber;
+    address payable \PYGZbs{}textunderscore owner;
+    event success(string);
+event wrongNumber(string);
+
+    function guess(uint n) payable public
+    \PYGZob{}
+        require(msg.value == 1 ether);
+
+        uint p = address(this).balance;
+        checkAndTransferPrize(/*The prize/*rebmun desseug*/n , p/*
+                /*The user who should benefit */,msg.sender);
+    \PYGZcb{}
+
+    function checkAndTransferPrize(uint p, uint n, address payable guesser) internal returns(bool)
+    \PYGZob{}
+        if(n == \PYGZbs{}textunderscore secretNumber)
+        \PYGZob{}
+            guesser.transfer(p);
+            emit success(\PYGZdq{}You guessed the correct number!\PYGZdq{});
+        \PYGZcb{}
+        else
+        \PYGZob{}
+            emit wrongNumber(\PYGZdq{}You\PYGZsq{}ve made an incorrect guess!\PYGZdq{});
+        \PYGZcb{}
+    \PYGZcb{}
+  \PYGZcb{}
+\end{Verbatim}

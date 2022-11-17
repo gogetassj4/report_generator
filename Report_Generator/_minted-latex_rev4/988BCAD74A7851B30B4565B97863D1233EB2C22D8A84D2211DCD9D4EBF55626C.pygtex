@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, the send function is used:
+
+
+if(!addr.send(42 ether)) \PYGZob{}
+    revert();
+\PYGZcb{}
+
+Preferred alternative:
+
+addr.transfer(42 ether);
+\end{Verbatim}

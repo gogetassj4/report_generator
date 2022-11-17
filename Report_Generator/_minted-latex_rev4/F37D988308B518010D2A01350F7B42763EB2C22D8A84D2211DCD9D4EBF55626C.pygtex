@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract TestContract is MultiOwnable \PYGZob{}
+
+  function withdrawAll()\PYGZob{}
+    msg.sender.transfer(this.balance);
+  \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.25;
+
+contract ReturnValue \PYGZob{}
+
+checked
+function callchecked(address callee) public \PYGZob{}
+    require(callee.call());
+  \PYGZcb{}
+
+  function callnotchecked(address callee) public \PYGZob{}
+    callee.call();
+  \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

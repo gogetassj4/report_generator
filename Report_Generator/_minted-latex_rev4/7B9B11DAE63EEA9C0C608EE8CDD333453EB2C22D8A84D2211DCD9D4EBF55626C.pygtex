@@ -1,0 +1,29 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In this example, one can front\PYGZbs{}textendash run transactions to claim his/her reward before the owner reduces the reward amount.
+
+pragma solidity \PYGZbs{}textsuperscript 0.4.16;
+
+contract EthTxOrderDependenceMinimal \PYGZob{}
+    address public owner;
+    bool public claimed;
+    uint public reward;
+
+    function EthTxOrderDependenceMinimal() public \PYGZob{}
+        owner = msg.sender;
+    \PYGZcb{}
+
+    function setReward() public payable \PYGZob{}
+        require (!claimed);
+        require(msg.sender == owner);
+        owner.transfer(reward);
+        reward = msg.value;
+    \PYGZcb{}
+
+    function claimReward(uint256 submission) \PYGZob{}
+        require (!claimed);
+        require(submission \PYGZlt{} 10);
+        msg.sender.transfer(reward);
+        claimed = true;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

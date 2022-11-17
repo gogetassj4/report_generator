@@ -1058,6 +1058,7 @@ public class Parser_Inner {
 		    
 		     String latex = "\\documentclass{article} \r\n";
 		        latex += "\\usepackage[utf8]{inputenc} \r\n";
+		        latex += "\\usepackage{ffcode} \r\n";
 		        latex += "\r\n";
 		        latex += "\\title{Metasecurelabs analysis report}\r\n";
 		        latex += "\\author{metasecurelabs.io }\r\n";
@@ -1126,11 +1127,11 @@ public class Parser_Inner {
 			        latex += "\\textbf{Description}:" + inner.get(1) + "\r\n";
 			        latex += "\r\n";
 			        latex += "\\textbf{Example:} \r\n";
-			        latex += "\\begin{verbatim}";
+			        latex += "\\begin{ffcode} \r\n";
 			        latex += "\r\n";
 			        latex += inner.get(2);
 			        latex += "\r\n";
-			        latex += "\\end{verbatim}";
+			        latex += "\\end{ffcode} \r\n";
 			        latex += "\\} \r\n";
 			        latex += "\r\n";
 			        latex += "\\} \r\n";
@@ -1199,7 +1200,7 @@ public class Parser_Inner {
 		 	 FileWriter fw3 = new FileWriter(tex3);
 		     
 		     while(br3.ready()) {
-		    	 fw3.write(br3.readLine().replace("^", "\\textsuperscript") + "\n");
+		    	 fw3.write(br3.readLine().replace("^", "\\textsuperscript ") + "\n");
 		     }
 		     
 		     fw3.close();
@@ -1231,6 +1232,20 @@ public class Parser_Inner {
 		     fw5.close();
 		     br5.close();
 		     fr5.close();
+		     
+		     /*Reader fr6 = new FileReader(tex5);
+		     BufferedReader br6 = new BufferedReader(fr6);
+		     File tex6 = new File("latex_rev5.tex");
+		 	 FileWriter fw6 = new FileWriter(tex6);
+		     
+		     while(br6.ready()) {
+		    	 fw6.write(br6.readLine().replace("&", "\\& ") + "\n");
+		     }
+		     
+		     fw6.close();
+		     br6.close();
+		     fr6.close();*/
+		     
 
 
 			

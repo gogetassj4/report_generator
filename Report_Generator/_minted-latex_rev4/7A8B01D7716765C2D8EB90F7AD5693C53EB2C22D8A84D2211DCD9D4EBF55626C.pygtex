@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Uninitialized\PYGZob{}
+    address destination;
+
+    function transfer() payable public\PYGZob{}
+        destination.transfer(msg.value);
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

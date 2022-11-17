@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Here is the example of correct view\PYGZbs{}textendash function:
+
+contract C \PYGZob{}
+    function f(uint a, uint b) view returns (uint) \PYGZob{}
+        return a * (b + 42) + now;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

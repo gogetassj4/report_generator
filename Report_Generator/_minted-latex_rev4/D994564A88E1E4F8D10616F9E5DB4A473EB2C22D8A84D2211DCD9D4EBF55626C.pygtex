@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, functions with both public and external visibility modifiers are used:
+
+contract Token \PYGZob{}
+
+    mapping (address =\PYGZgt{} uint256) internal \PYGZbs{}textunderscore balances;
+
+    function transfer\PYGZbs{}textunderscore public(address to, uint256 value) public \PYGZob{}
+        require(value \PYGZlt{}= \PYGZbs{}textunderscore balances[msg.sender]);
+
+        \PYGZbs{}textunderscore balances[msg.sender] \PYGZbs{}textendash = value;
+        \PYGZbs{}textunderscore balances[to] += value;
+    \PYGZcb{}
+
+    function transfer\PYGZbs{}textunderscore external(address to, uint256 value) external \PYGZob{}
+        require(value \PYGZlt{}= \PYGZbs{}textunderscore balances[msg.sender]);
+
+        \PYGZbs{}textunderscore balances[msg.sender] \PYGZbs{}textendash = value;
+        \PYGZbs{}textunderscore balances[to] += value;
+    \PYGZcb{}
+\PYGZcb{}
+
+The second function requires less gas.
+\end{Verbatim}

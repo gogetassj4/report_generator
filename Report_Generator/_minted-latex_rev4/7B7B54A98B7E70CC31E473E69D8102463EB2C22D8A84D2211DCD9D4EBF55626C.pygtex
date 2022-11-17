@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract C \PYGZob{}
+    function f(uint z) public returns (uint) \PYGZob{}
+        uint y = x + 9 + z; // \PYGZsq{}z\PYGZsq{} is used pre\PYGZbs{}textendash declaration
+        uint x = 7;
+
+        if (z \PYGZpc{} 2 == 0) \PYGZob{}
+            uint max = 5;
+            // ...
+        \PYGZcb{}
+
+        // \PYGZsq{}max\PYGZsq{} was intended to be 5, but it was mistakenly declared in a scope and not assigned (so it is zero).
+        for (uint i = 0; i \PYGZlt{} max; i++) \PYGZob{}
+            x += 1;
+        \PYGZcb{}
+
+        return x;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

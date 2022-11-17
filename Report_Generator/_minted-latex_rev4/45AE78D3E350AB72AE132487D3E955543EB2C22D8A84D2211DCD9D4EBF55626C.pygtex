@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Uninitialized is Owner\PYGZob{}
+    function withdraw() payable public onlyOwner\PYGZob{}
+        address to;
+        to.transfer(this.balance)
+    \PYGZcb{}
+\PYGZcb{}
+
+Bob calls transfer. As a result, all Ether is sent to the address 0x0 and is lost.
+\end{Verbatim}

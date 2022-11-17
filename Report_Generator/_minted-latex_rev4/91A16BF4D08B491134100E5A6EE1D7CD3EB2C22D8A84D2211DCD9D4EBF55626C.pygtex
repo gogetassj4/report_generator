@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Uninitialized\PYGZob{}
+    address owner = msg.sender;
+
+    struct St\PYGZob{}
+        uint a;
+    \PYGZcb{}
+
+    function func() \PYGZob{}
+        St st;
+        st.a = 0x0;
+    \PYGZcb{}
+\PYGZcb{}
+Bob calls func. As a result, owner is overridden to 0.
+\end{Verbatim}

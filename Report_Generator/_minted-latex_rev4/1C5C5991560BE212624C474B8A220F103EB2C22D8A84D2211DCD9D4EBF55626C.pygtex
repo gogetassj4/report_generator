@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+function buggyTransfer(address to, uint256 value) external returns (bool)\PYGZob{}
+        balanceOf[msg.sender] \PYGZbs{}textendash = value;
+        balanceOf[to] += value;
+        return true;
+    \PYGZcb{}
+
+ /*In a pausable contract, buggyTransfer performs a token transfer but does not use Pausable\PYGZsq{}s whenNotPaused modifier. If the token admin/owner pauses the ERC20 contract to trigger an emergency stop, it will not apply to this function. This results in Txs transferring even in a paused state, which corrupts the contract balance state and affects recovery.*/
+\end{Verbatim}

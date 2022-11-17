@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Memory \PYGZob{}
+    uint[1] public x; // storage
+
+    function f() public \PYGZob{}
+        f1(x); // update x
+        f2(x); // do not update x
+    \PYGZcb{}
+
+    function f1(uint[1] storage arr) internal \PYGZob{} // by reference
+        arr[0] = 1;
+    \PYGZcb{}
+
+    function f2(uint[1] arr) internal \PYGZob{} // by value
+        arr[0] = 2;
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*Bob calls f(). Bob assumes that at the end of the call x[0] is 2, but it is 1. As a result, Bob\PYGZsq{}s usage of the contract is incorrect. */
+\end{Verbatim}

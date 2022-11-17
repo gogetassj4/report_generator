@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract A \PYGZob{}
+    uint x;
+    constructor() public \PYGZob{}
+        x = 0;
+    \PYGZcb{}
+    function A() public \PYGZob{}
+        x = 1;
+    \PYGZcb{}
+
+    function test() public returns(uint) \PYGZob{}
+        return x;
+    \PYGZcb{}
+\PYGZcb{}
+
+In Solidity 0.4.22, a contract with both constructor schemes will compile. The first constructor will take precedence over the second, which may be unintended.
+\end{Verbatim}

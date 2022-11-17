@@ -1,0 +1,7 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+function a(address from, address to, uint256 amount) public \PYGZob{}
+  erc20.transferFrom(from, to, am);
+\PYGZcb{}
+
+Alice approves this contract to spend her ERC20 tokens. Bob can call a and specify Alice\PYGZsq{}s address as the from parameter in transferFrom, allowing him to transfer Alice\PYGZsq{}s tokens to himself.
+\end{Verbatim}

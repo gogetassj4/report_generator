@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract ERC20Bad \PYGZob{}
+    // ...
+    event Transfer(address from, address to, uint value);
+    event Approval(address owner, address spender, uint value);
+
+    // ...
+\PYGZcb{}
+
+ /*Transfer and Approval events should have the \PYGZsq{}indexed\PYGZsq{} keyword on their two first parameters, as defined by the ERC20 specification. Failure to include these keywords will exclude the parameter data in the transaction/block\PYGZsq{}s bloom filter, so external tooling searching for these parameters may overlook them and fail to index logs from this token contract. */
+\end{Verbatim}

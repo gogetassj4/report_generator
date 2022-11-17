@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+ /*In the following example, call function is used for ETH transfer:*/
+pragma solidity 0.4.24;
+
+contract MyContract \PYGZob{}
+
+    function withdraw() \PYGZob{}
+        if (msg.sender.call.value(1)()) \PYGZob{}
+        /*...*/
+        \PYGZcb{}
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

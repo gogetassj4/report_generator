@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract CostlyOperationsInLoop\PYGZob{}
+
+    uint loop\PYGZbs{}textunderscore count = 100;
+    uint state\PYGZbs{}textunderscore variable=0;
+
+    function bad() external\PYGZob{}
+        for (uint i=0; i \PYGZlt{} loop\PYGZbs{}textunderscore count; i++)\PYGZob{}
+            state\PYGZbs{}textunderscore variable++;
+        \PYGZcb{}
+    \PYGZcb{}
+
+    function good() external\PYGZob{}
+      uint local\PYGZbs{}textunderscore variable = state\PYGZbs{}textunderscore variable;
+      for (uint i=0; i \PYGZlt{} loop\PYGZbs{}textunderscore count; i++)\PYGZob{}
+        local\PYGZbs{}textunderscore variable++;
+      \PYGZcb{}
+      state\PYGZbs{}textunderscore variable = local\PYGZbs{}textunderscore variable;
+    \PYGZcb{}
+\PYGZcb{}
+Incrementing state\PYGZbs{}textunderscore variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out\PYGZbs{}textendash of\PYGZbs{}textendash gas.
+\end{Verbatim}

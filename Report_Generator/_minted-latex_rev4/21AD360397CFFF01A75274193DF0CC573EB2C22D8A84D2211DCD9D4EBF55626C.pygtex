@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity \PYGZbs{}textsuperscript 0.4.24;
+
+contract Bug \PYGZob{}
+    uint now; // Overshadows current time stamp.
+
+    function assert(bool condition) public \PYGZob{}
+        // Overshadows built\PYGZbs{}textendash in symbol for providing assertions.
+    \PYGZcb{}
+
+    function get\PYGZbs{}textunderscore next\PYGZbs{}textunderscore expiration(uint earlier\PYGZbs{}textunderscore time) private returns (uint) \PYGZob{}
+        return now + 259200; // References overshadowed timestamp.
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

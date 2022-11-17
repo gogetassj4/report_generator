@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, the function\PYGZsq{}s signature only denotes the type of the return value, but the function\PYGZsq{}s body does not contain return statement:
+
+pragma solidity 0.4.25;
+
+contract NewContract \PYGZob{}
+    uint minimumBuy;
+
+    function setMinimumBuy(uint256 newMinimumBuy) returns (bool)\PYGZob{}
+        minimumBuy = newMinimumBuy;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

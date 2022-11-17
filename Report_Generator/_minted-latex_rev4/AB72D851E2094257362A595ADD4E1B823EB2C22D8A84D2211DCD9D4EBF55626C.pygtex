@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Bug\PYGZob{}
+  function buy() public payable\PYGZob{}
+    uint minted = msg.value * (1000 / address(this).balance);
+    // ...
+  \PYGZcb{}
+\PYGZcb{}
+
+buy is meant to compute a price that changes a ratio over the contract\PYGZsq{}s balance. .balance will include msg.value and lead to an incorrect price computation.
+\end{Verbatim}

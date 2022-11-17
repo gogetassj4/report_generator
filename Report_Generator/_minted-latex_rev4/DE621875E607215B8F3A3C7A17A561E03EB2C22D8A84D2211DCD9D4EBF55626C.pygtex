@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Token\PYGZob{}
+    function transfer(address to, uint value) external;
+    //...
+\PYGZcb{}
+
+Token.transfer does not return a boolean. Bob deploys the token. Alice creates a contract that interacts with it but assumes a correct ERC20 interface implementation. Alice\PYGZsq{}s contract is unable to interact with Bob\PYGZsq{}s contract.
+\end{Verbatim}

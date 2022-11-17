@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, byte array is used:
+
+pragma solidity 0.4.24;
+
+contract C \PYGZob{}
+    byte[] someVariable;
+    ...
+\PYGZcb{}
+
+Alternative:
+
+pragma solidity 0.4.24;
+
+contract C \PYGZob{}
+    bytes someVariable;
+    ...
+\PYGZcb{}
+\end{Verbatim}

@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+mapping(address =\PYGZgt{} uint) public balances;
+function f() public \PYGZob{}
+    delete balances[msg.sender];
+    msg.sender.transfer(balances[msg.sender]);
+\PYGZcb{}
+
+ /*balances[msg.sender] is deleted before it\PYGZsq{}s sent to the caller, leading the transfer to always send zero.*/
+\end{Verbatim}

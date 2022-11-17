@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract MyConc\PYGZob{}
+    using SafeMath for uint;
+    function my\PYGZbs{}textunderscore func(uint a, uint b) public\PYGZob{}
+        a.add(b);
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*MyConc calls add of SafeMath, but does not store the result in a. As a result, the computation has no effect. */
+\end{Verbatim}

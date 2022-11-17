@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract MsgValueInLoop\PYGZob{}
+    mapping (address =\PYGZgt{} uint256) balances;
+
+    function bad(address[] memory receivers) public payable \PYGZob{}
+        for (uint256 i=0; i \PYGZlt{} receivers.length; i++) \PYGZob{}
+            balances[receivers[i]] += msg.value;
+        \PYGZcb{}
+    \PYGZcb{}
+\PYGZcb{}
+
+msg.value should be tracked through a local variable and decrease its amount on every iteration/usage.
+\end{Verbatim}

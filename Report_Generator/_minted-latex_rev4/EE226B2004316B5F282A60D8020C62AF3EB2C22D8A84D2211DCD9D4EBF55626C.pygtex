@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, amount variable is divided by DELIMITER and then multiplied by BONUS. Thus, a rounding error appears (consider amount = 9000):
+
+pragma solidity 0.4.25;
+
+contract MyContract \PYGZob{}
+
+    uint constant BONUS = 500;
+    uint constant DELIMITER = 10000;
+
+    function calculateBonus(uint amount) returns (uint) \PYGZob{}
+        return amount/DELIMITER*BONUS;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

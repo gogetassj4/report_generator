@@ -1,0 +1,15 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+In the following example, limiter variable is accessed on every for\PYGZbs{}textendash loop iteration:
+
+pragma solidity 0.4.25;
+
+contract NewContract \PYGZob{}
+    uint limiter = 100;
+
+    function longLoop() \PYGZob{}
+        for(uint i = 0; i \PYGZlt{} limiter; i++) \PYGZob{}
+            /* ... */
+        \PYGZcb{}
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

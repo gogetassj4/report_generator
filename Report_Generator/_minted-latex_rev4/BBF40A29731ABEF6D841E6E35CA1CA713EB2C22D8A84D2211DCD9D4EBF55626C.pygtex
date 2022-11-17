@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+struct BalancesStruct\PYGZob{}
+    address owner;
+    mapping(address =\PYGZgt{} uint) balances;
+\PYGZcb{}
+mapping(address =\PYGZgt{} BalancesStruct) public stackBalance;
+
+function remove() internal\PYGZob{}
+      delete stackBalance[msg.sender];
+\PYGZcb{}
+\end{Verbatim}

@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Integer overflow/underflow
+/*
+* @source: https://capturetheether.com/challenges/math/token\PYGZbs{}textendash sale/
+* @author: Steve Marx
+*/
+pragma solidity \PYGZbs{}textsuperscript 0.4.21;
+contract TokenSaleChallenge \PYGZob{}
+    mapping(address =\PYGZgt{} uint256) public balanceOf;
+    uint256 constant PRICE\PYGZbs{}textunderscore PER\PYGZbs{}textunderscore TOKEN = 1 ether;
+
+    function TokenSaleChallenge(address \PYGZbs{}textunderscore player) public payable \PYGZob{}
+        require(msg.value == 1 ether);
+    \PYGZcb{}
+
+    function isComplete() public view returns (bool) \PYGZob{}
+        return address(this).balance \PYGZlt{} 1 ether;
+    \PYGZcb{}
+
+    function buy(uint256 numTokens) public payable \PYGZob{}
+        require(msg.value == numTokens * PRICE\PYGZbs{}textunderscore PER\PYGZbs{}textunderscore TOKEN);
+
+        balanceOf[msg.sender] += numTokens;
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*Division issues*/
+contract Division \PYGZob{}
+
+    /*function unsigned\PYGZbs{}textunderscore division(uint32 x, uint32 y) returns (int r) \PYGZob{}
+      //if (y == 0) \PYGZob{} throw; \PYGZcb{}
+      r = x / y;
+    \PYGZcb{}*/
+
+    function signed\PYGZbs{}textunderscore division(int x, int y) returns (int) \PYGZob{}
+      //if ((y == 0)  ((x == \PYGZbs{}textendash 2**255) \PYGZbs{}\PYGZam{} \PYGZbs{}\PYGZam{}  (y == \PYGZbs{}textendash 1))) \PYGZob{} throw; \PYGZcb{}
+      return x / y;
+    \PYGZcb{}
+
+\PYGZcb{}
+
+ /*Type deduction overflow*/
+contract For\PYGZbs{}textunderscore Test \PYGZob{}
+...
+  function Test () payable public \PYGZob{}
+    if ( msg . value \PYGZgt{} 0.1 ether ) \PYGZob{}
+      uint256 multi = 0;
+      uint256 amountToTransfer = 0;
+      for ( var i = 0; i \PYGZlt{} 2* msg . value ; i ++) \PYGZob{}
+        multi = i *2;
+        if ( multi \PYGZlt{} amountToTransfer ) \PYGZob{}
+          break ;
+        amountToTransfer = multi ;
+      \PYGZcb{}
+      msg.sender.transfer( amountToTransfer );
+    \PYGZcb{}
+  \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

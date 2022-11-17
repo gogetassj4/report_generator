@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.24;
+
+contract dataStorage \PYGZob{}
+    uint[] public data;
+
+    function writeData(uint[] \PYGZbs{}textunderscore data) external \PYGZob{}
+        for(uint i = data.length; i \PYGZlt{} \PYGZbs{}textunderscore data.length; i++) \PYGZob{}
+            data.length++;
+            data[i]=\PYGZbs{}textunderscore data[i];
+        \PYGZcb{}
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}
