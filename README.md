@@ -1,6 +1,6 @@
 ## Setup :
 
-- Clone the Project from ```report_generator_parser``` branch to your local and follow the below steps .
+- Clone the Project to your local and follow the below steps .
 
 #### Eclipse
 
@@ -29,5 +29,5 @@
     - To test, open command prompt and try running ```pdflatex <filename.tex>```. The PDF will be generated in the project directory.
 
 
-Once the Project has been imported and the above setup has been completed, run the ```Parser_Inner.java``` file. The generated latex file will be ```latex_rev4.tex```. Open command prompt, run ```pdflatex latex_rev4.tex -shell-escape```. The PDF file will be generated in your project directory itself.
+Once the Project has been imported and the above setup has been completed, run the ```Parser_Inner.java``` file. The generated latex file will be ```latex_rev7.tex```. Open command prompt, run ```pdflatex latex_rev7.tex -shell-escape```. The PDF file will be generated in your project directory itself.
 
