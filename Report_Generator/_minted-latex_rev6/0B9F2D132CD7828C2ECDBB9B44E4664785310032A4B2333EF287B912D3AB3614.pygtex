@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+function callme()\PYGZob{}
+  if( ! (msg.sender.call()() ) )\PYGZob{}
+    throw;
+  \PYGZcb{}
+  counter += 1
+\PYGZcb{}
+
+ /*callme() contains a benign reentrancy.*/
+\end{Verbatim}

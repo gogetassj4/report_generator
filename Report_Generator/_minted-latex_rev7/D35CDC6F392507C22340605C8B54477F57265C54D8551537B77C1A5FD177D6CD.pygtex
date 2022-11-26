@@ -1,0 +1,24 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.25;
+
+contract Crowdsale \PYGZob{}
+
+    address public owner;
+
+    uint rate;
+    uint cap;
+
+    constructor() \PYGZob{}
+        owner = msg.sender;
+    \PYGZcb{}
+
+    function setRate(\PYG{esc}{\textunderscore} rate) public onlyOwner \PYGZob{}
+        rate = \PYG{esc}{\textunderscore} rate;
+    \PYGZcb{}
+
+    function setCap(\PYG{esc}{\textunderscore} cap) public \PYGZob{}
+        require (msg.sender == owner);
+        cap = \PYG{esc}{\textunderscore} cap;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

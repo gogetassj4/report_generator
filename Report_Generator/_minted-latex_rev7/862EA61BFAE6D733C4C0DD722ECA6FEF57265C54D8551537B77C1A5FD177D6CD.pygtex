@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+address token;
+
+function call\PYG{esc}{\textunderscore} token(bytes data)\PYGZob{}
+  token.call(data);
+\PYGZcb{}
+
+ /*token` points to an ERC20 token. Bob uses call\PYG{esc}{\textunderscore} token to call the transfer function of token to withdraw all tokens held by the contract.*/
+\end{Verbatim}

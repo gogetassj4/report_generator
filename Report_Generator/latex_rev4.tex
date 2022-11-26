@@ -11,55 +11,22 @@
 \maketitle 
 
 \section{Introduction} 
-\subsection{storage\textunderscore signed\textunderscore integer\textunderscore array} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{dangerous{|\textunderscore| }enum{|\textunderscore| }conversion} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:solc versions 0.4.7\textendash 0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract A {
-  int[3] ether\textunderscore balances; // storage signed integer array
-  function bad0() private {
-    // ...
-    ether\textunderscore balances = [\textendash 1, \textendash 1, \textendash 1];
-    // ...
-  }
-}
-
- /*bad0() uses a (storage\textendash allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{modifier\textunderscore like\textunderscore Sol\textunderscore keyword} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:A contract may contain modifier that looks similar to Solidity keyword
+\textbf{Description}:out{\textendash}of{\textendash}range enum conversion may occur (solc < 0.4.5).
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract Contract{
-    modifier pub1ic() {
-    }
-
-    function doSomething() pub1ic {
-        require(owner == msg.sender);
-        owner = newOwner;
+pragma solidity 0.4.2;
+contract Test{
+  enum E{a}
+  function bug(uint a) public returns(E){
+        return E(a);
     }
 }
-
- /*public is a modifier meant to look like a Solidity keyword.*/ 
 
 \end{ffcode} 
 \} 
@@ -70,20 +37,123 @@ contract Contract{
 
 \textbf{Found}: false
 
-\subsection{arbitrary\textunderscore from\textunderscore in\textunderscore transferFrom} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{unused{|\textunderscore| }function{|\textunderscore| }should{|\textunderscore| }be{|\textunderscore| }external} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Something wrong happens when msg.sender is not used as `from` in transferFrom.
+\textbf{Description}:A function with public visibility modifier that is not called internally. Changing visibility level to external increases code readability. Moreover, in many cases functions with external visibility modifier spend less gas comparing to functions with public visibility modifier.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-function a(address from, address to, uint256 amount) public {
-  erc20.transferFrom(from, to, am);
+ /*In the following example, functions with both public and external visibility modifiers are used: */ 
+
+contract Token {
+
+    mapping (address => uint256) internal \textunderscore balances;
+
+    function transfer\textunderscore public(address to, uint256 value) public {
+        require(value <= \textunderscore balances[msg.sender]);
+
+        \textunderscore balances[msg.sender] |\textendash| = value;
+        \textunderscore balances[to] += value;
+    }
+
+    function transfer\textunderscore external(address to, uint256 value) external {
+        require(value <= \textunderscore balances[msg.sender]);
+
+        \textunderscore balances[msg.sender] |\textendash| = value;
+        \textunderscore balances[to] += value;
+    }
 }
 
- /*Alice approves this contract to spend her ERC20 tokens. Bob can call a and specify Alice's address as the from parameter in transferFrom, allowing him to transfer Alice's tokens to himself.*/ 
+ /*The second function requires less gas.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: true
+
+\subsection{access{|\textunderscore| }control} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:
+* Contracts use the deprecated tx.origin to validate callers
+* Handling large authorization logic with lengthy require
+* Making reckless use of delegatecall in proxy libraries or proxy contracts. Delegate calling into untrusted contracts is very dangerous, as the code at the target address can change any storage values of the caller and has full control over the caller's balance.
+* Due to missing or insufficient access controls, malicious parties can withdraw some or all Ether from the contract account.
+* Due to missing or insufficient access controls, malicious parties can self{\textendash}destruct the contract.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract TestContract is MultiOwnable {
+
+  function withdrawAll(){
+    msg.sender.transfer(this.balance);
+  }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Access control
+
+\textbf{Found}: true
+
+\subsection{erc20{|\textunderscore| }event{|\textunderscore| }not{|\textunderscore| }indexed} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Events defined by the ERC20 specification that should have some parameters as indexed.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract ERC20Bad {
+    // ...
+    event Transfer(address from, address to, uint value);
+    event Approval(address owner, address spender, uint value);
+
+    // ...
+}
+
+ /*Transfer and Approval events should have the 'indexed' keyword on their two first parameters, as defined by the ERC20 specification. Failure to include these keywords will exclude the parameter data in the transaction/block's bloom filter, so external tooling searching for these parameters may overlook them and fail to index logs from this token contract. */ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{locked{|\textunderscore| }money} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Contracts programmed to receive ether should implement a way to withdraw it, i.e., call transfer (recommended), send, or call.value at least once..
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/* In the following example, contracts programmed to receive ether does not call transfer, send, or call.value function: */ 
+
+pragma solidity 0.4.25;
+
+contract BadMarketPlace {
+    function deposit() payable {
+        require(msg.value > 0);
+    }
+}
 
 \end{ffcode} 
 \} 
@@ -95,10 +165,10 @@ function a(address from, address to, uint256 amount) public {
 \textbf{Found}: false
 
 \subsection{arithmetic} 
-\textbf{SWC \textunderscore ID:} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .
-* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2\textsuperscript 8\textendash 1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.
+* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2{	extsuperscript}8{\textendash}1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.
 * Division issues. Some wrong will happen when integer or float numbers are divided by zero.
 * Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).
 
@@ -108,10 +178,10 @@ function a(address from, address to, uint256 amount) public {
 
 Integer overflow/underflow
 /*
-* @source: https://capturetheether.com/challenges/math/token\textendash sale/
+* @source: https://capturetheether.com/challenges/math/token|\textendash| sale/
 * @author: Steve Marx
 */
-pragma solidity \textsuperscript 0.4.21;
+pragma solidity |\textsuperscript| 0.4.21;
 contract TokenSaleChallenge {
     mapping(address => uint256) public balanceOf;
     uint256 constant PRICE\textunderscore PER\textunderscore TOKEN = 1 ether;
@@ -140,7 +210,7 @@ contract Division {
     }*/
 
     function signed\textunderscore division(int x, int y) returns (int) {
-      //if ((y == 0) || ((x == \textendash 2**255) \& \&  (y == \textendash 1))) { throw; }
+      //if ((y == 0) || ((x == |\textendash| 2**255) |\&| |\&|  (y == |\textendash| 1))) { throw; }
       return x / y;
     }
 
@@ -173,25 +243,55 @@ contract For\textunderscore Test {
 
 \textbf{Found}: true
 
-\subsection{storage\textunderscore ABIEncoderV2\textunderscore array} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{incorrect{|\textunderscore| }shift{|\textunderscore| }in{|\textunderscore| }assembly} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:solc versions 0.4.7\textendash 0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.
+\textbf{Description}:The values in a shift operation could be reversed (in a wrong order)
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract C {
+  function f() internal returns (uint a) {
+    assembly {
+        a := shr(a, 8)
+    }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{multiple{|\textunderscore| }constructor{|\textunderscore| }schemes} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Multiple constructor definitions in the same contract (using new and old schemes).
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
 contract A {
-    uint[2][3] bad\textunderscore arr = [[1, 2], [3, 4], [5, 6]];
+    uint x;
+    constructor() public {
+        x = 0;
+    }
+    function A() public {
+        x = 1;
+    }
 
-    /* Array of arrays passed to abi.encode is vulnerable */
-    function bad() public {
-        bytes memory b = abi.encode(bad\textunderscore arr);
+    function test() public returns(uint) {
+        return x;
     }
 }
 
- /*abi.encode(bad\textunderscore arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.*/ 
+ /*In Solidity 0.4.22, a contract with both constructor schemes will compile. The first constructor will take precedence over the second, which may be unintended.*/ 
 
 \end{ffcode} 
 \} 
@@ -202,27 +302,93 @@ contract A {
 
 \textbf{Found}: false
 
-\subsection{dead\textunderscore code} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{local{|\textunderscore| }variable{|\textunderscore| }shadowing} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect\textendash free code. This can lead to the introduction of "dead" code that does not properly performing an intended action.
-
-For example, it's easy to miss the trailing parentheses in msg.sender.call.value(xx)("");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead` when they are not invoked.
+\textbf{Description}:Something wrong may happen when local variables shadowing state variables or other local variables.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-pragma solidity \textsuperscript 0.5.0;
+pragma solidity |\textsuperscript| 0.4.24;
 
-contract DepositBox {
-    mapping(address => uint) balance;
+contract Bug {
+    uint owner;
 
-    // Accept deposit
-    function deposit(uint amount) public payable {
-        require(msg.value == amount, 'incorrect amount');
-        // Should update user balance
-        balance[msg.sender] = amount;
+    function sensitive\textunderscore function(address owner) public {
+        // ...
+        require(owner == msg.sender);
+    }
+
+    function alternate\textunderscore sensitive\textunderscore function() public {
+        address owner = msg.sender;
+        // ...
+        require(owner == msg.sender);
+    }
+}
+
+ /*sensitive\textunderscore function.owner shadows Bug.owner. As a result, the use of owner in sensitive\textunderscore function might be incorrect.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{redundant{|\textunderscore| }code} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Redundant statements may have no effect.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract RedundantStatementsContract {
+
+    constructor() public {
+        uint; // Elementary Type Name
+        bool; // Elementary Type Name
+        RedundantStatementsContract; // Identifier
+    }
+
+    function test() public returns (uint) {
+        uint; // Elementary Type Name
+        assert; // Identifier
+        test; // Identifier
+        return 777;
+    }
+}
+
+ /*Each commented line references types/identifiers, but performs no action with them, so no code will be generated for such statements and they can be removed.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{should{|\textunderscore| }be{|\textunderscore| }view} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:In Solidity, functions that do not read from the state or modify it can be declared as view.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+Here is the example of correct view|\textendash| function:
+
+contract C {
+    function f(uint a, uint b) view returns (uint) {
+        return a * (b + 42) + now;
     }
 }
 
@@ -235,8 +401,32 @@ contract DepositBox {
 
 \textbf{Found}: false
 
-\subsection{func\textunderscore modifying\textunderscore storage\textunderscore array\textunderscore by\textunderscore value} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{arbitrary{|\textunderscore| }from{|\textunderscore| }in{|\textunderscore| }transferFrom} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Something wrong happens when msg.sender is not used as `from` in transferFrom.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+function a(address from, address to, uint256 amount) public {
+  erc20.transferFrom(from, to, am);
+}
+
+ /*Alice approves this contract to spend her ERC20 tokens. Bob can call a and specify Alice's address as the from parameter in transferFrom, allowing him to transfer Alice's tokens to himself.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{func{|\textunderscore| }modifying{|\textunderscore| }storage{|\textunderscore| }array{|\textunderscore| }by{|\textunderscore| }value} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Arrays passed to a function that expects reference to a storage array.
 
@@ -272,22 +462,28 @@ contract Memory {
 
 \textbf{Found}: false
 
-\subsection{strict\textunderscore balance\textunderscore equality} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{dead{|\textunderscore| }code} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Contracts can behave erroneously when they strictly assume a specific Ether balance. It is always possible to forcibly send ether to a contract (without triggering its fallback function), using selfdestruct, or by mining to the account. In the worst case scenario this could lead to DOS conditions that might render the contract unusable.
+\textbf{Description}:In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect{\textendash}free code. This can lead to the introduction of "dead" code that does not properly performing an intended action.
+
+For example, it's easy to miss the trailing parentheses in msg.sender.call.value(xx)("");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead` when they are not invoked.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-if (address(this).balance == 42 ether ) {
-    /* ... */
-}
- secure alternative:
+pragma solidity |\textsuperscript| 0.5.0;
 
-if (address(this).balance >= 42 ether ) {
-  /* ... */
+contract DepositBox {
+    mapping(address => uint) balance;
+
+    // Accept deposit
+    function deposit(uint amount) public payable {
+        require(msg.value == amount, 'incorrect amount');
+        // Should update user balance
+        balance[msg.sender] = amount;
+    }
 }
 
 \end{ffcode} 
@@ -299,35 +495,42 @@ if (address(this).balance >= 42 ether ) {
 
 \textbf{Found}: false
 
-\subsection{overpowered\textunderscore role} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{short{|\textunderscore| }addresses} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:This function is callable only from one address. Therefore, the system depends heavily on this address. In this case, there are scenarios that may lead to undesirable consequences for investors, e.g. if the private key of this address becomes compromised.
+\textbf{Description}:MISSING
 
 
 \textbf{Example:} 
 \begin{ffcode} 
+
+MISSING
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{blockhash{|\textunderscore| }current} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:blockhash function returns a non{\textendash}zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/*In the following example, currentBlockBlockhash function always returns 0:*/ 
 
 pragma solidity 0.4.25;
 
-contract Crowdsale {
-
-    address public owner;
-
-    uint rate;
-    uint cap;
-
-    constructor() {
-        owner = msg.sender;
-    }
-
-    function setRate(\textunderscore rate) public onlyOwner {
-        rate = \textunderscore rate;
-    }
-
-    function setCap(\textunderscore cap) public {
-        require (msg.sender == owner);
-        cap = \textunderscore cap;
+contract MyContract {
+    function currentBlockHash() public view returns(bytes32) {
+        return blockhash(block.number);
     }
 }
 
@@ -340,24 +543,26 @@ contract Crowdsale {
 
 \textbf{Found}: false
 
-\subsection{erc20\textunderscore event\textunderscore not\textunderscore indexed} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{msg.value{|\textunderscore| }in{|\textunderscore| }loop} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Events defined by the ERC20 specification that should have some parameters as indexed.
+\textbf{Description}:It is error{\textendash}prone to use msg.value inside a loop.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract ERC20Bad {
-    // ...
-    event Transfer(address from, address to, uint value);
-    event Approval(address owner, address spender, uint value);
+contract MsgValueInLoop{
+    mapping (address => uint256) balances;
 
-    // ...
+    function bad(address[] memory receivers) public payable {
+        for (uint256 i=0; i < receivers.length; i++) {
+            balances[receivers[i]] += msg.value;
+        }
+    }
 }
 
- /*Transfer and Approval events should have the 'indexed' keyword on their two first parameters, as defined by the ERC20 specification. Failure to include these keywords will exclude the parameter data in the transaction/block's bloom filter, so external tooling searching for these parameters may overlook them and fail to index logs from this token contract. */ 
+ /*msg.value should be tracked through a local variable and decrease its amount on every iteration/usage.*/ 
 
 \end{ffcode} 
 \} 
@@ -368,23 +573,66 @@ contract ERC20Bad {
 
 \textbf{Found}: false
 
-\subsection{unused\textunderscore retval} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{reentrancy} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:The return value of an external call is not stored in a local or state variable.
+\textbf{Description}:One of the major dangers of calling external contracts is that they can take over the control flow. In the reentrancy attack (a.k.a. recursive call attack), a malicious contract calls back into the calling contract before the first invocation of the function is finished. This may cause the different invocations of the function to interact in undesirable ways.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract MyConc{
-    using SafeMath for uint;
-    function my\textunderscore func(uint a, uint b) public{
-        a.add(b);
+/*
+* @source: http://blockchain.unica.it/projects/ethereum|\textendash| survey/attacks.htmlsimpledao
+* @author: |\textendash| 
+* @vulnerable\textunderscore at\textunderscore lines: 19
+*/
+
+pragma solidity |\textsuperscript| 0.4.2;
+
+contract SimpleDAO {
+  mapping (address => uint) public credit;
+
+  function donate(address to) payable {
+    credit[to] += msg.value;
+  }
+
+  function withdraw(uint amount) {
+    if (credit[msg.sender]>= amount) {
+      // <yes> <report> REENTRANCY
+      bool res = msg.sender.call.value(amount)();
+      credit[msg.sender]|\textendash| =amount;
     }
+  }
 }
 
- /*MyConc calls add of SafeMath, but does not store the result in a. As a result, the computation has no effect. */ 
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Reentrancy
+
+\textbf{Found}: true
+
+\subsection{visibility} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:The default function visibility level in contracts is public, in interfaces {\textendash} external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.
+Additionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/*In this example, a specific modifier, such as public, is not used when declaring a function: */ 
+
+function foo();
+
+Preferred alternatives:
+
+function foo() public;
+function foo() internal;
 
 \end{ffcode} 
 \} 
@@ -395,25 +643,24 @@ contract MyConc{
 
 \textbf{Found}: true
 
-\subsection{extra\textunderscore gas\textunderscore in\textunderscore loops} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{array{|\textunderscore| }length{|\textunderscore| }manipulation} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:State variable, .balance, or .length of non\textendash memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.
+\textbf{Description}:The length of the dynamic array is changed directly. In the following case, the appearance of gigantic arrays is possible and it can lead to a storage overlap attack (collisions with other data in storage).
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-/* In the following example, limiter variable is accessed on every for\textendash loop iteration: /* 
+pragma solidity 0.4.24;
 
-pragma solidity 0.4.25;
+contract dataStorage {
+    uint[] public data;
 
-contract NewContract {
-    uint limiter = 100;
-
-    function longLoop() {
-        for(uint i = 0; i < limiter; i++) {
-            /* ... */
+    function writeData(uint[] \textunderscore data) external {
+        for(uint i = data.length; i < \textunderscore data.length; i++) {
+            data.length++;
+            data[i]=\textunderscore data[i];
         }
     }
 }
@@ -423,12 +670,36 @@ contract NewContract {
 
 \} 
 
-\textbf{DASP} : Unknown unknowns
+\textbf{DASP} : Unknown Unknowns
 
 \textbf{Found}: false
 
-\subsection{uninitialized\textunderscore state\textunderscore variable} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{denial{|\textunderscore| }of{|\textunderscore| }service} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:
+* External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.
+* A large number of loops may consume gas, so it is possible that the function exceeds the block gas limit, and transactions calling it will never be confirmed.
+* An inappropriate type inference in the loop (e.g., literal {\textendash}> uint8) may cause a infinite loop.
+* Recursive external calls may consume a large number of callstacks, which may lead to DoS.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+for (var i = 0; i < array.length; i++) { /* ... */
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Denial of Services
+
+\textbf{Found}: true
+
+\subsection{uninitialized{|\textunderscore| }state{|\textunderscore| }variable} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Some unexpected error may happen when state variables are not uninitialized.
 
@@ -453,91 +724,8 @@ contract Uninitialized{
 
 \textbf{Found}: true
 
-\subsection{pre\textendash declare\textunderscore usage\textunderscore of\textunderscore local} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Using a variable before the declaration is stepped over (either because it is later declared, or declared in another scope).
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract C {
-    function f(uint z) public returns (uint) {
-        uint y = x + 9 + z; // 'z' is used pre\textendash declaration
-        uint x = 7;
-
-        if (z % 2 == 0) {
-            uint max = 5;
-            // ...
-        }
-
-        // 'max' was intended to be 5, but it was mistakenly declared in a scope and not assigned (so it is zero).
-        for (uint i = 0; i < max; i++) {
-            x += 1;
-        }
-
-        return x;
-    }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{race\textunderscore condition} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front\textendash running attacks.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/* In this example, one can front\textendash run transactions to claim his/her reward before the owner reduces the reward amount.*/ 
-
-pragma solidity \textsuperscript 0.4.16;
-
-contract EthTxOrderDependenceMinimal {
-    address public owner;
-    bool public claimed;
-    uint public reward;
-
-    function EthTxOrderDependenceMinimal() public {
-        owner = msg.sender;
-    }
-
-    function setReward() public payable {
-        require (!claimed);
-        require(msg.sender == owner);
-        owner.transfer(reward);
-        reward = msg.value;
-    }
-
-    function claimReward(uint256 submission) {
-        require (!claimed);
-        require(submission < 10);
-        msg.sender.transfer(reward);
-        claimed = true;
-    }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Front Running
-
-\textbf{Found}: true
-
-\subsection{unchecked\textunderscore calls} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{unchecked{|\textunderscore| }calls} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:The return value of a message call is not checked. Execution will resume even if the called contract throws an exception. If the call fails accidentally or an attacker forces the call to fail, this may cause unexpected behaviour in the subsequent program logic.
 
@@ -568,187 +756,23 @@ function callchecked(address callee) public {
 
 \textbf{Found}: true
 
-\subsection{locked\textunderscore money} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{unused{|\textunderscore| }retval} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Contracts programmed to receive ether should implement a way to withdraw it, i.e., call transfer (recommended), send, or call.value at least once..
+\textbf{Description}:The return value of an external call is not stored in a local or state variable.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-/* In the following example, contracts programmed to receive ether does not call transfer, send, or call.value function: */ 
-
-pragma solidity 0.4.25;
-
-contract BadMarketPlace {
-    function deposit() payable {
-        require(msg.value > 0);
+contract MyConc{
+    using SafeMath for uint;
+    function my\textunderscore func(uint a, uint b) public{
+        a.add(b);
     }
 }
 
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{incorrect\textunderscore ERC20\textunderscore interface} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract Token{
-    function transfer(address to, uint value) external;
-    //...
-}
-
- /*Token.transfer does not return a boolean. Bob deploys the token. Alice creates a contract that interacts with it but assumes a correct ERC20 interface implementation. Alice's contract is unable to interact with Bob's contract. */ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{unused\textunderscore function\textunderscore should\textunderscore be\textunderscore external} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:A function with public visibility modifier that is not called internally. Changing visibility level to external increases code readability. Moreover, in many cases functions with external visibility modifier spend less gas comparing to functions with public visibility modifier.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
- /*In the following example, functions with both public and external visibility modifiers are used: */ 
-
-contract Token {
-
-    mapping (address => uint256) internal \textunderscore balances;
-
-    function transfer\textunderscore public(address to, uint256 value) public {
-        require(value <= \textunderscore balances[msg.sender]);
-
-        \textunderscore balances[msg.sender] \textendash = value;
-        \textunderscore balances[to] += value;
-    }
-
-    function transfer\textunderscore external(address to, uint256 value) external {
-        require(value <= \textunderscore balances[msg.sender]);
-
-        \textunderscore balances[msg.sender] \textendash = value;
-        \textunderscore balances[to] += value;
-    }
-}
-
- /*The second function requires less gas.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: true
-
-\subsection{uninitialized\textunderscore func\textunderscore pointer} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:this.balance will include the value sent by msg.value, which might lead to incorrect computation.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract Bug{
-  function buy() public payable{
-    uint minted = msg.value * (1000 / address(this).balance);
-    // ...
-  }
-}
-
- /*buy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{reentrancy} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:One of the major dangers of calling external contracts is that they can take over the control flow. In the reentrancy attack (a.k.a. recursive call attack), a malicious contract calls back into the calling contract before the first invocation of the function is finished. This may cause the different invocations of the function to interact in undesirable ways.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/*
-* @source: http://blockchain.unica.it/projects/ethereum\textendash survey/attacks.htmlsimpledao
-* @author: \textendash 
-* @vulnerable\textunderscore at\textunderscore lines: 19
-*/
-
-pragma solidity \textsuperscript 0.4.2;
-
-contract SimpleDAO {
-  mapping (address => uint) public credit;
-
-  function donate(address to) payable {
-    credit[to] += msg.value;
-  }
-
-  function withdraw(uint amount) {
-    if (credit[msg.sender]>= amount) {
-      // <yes> <report> REENTRANCY
-      bool res = msg.sender.call.value(amount)();
-      credit[msg.sender]\textendash =amount;
-    }
-  }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Reentrancy
-
-\textbf{Found}: true
-
-\subsection{visibility} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:The default function visibility level in contracts is public, in interfaces \textendash  external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.
-Additionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/*In this example, a specific modifier, such as public, is not used when declaring a function: */ 
-
-function foo();
-
-Preferred alternatives:
-
-function foo() public;
-function foo() internal;
+ /*MyConc calls add of SafeMath, but does not store the result in a. As a result, the computation has no effect. */ 
 
 \end{ffcode} 
 \} 
@@ -759,8 +783,156 @@ function foo() internal;
 
 \textbf{Found}: true
 
-\subsection{state\textunderscore variable\textunderscore shadowing} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{wrong{|\textunderscore| }signature} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma {\textendash} no spaces are used. This means one should use uint256 and int256 instead of uint or int.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+ /*This code uses incorrect function signature:*/ 
+
+pragma solidity |\textsuperscript| 0.5.1;
+contract Signature {
+    function callFoo(address addr, uint value) public returns (bool) {
+        bytes memory data = abi.encodeWithSignature("foo(uint)", value);
+        (bool status, ) = addr.call(data);
+        return status;
+    }
+}
+
+/*Use "foo(uint256)" instead.*/
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{constant{|\textunderscore| }state{|\textunderscore| }variable} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+pragma solidity |\textsuperscript| 0.4.0;
+
+contract A{
+    uint num = 5;
+    constructor(uint x) public{
+        num += x;
+    }
+}
+
+contract B is A{
+    constructor() A(2) public { /* ... */ }
+}
+
+contract C is A {
+    constructor() A(3) public { /* ... */ }
+}
+
+contract D is B, C {
+    constructor() public { /* ... */ }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{incorrect{|\textunderscore| }modifier} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:If a modifier does not execute \textunderscore  or revert, the execution of the function will return the default value, which can be misleading for the caller.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+modidfier myModif(){
+    if(..){
+      \textunderscore ;
+    }
+}
+function get() myModif returns(uint){}
+
+ /*If the condition in myModif is false, the execution of get() will return 0.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{deprecated{|\textunderscore| }standards} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Several functions and operators in Solidity are deprecated. Using them leads to reduced code quality. With new major versions of the Solidity compiler, deprecated functions and operators may result in side effects and compile errors.
+  Deprecated              Alternative
+  suicide(address)        selfdestruct(address)
+  block.blockhash(uint)   blockhash(uint)
+  sha3(...)               keccak256(...)
+  callcode(...)           delegatecall(...)
+  throw                   revert()
+  msg.gas                 gasleft
+  constant                view
+  var                     corresponding type name
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+pragma solidity 0.4.24;
+
+contract BreakThisHash {
+    bytes32 hash;
+    uint birthday;
+    constructor(bytes32 \textunderscore hash) public payable {
+        hash = \textunderscore hash;
+        birthday = now;
+    }
+
+    function kill(bytes password) external {
+        if (sha3(password) != hash) {
+            throw;
+        }
+        suicide(msg.sender);
+    }
+
+    function hashAge() public constant returns(uint) {
+        return(now |\textendash|  birthday);
+    }
+}
+
+ /*Use keccak256, selfdestruct, revert() instead.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{state{|\textunderscore| }variable{|\textunderscore| }shadowing} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Solidity allows for ambiguous naming of state variables when inheritance is used. Contract A with a variable x could inherit contract B that also has a state variable x defined. This would result in two separate versions of x, one of them being accessed from contract A and the other one from contract B. In more complex contract systems this condition could go unnoticed and subsequently lead to security issues.
 
@@ -797,267 +969,23 @@ contract Presale is Tokensale {
 
 \textbf{Found}: false
 
-\subsection{call\textunderscore without\textunderscore data} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{benign{|\textunderscore| }reentrancy} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Using low\textendash level call function with no arguments provided.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
- /*In the following example, call function is used for ETH transfer:*/ 
-pragma solidity 0.4.24;
-
-contract MyContract {
-
-    function withdraw() {
-        if (msg.sender.call.value(1)()) {
-        /*...*/
-        }
-    }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{incorrect\textunderscore modifier} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:If a modifier does not execute \textunderscore  or revert, the execution of the function will return the default value, which can be misleading for the caller.
+\textbf{Description}:Some re{\textendash}entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-modidfier myModif(){
-    if(..){
-      \textunderscore ;
-    }
-}
-function get() myModif returns(uint){}
-
- /*If the condition in myModif is false, the execution of get() will return 0.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{builtin\textunderscore symbol\textunderscore shadowing} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Something wrong may happen when built\textendash in symbols are shadowed by local variables, state variables, functions, modifiers, or events.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-pragma solidity \textsuperscript 0.4.24;
-
-contract Bug {
-    uint now; // Overshadows current time stamp.
-
-    function assert(bool condition) public {
-        // Overshadows built\textendash in symbol for providing assertions.
-    }
-
-    function get\textunderscore next\textunderscore expiration(uint earlier\textunderscore time) private returns (uint) {
-        return now + 259200; // References overshadowed timestamp.
-    }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{address\textunderscore hardcoded} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:The contract contains unknown address. This address might be used for some malicious activity. Please check hardcoded address and it's usage.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/*In the following contract, the address is specified in the source code:*/ 
-
-pragma solidity 0.4.24;
-contract C {
-  function f(uint a, uint b) pure returns (address) {
-    address public multisig = 0xf64B584972FE6055a770477670208d737Fff282f;
-    return multisig;
-        }
-}
-
- /*Do not forget to check the contract at the address 0xf64B584972FE6055a770477670208d737Fff282f for vulnerabilities.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{wrong\textunderscore signature} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma \textendash  no spaces are used. This means one should use uint256 and int256 instead of uint or int.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
- /*This code uses incorrect function signature:*/ 
-
-pragma solidity \textsuperscript 0.5.1;
-contract Signature {
-    function callFoo(address addr, uint value) public returns (bool) {
-        bytes memory data = abi.encodeWithSignature("foo(uint)", value);
-        (bool status, ) = addr.call(data);
-        return status;
-    }
-}
-
-Use "foo(uint256)" instead.
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{msg.value\textunderscore in\textunderscore loop} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:It is error\textendash prone to use msg.value inside a loop.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract MsgValueInLoop{
-    mapping (address => uint256) balances;
-
-    function bad(address[] memory receivers) public payable {
-        for (uint256 i=0; i < receivers.length; i++) {
-            balances[receivers[i]] += msg.value;
-        }
-    }
-}
-
- /*msg.value should be tracked through a local variable and decrease its amount on every iteration/usage.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{right\textunderscore to\textunderscore left\textunderscore char} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Malicious actors can use the Right\textendash To\textendash Left\textendash Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/*
-* @source: https://youtu.be/P\textunderscore Mtd5Fc\textunderscore 3E
-* @author: Shahar Zini
-*/
-pragma solidity \textsuperscript 0.5.0;
-
-contract GuessTheNumber
-{
-    uint \textunderscore secretNumber;
-    address payable \textunderscore owner;
-    event success(string);
-event wrongNumber(string);
-
-    function guess(uint n) payable public
-    {
-        require(msg.value == 1 ether);
-
-        uint p = address(this).balance;
-        checkAndTransferPrize(/*The prize/*rebmun desseug*/n , p/*
-                /*The user who should benefit */,msg.sender);
-    }
-
-    function checkAndTransferPrize(uint p, uint n, address payable guesser) internal returns(bool)
-    {
-        if(n == \textunderscore secretNumber)
-        {
-            guesser.transfer(p);
-            emit success("You guessed the correct number!");
-        }
-        else
-        {
-            emit wrongNumber("You've made an incorrect guess!");
-        }
-    }
+function callme(){
+  if( ! (msg.sender.call()() ) ){
+    throw;
   }
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{local\textunderscore variable\textunderscore shadowing} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Something wrong may happen when local variables shadowing state variables or other local variables.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-pragma solidity \textsuperscript 0.4.24;
-
-contract Bug {
-    uint owner;
-
-    function sensitive\textunderscore function(address owner) public {
-        // ...
-        require(owner == msg.sender);
-    }
-
-    function alternate\textunderscore sensitive\textunderscore function() public {
-        address owner = msg.sender;
-        // ...
-        require(owner == msg.sender);
-    }
+  counter += 1
 }
 
- /*sensitive\textunderscore function.owner shadows Bug.owner. As a result, the use of owner in sensitive\textunderscore function might be incorrect.*/ 
+ /*callme() contains a benign reentrancy.*/ 
 
 \end{ffcode} 
 \} 
@@ -1068,8 +996,216 @@ contract Bug {
 
 \textbf{Found}: false
 
-\subsection{use\textunderscore after\textunderscore delete} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{using{|\textunderscore| }send} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:The send function is called inside checks instead of using transfer. The recommended way to perform checked ether payments is addr.transfer(x), which automatically throws an exception if the transfer is unsuccessful.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/* In the following example, the send function is used:*/ 
+
+
+if(!addr.send(42 ether)) {
+    revert();
+}
+
+ /*Preferred alternative:
+
+addr.transfer(42 ether);*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{race{|\textunderscore| }condition} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front{\textendash}running attacks.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/* In this example, one can front|\textendash| run transactions to claim his/her reward before the owner reduces the reward amount.*/ 
+
+pragma solidity |\textsuperscript| 0.4.16;
+
+contract EthTxOrderDependenceMinimal {
+    address public owner;
+    bool public claimed;
+    uint public reward;
+
+    function EthTxOrderDependenceMinimal() public {
+        owner = msg.sender;
+    }
+
+    function setReward() public payable {
+        require (!claimed);
+        require(msg.sender == owner);
+        owner.transfer(reward);
+        reward = msg.value;
+    }
+
+    function claimReward(uint256 submission) {
+        require (!claimed);
+        require(submission < 10);
+        msg.sender.transfer(reward);
+        claimed = true;
+    }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Front Running
+
+\textbf{Found}: true
+
+\subsection{uninitialized{|\textunderscore| }func{|\textunderscore| }pointer} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:this.balance will include the value sent by msg.value, which might lead to incorrect computation.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract Bug{
+  function buy() public payable{
+    uint minted = msg.value * (1000 / address(this).balance);
+    // ...
+  }
+}
+
+ /*buy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{modifier{|\textunderscore| }like{|\textunderscore| }Sol{|\textunderscore| }keyword} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:A contract may contain modifier that looks similar to Solidity keyword
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract Contract{
+    modifier pub1ic() {
+    }
+
+    function doSomething() pub1ic {
+        require(owner == msg.sender);
+        owner = newOwner;
+    }
+}
+
+ /*public is a modifier meant to look like a Solidity keyword.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{incorrect{|\textunderscore| }ERC721{|\textunderscore| }interface} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Incorrect return values for ERC721 functions. A contract compiled with solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract Token{
+    function ownerOf(uint256 \textunderscore tokenId) external view returns (bool);
+    //...
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{incorrect{|\textunderscore| }ERC20{|\textunderscore| }interface} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract Token{
+    function transfer(address to, uint value) external;
+    //...
+}
+
+ /*Token.transfer does not return a boolean. Bob deploys the token. Alice creates a contract that interacts with it but assumes a correct ERC20 interface implementation. Alice's contract is unable to interact with Bob's contract. */ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{del{|\textunderscore| }structure{|\textunderscore| }containing{|\textunderscore| }mapping} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:A deletion in a structure containing a mapping will not delete the mapping (see the Solidity documentation). The remaining data may be used to compromise the contract.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+struct BalancesStruct{
+    address owner;
+    mapping(address => uint) balances;
+}
+mapping(address => BalancesStruct) public stackBalance;
+
+function remove() internal{
+      delete stackBalance[msg.sender];
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{use{|\textunderscore| }after{|\textunderscore| }delete} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Using values of variables after they have been explicitly deleted may lead to unexpected behavior or compromise.
 
@@ -1094,123 +1230,8 @@ function f() public {
 
 \textbf{Found}: false
 
-\subsection{incorrect\textunderscore shift\textunderscore in\textunderscore assembly} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:The values in a shift operation could be reversed (in a wrong order)
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract C {
-  function f() internal returns (uint a) {
-    assembly {
-        a := shr(a, 8)
-    }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{deprecated\textunderscore standards} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Several functions and operators in Solidity are deprecated. Using them leads to reduced code quality. With new major versions of the Solidity compiler, deprecated functions and operators may result in side effects and compile errors.
-  Deprecated              Alternative
-  suicide(address)        selfdestruct(address)
-  block.blockhash(uint)   blockhash(uint)
-  sha3(...)               keccak256(...)
-  callcode(...)           delegatecall(...)
-  throw                   revert()
-  msg.gas                 gasleft
-  constant                view
-  var                     corresponding type name
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-pragma solidity 0.4.24;
-
-contract BreakThisHash {
-    bytes32 hash;
-    uint birthday;
-    constructor(bytes32 \textunderscore hash) public payable {
-        hash = \textunderscore hash;
-        birthday = now;
-    }
-
-    function kill(bytes password) external {
-        if (sha3(password) != hash) {
-            throw;
-        }
-        suicide(msg.sender);
-    }
-
-    function hashAge() public constant returns(uint) {
-        return(now \textendash  birthday);
-    }
-}
-
- /*Use keccak256, selfdestruct, revert() instead.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{costly\textunderscore ops\textunderscore in\textunderscore loop} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Costly operations inside a loop might waste gas, so optimizations are justified.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract CostlyOperationsInLoop{
-
-    uint loop\textunderscore count = 100;
-    uint state\textunderscore variable=0;
-
-    function bad() external{
-        for (uint i=0; i < loop\textunderscore count; i++){
-            state\textunderscore variable++;
-        }
-    }
-
-    function good() external{
-      uint local\textunderscore variable = state\textunderscore variable;
-      for (uint i=0; i < loop\textunderscore count; i++){
-        local\textunderscore variable++;
-      }
-      state\textunderscore variable = local\textunderscore variable;
-    }
-}
- /*Incrementing state\textunderscore variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out\textendash of\textendash gas.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{function\textunderscore declared\textunderscore return\textunderscore but\textunderscore no\textunderscore return} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{function{|\textunderscore| }declared{|\textunderscore| }return{|\textunderscore| }but{|\textunderscore| }no{|\textunderscore| }return} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Function doesn't initialize return value. As result default value will be returned.
 
@@ -1239,66 +1260,22 @@ contract NewContract {
 
 \textbf{Found}: false
 
-\subsection{multiple\textunderscore constructor\textunderscore schemes} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{controlled{|\textunderscore| }lowlevel{|\textunderscore| }call} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Multiple constructor definitions in the same contract (using new and old schemes).
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract A {
-    uint x;
-    constructor() public {
-        x = 0;
-    }
-    function A() public {
-        x = 1;
-    }
-
-    function test() public returns(uint) {
-        return x;
-    }
-}
-
- /*In Solidity 0.4.22, a contract with both constructor schemes will compile. The first constructor will take precedence over the second, which may be unintended.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{byte\textunderscore array\textunderscore instead\textunderscore bytes} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Use bytes instead of byte[] for lower gas consumption.
+\textbf{Description}:Low{\textendash}level call with a user{\textendash}controlled data field
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-/*In the following example, byte array is used:*/ 
+address token;
 
-pragma solidity 0.4.24;
-
-contract C {
-    byte[] someVariable;
-    ...
+function call\textunderscore token(bytes data){
+  token.call(data);
 }
 
-Alternative:
-
-pragma solidity 0.4.24;
-
-contract C {
-    bytes someVariable;
-    ...
-}
+ /*token` points to an ERC20 token. Bob uses call\textunderscore token to call the transfer function of token to withdraw all tokens held by the contract.*/ 
 
 \end{ffcode} 
 \} 
@@ -1307,125 +1284,28 @@ contract C {
 
 \textbf{DASP} : Unknown Unknowns
 
-\textbf{Found}: false
+\textbf{Found}: true
 
-\subsection{short\textunderscore addresses} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{address{|\textunderscore| }hardcoded} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:MISSING
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-MISSING
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{uninitialized\textunderscore storage\textunderscore pointer} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:An uninitialized storage variable will act as a reference to the first state variable, and can override a critical variable.
+\textbf{Description}:The contract contains unknown address. This address might be used for some malicious activity. Please check hardcoded address and it's usage.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract Uninitialized{
-    address owner = msg.sender;
+/*In the following contract, the address is specified in the source code:*/ 
 
-    struct St{
-        uint a;
-    }
-
-    function func() {
-        St st;
-        st.a = 0x0;
-    }
-}
- /*Bob calls func. As a result, owner is overridden to 0.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{pausable\textunderscore modifier\textunderscore absence} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:ERC20 balance/allowance is modified without whenNotPaused modifier (in pausable contract).x
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-function buggyTransfer(address to, uint256 value) external returns (bool){
-        balanceOf[msg.sender] \textendash = value;
-        balanceOf[to] += value;
-        return true;
-    }
-
- /*In a pausable contract, buggyTransfer performs a token transfer but does not use Pausable's whenNotPaused modifier. If the token admin/owner pauses the ERC20 contract to trigger an emergency stop, it will not apply to this function. This results in Txs transferring even in a paused state, which corrupts the contract balance state and affects recovery.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{useless\textunderscore compare} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:A variable compared to itself is probably an error as it will always return true for ==, >=, <= and always false for <, > and !=. In addition, some comparison are also tautologies or contradictions.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-function check(uint a) external returns(bool){
-    return (a >= a);
+pragma solidity 0.4.24;
+contract C {
+  function f(uint a, uint b) pure returns (address) {
+    address public multisig = 0xf64B584972FE6055a770477670208d737Fff282f;
+    return multisig;
+        }
 }
 
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{benign\textunderscore reentrancy} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Some re\textendash entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-function callme(){
-  if( ! (msg.sender.call()() ) ){
-    throw;
-  }
-  counter += 1
-}
-
- /*callme() contains a benign reentrancy.*/ 
+ /*Do not forget to check the contract at the address 0xf64B584972FE6055a770477670208d737Fff282f for vulnerabilities.*/ 
 
 \end{ffcode} 
 \} 
@@ -1436,8 +1316,8 @@ function callme(){
 
 \textbf{Found}: false
 
-\subsection{divide\textunderscore before\textunderscore multiply} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{divide{|\textunderscore| }before{|\textunderscore| }multiply} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Solidity operates only with integers. Thus, if the division is done before the multiplication, the rounding errors can increase dramatically. Vulnerability type by SmartDec classification: Precision issues.
 
@@ -1468,51 +1348,34 @@ contract MyContract {
 
 \textbf{Found}: false
 
-\subsection{should\textunderscore be\textunderscore pure} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{reused{|\textunderscore| }base{|\textunderscore| }constructors} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:In Solidity, function that do not read from the state or modify it can be declared as pure.
+\textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-Here is the example of correct pure\textendash function:
+pragma solidity |\textsuperscript| 0.4.0;
 
-pragma solidity \textsuperscript 0.4.16;
-
-contract C {
-    function f(uint a, uint b) pure returns (uint) {
-        return a * (b + 42) + now;
+contract A{
+    uint num = 5;
+    constructor(uint x) public{
+        num += x;
     }
 }
 
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{del\textunderscore structure\textunderscore containing\textunderscore mapping} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:A deletion in a structure containing a mapping will not delete the mapping (see the Solidity documentation). The remaining data may be used to compromise the contract.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-struct BalancesStruct{
-    address owner;
-    mapping(address => uint) balances;
+contract B is A{
+    constructor() A(2) public { /* ... */ }
 }
-mapping(address => BalancesStruct) public stackBalance;
 
-function remove() internal{
-      delete stackBalance[msg.sender];
+contract C is A {
+    constructor() A(3) public { /* ... */ }
+}
+
+contract D is B, C {
+    constructor() public { /* ... */ }
 }
 
 \end{ffcode} 
@@ -1524,28 +1387,8 @@ function remove() internal{
 
 \textbf{Found}: false
 
-\subsection{msg.value\textunderscore equals\textunderscore zero} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:The msg.value == 0 condition check is meaningless in most cases.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-msg.value == 0
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{unused\textunderscore state\textunderscore variables} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{unused{|\textunderscore| }state{|\textunderscore| }variables} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Unused variables are allowed in Solidity and they do not pose a direct security issue. It is best practice though to avoid them as they can:
 * cause an increase in computations (and unnecessary gas consumption)
@@ -1602,51 +1445,20 @@ function call(int a) public {
 
 \textbf{Found}: false
 
-\subsection{denial\textunderscore of\textunderscore service} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{do{|\textunderscore| }while{|\textunderscore| }continue} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:
-* External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.
-* A large number of loops may consume gas, so it is possible that the function exceeds the block gas limit, and transactions calling it will never be confirmed.
-* An inappropriate type inference in the loop (e.g., literal \textendash > uint8) may cause a infinite loop.
-* Recursive external calls may consume a large number of callstacks, which may lead to DoS.
+\textbf{Description}:Prior to version 0.5.0, Solidity compiler handles continue inside do{\textendash}while loop incorrectly: it ignores while condition.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-for (var i = 0; i < array.length; i++) { /* ... */
+/*The following loop is infinite:*/ 
 
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Denial of Services
-
-\textbf{Found}: true
-
-\subsection{array\textunderscore length\textunderscore manipulation} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:The length of the dynamic array is changed directly. In the following case, the appearance of gigantic arrays is possible and it can lead to a storage overlap attack (collisions with other data in storage).
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-pragma solidity 0.4.24;
-
-contract dataStorage {
-    uint[] public data;
-
-    function writeData(uint[] \textunderscore data) external {
-        for(uint i = data.length; i < \textunderscore data.length; i++) {
-            data.length++;
-            data[i]=\textunderscore data[i];
-        }
-    }
-}
+do {
+    continue;
+} while(false);
 
 \end{ffcode} 
 \} 
@@ -1657,34 +1469,27 @@ contract dataStorage {
 
 \textbf{Found}: false
 
-\subsection{constant\textunderscore state\textunderscore variable} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{builtin{|\textunderscore| }symbol{|\textunderscore| }shadowing} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
+\textbf{Description}:Something wrong may happen when built{\textendash}in symbols are shadowed by local variables, state variables, functions, modifiers, or events.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-pragma solidity \textsuperscript 0.4.0;
+pragma solidity |\textsuperscript| 0.4.24;
 
-contract A{
-    uint num = 5;
-    constructor(uint x) public{
-        num += x;
+contract Bug {
+    uint now; // Overshadows current time stamp.
+
+    function assert(bool condition) public {
+        // Overshadows built|\textendash| in symbol for providing assertions.
     }
-}
 
-contract B is A{
-    constructor() A(2) public { /* ... */ }
-}
-
-contract C is A {
-    constructor() A(3) public { /* ... */ }
-}
-
-contract D is B, C {
-    constructor() public { /* ... */ }
+    function get\textunderscore next\textunderscore expiration(uint earlier\textunderscore time) private returns (uint) {
+        return now + 259200; // References overshadowed timestamp.
+    }
 }
 
 \end{ffcode} 
@@ -1696,38 +1501,8 @@ contract D is B, C {
 
 \textbf{Found}: false
 
-\subsection{access\textunderscore control} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:
-* Contracts use the deprecated tx.origin to validate callers
-* Handling large authorization logic with lengthy require
-* Making reckless use of delegatecall in proxy libraries or proxy contracts. Delegate calling into untrusted contracts is very dangerous, as the code at the target address can change any storage values of the caller and has full control over the caller's balance.
-* Due to missing or insufficient access controls, malicious parties can withdraw some or all Ether from the contract account.
-* Due to missing or insufficient access controls, malicious parties can self\textendash destruct the contract.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract TestContract is MultiOwnable {
-
-  function withdrawAll(){
-    msg.sender.transfer(this.balance);
-  }
-}
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Access control
-
-\textbf{Found}: true
-
 \subsection{ignore} 
-\textbf{SWC \textunderscore ID:} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:Other trivial bug types.
 
@@ -1745,48 +1520,28 @@ contract TestContract is MultiOwnable {
 
 \textbf{Found}: true
 
-\subsection{controlled\textunderscore lowlevel\textunderscore call} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{uninitialized{|\textunderscore| }storage{|\textunderscore| }pointer} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Low\textendash level call with a user\textendash controlled data field
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-address token;
-
-function call\textunderscore token(bytes data){
-  token.call(data);
-}
-
- /*token` points to an ERC20 token. Bob uses call\textunderscore token to call the transfer function of token to withdraw all tokens held by the contract.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: true
-
-\subsection{dangerous\textunderscore enum\textunderscore conversion} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:out\textendash of\textendash range enum conversion may occur (solc < 0.4.5).
+\textbf{Description}:An uninitialized storage variable will act as a reference to the first state variable, and can override a critical variable.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-pragma solidity 0.4.2;
-contract Test{
-  enum E{a}
-  function bug(uint a) public returns(E){
-        return E(a);
+contract Uninitialized{
+    address owner = msg.sender;
+
+    struct St{
+        uint a;
+    }
+
+    function func() {
+        St st;
+        st.a = 0x0;
     }
 }
+ /*Bob calls func. As a result, owner is overridden to 0.*/ 
 
 \end{ffcode} 
 \} 
@@ -1797,19 +1552,21 @@ contract Test{
 
 \textbf{Found}: false
 
-\subsection{should\textunderscore be\textunderscore view} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{should{|\textunderscore| }be{|\textunderscore| }pure} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:In Solidity, functions that do not read from the state or modify it can be declared as view.
+\textbf{Description}:In Solidity, function that do not read from the state or modify it can be declared as pure.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-Here is the example of correct view\textendash function:
+Here is the example of correct pure|\textendash| function:
+
+pragma solidity |\textsuperscript| 0.4.16;
 
 contract C {
-    function f(uint a, uint b) view returns (uint) {
+    function f(uint a, uint b) pure returns (uint) {
         return a * (b + 42) + now;
     }
 }
@@ -1823,61 +1580,32 @@ contract C {
 
 \textbf{Found}: false
 
-\subsection{uninitialized\textunderscore local\textunderscore variable} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{pre{|\textunderscore| }declare{|\textunderscore| }usage{|\textunderscore| }of{|\textunderscore| }local} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Some unexpected error may happen when local variables are not uninitialized.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract Uninitialized is Owner{
-    function withdraw() payable public onlyOwner{
-        address to;
-        to.transfer(this.balance)
-    }
-}
-
- /*Bob calls transfer. As a result, all Ether is sent to the address 0x0 and is lost.*/ 
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{reused\textunderscore base\textunderscore constructors} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
+\textbf{Description}:Using a variable before the declaration is stepped over (either because it is later declared, or declared in another scope).
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-pragma solidity \textsuperscript 0.4.0;
+contract C {
+    function f(uint z) public returns (uint) {
+        uint y = x + 9 + z; // 'z' is used pre|\textendash| declaration
+        uint x = 7;
 
-contract A{
-    uint num = 5;
-    constructor(uint x) public{
-        num += x;
+        if (z % 2 == 0) {
+            uint max = 5;
+            // ...
+        }
+
+        // 'max' was intended to be 5, but it was mistakenly declared in a scope and not assigned (so it is zero).
+        for (uint i = 0; i < max; i++) {
+            x += 1;
+        }
+
+        return x;
     }
-}
-
-contract B is A{
-    constructor() A(2) public { /* ... */ }
-}
-
-contract C is A {
-    constructor() A(3) public { /* ... */ }
-}
-
-contract D is B, C {
-    constructor() public { /* ... */ }
 }
 
 \end{ffcode} 
@@ -1889,22 +1617,123 @@ contract D is B, C {
 
 \textbf{Found}: false
 
-\subsection{blockhash\textunderscore current} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{storage{|\textunderscore| }ABIEncoderV2{|\textunderscore| }array} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:blockhash function returns a non\textendash zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.
+\textbf{Description}:solc versions 0.4.7{\textendash}0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-/*In the following example, currentBlockBlockhash function always returns 0:*/ 
+contract A {
+    uint[2][3] bad\textunderscore arr = [[1, 2], [3, 4], [5, 6]];
+
+    /* Array of arrays passed to abi.encode is vulnerable */
+    function bad() public {
+        bytes memory b = abi.encode(bad\textunderscore arr);
+    }
+}
+
+ /*abi.encode(bad\textunderscore arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{costly{|\textunderscore| }ops{|\textunderscore| }in{|\textunderscore| }loop} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Costly operations inside a loop might waste gas, so optimizations are justified.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract CostlyOperationsInLoop{
+
+    uint loop\textunderscore count = 100;
+    uint state\textunderscore variable=0;
+
+    function bad() external{
+        for (uint i=0; i < loop\textunderscore count; i++){
+            state\textunderscore variable++;
+        }
+    }
+
+    function good() external{
+      uint local\textunderscore variable = state\textunderscore variable;
+      for (uint i=0; i < loop\textunderscore count; i++){
+        local\textunderscore variable++;
+      }
+      state\textunderscore variable = local\textunderscore variable;
+    }
+}
+ /*Incrementing state\textunderscore variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out|\textendash| of|\textendash| gas.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{msg.value{|\textunderscore| }equals{|\textunderscore| }zero} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:The msg.value == 0 condition check is meaningless in most cases.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+msg.value == 0
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{overpowered{|\textunderscore| }role} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:This function is callable only from one address. Therefore, the system depends heavily on this address. In this case, there are scenarios that may lead to undesirable consequences for investors, e.g. if the private key of this address becomes compromised.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
 
 pragma solidity 0.4.25;
 
-contract MyContract {
-    function currentBlockHash() public view returns(bytes32) {
-        return blockhash(block.number);
+contract Crowdsale {
+
+    address public owner;
+
+    uint rate;
+    uint cap;
+
+    constructor() {
+        owner = msg.sender;
+    }
+
+    function setRate(\textunderscore rate) public onlyOwner {
+        rate = \textunderscore rate;
+    }
+
+    function setCap(\textunderscore cap) public {
+        require (msg.sender == owner);
+        cap = \textunderscore cap;
     }
 }
 
@@ -1917,8 +1746,91 @@ contract MyContract {
 
 \textbf{Found}: false
 
-\subsection{payable\textunderscore func\textunderscore using\textunderscore delegatecall\textunderscore in\textunderscore loop} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{storage{|\textunderscore| }signed{|\textunderscore| }integer{|\textunderscore| }array} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:solc versions 0.4.7{\textendash}0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract A {
+  int[3] ether\textunderscore balances; // storage signed integer array
+  function bad0() private {
+    // ...
+    ether\textunderscore balances = [|\textendash| 1, |\textendash| 1, |\textendash| 1];
+    // ...
+  }
+}
+
+ /*bad0() uses a (storage|\textendash| allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{useless{|\textunderscore| }compare} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:A variable compared to itself is probably an error as it will always return true for ==, >=, <= and always false for <, > and !=. In addition, some comparison are also tautologies or contradictions.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+function check(uint a) external returns(bool){
+    return (a >= a);
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{extra{|\textunderscore| }gas{|\textunderscore| }in{|\textunderscore| }loops} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:State variable, .balance, or .length of non{\textendash}memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+/* In the following example, limiter variable is accessed on every for|\textendash| loop iteration: /* 
+
+pragma solidity 0.4.25;
+
+contract NewContract {
+    uint limiter = 100;
+
+    function longLoop() {
+        for(uint i = 0; i < limiter; i++) {
+            /* ... */
+        }
+    }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{payable{|\textunderscore| }func{|\textunderscore| }using{|\textunderscore| }delegatecall{|\textunderscore| }in{|\textunderscore| }loop} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:The same msg.value amount may be incorrectly accredited multiple times when using delegatecall inside a loop in a payable function.
 
@@ -1950,25 +1862,50 @@ contract DelegatecallInLoop{
 
 \textbf{Found}: false
 
-\subsection{using\textunderscore send} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{right{|\textunderscore| }to{|\textunderscore| }left{|\textunderscore| }char} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:The send function is called inside checks instead of using transfer. The recommended way to perform checked ether payments is addr.transfer(x), which automatically throws an exception if the transfer is unsuccessful.
+\textbf{Description}:Malicious actors can use the Right{\textendash}To{\textendash}Left|\textendash| Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-/* In the following example, the send function is used:*/ 
+/*
+* @source: https://youtu.be/P\textunderscore Mtd5Fc\textunderscore 3E
+* @author: Shahar Zini
+*/
+pragma solidity |\textsuperscript| 0.5.0;
 
+contract GuessTheNumber
+{
+    uint \textunderscore secretNumber;
+    address payable \textunderscore owner;
+    event success(string);
+event wrongNumber(string);
 
-if(!addr.send(42 ether)) {
-    revert();
-}
+    function guess(uint n) payable public
+    {
+        require(msg.value == 1 ether);
 
- /*Preferred alternative:
+        uint p = address(this).balance;
+        checkAndTransferPrize(/*The prize/*rebmun desseug*/n , p/*
+                /*The user who should benefit */,msg.sender);
+    }
 
-addr.transfer(42 ether);*/ 
+    function checkAndTransferPrize(uint p, uint n, address payable guesser) internal returns(bool)
+    {
+        if(n == \textunderscore secretNumber)
+        {
+            guesser.transfer(p);
+            emit success("You guessed the correct number!");
+        }
+        else
+        {
+            emit wrongNumber("You've made an incorrect guess!");
+        }
+    }
+  }
 
 \end{ffcode} 
 \} 
@@ -1979,8 +1916,91 @@ addr.transfer(42 ether);*/
 
 \textbf{Found}: false
 
-\subsection{time\textunderscore manipulation} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{assert{|\textunderscore| }state{|\textunderscore| }change} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Incorrect use of assert(). See Solidity best practices.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract A {
+  uint s\textunderscore a;
+
+  function bad() public {
+    assert((s\textunderscore a += 1) > 10);
+  }
+}
+ /*The assert in bad() increments the state variable s\textunderscore a while checking for the condition.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown Unknowns
+
+\textbf{Found}: false
+
+\subsection{pausable{|\textunderscore| }modifier{|\textunderscore| }absence} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:ERC20 balance/allowance is modified without whenNotPaused modifier (in pausable contract).x
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+function buggyTransfer(address to, uint256 value) external returns (bool){
+        balanceOf[msg.sender] |\textendash| = value;
+        balanceOf[to] += value;
+        return true;
+    }
+
+ /*In a pausable contract, buggyTransfer performs a token transfer but does not use Pausable's whenNotPaused modifier. If the token admin/owner pauses the ERC20 contract to trigger an emergency stop, it will not apply to this function. This results in Txs transferring even in a paused state, which corrupts the contract balance state and affects recovery.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{call{|\textunderscore| }without{|\textunderscore| }data} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Using low{\textendash}level call function with no arguments provided.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+ /*In the following example, call function is used for ETH transfer:*/ 
+pragma solidity 0.4.24;
+
+contract MyContract {
+
+    function withdraw() {
+        if (msg.sender.call.value(1)()) {
+        /*...*/
+        }
+    }
+}
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{time{|\textunderscore| }manipulation} 
+\textbf{SWC{\textunderscore }ID:} 
 
 \textbf{Description}:From locking a token sale to unlocking funds at a specific time for a game, contracts sometimes need to rely on the current time. This is usually done via block.timestamp or its alias now in Solidity. But where does that value come from? From the miners! Because a transaction's miner has leeway in reporting the time at which the mining occurred, good smart contracts will avoid relying strongly on the time advertised.
 
@@ -2015,18 +2035,49 @@ contract TimedCrowdsale
 
 \textbf{Found}: false
 
-\subsection{incorrect\textunderscore ERC721\textunderscore interface} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{uninitialized{|\textunderscore| }local{|\textunderscore| }variable} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Incorrect return values for ERC721 functions. A contract compiled with solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
+\textbf{Description}:Some unexpected error may happen when local variables are not uninitialized.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract Token{
-    function ownerOf(uint256 \textunderscore tokenId) external view returns (bool);
-    //...
+contract Uninitialized is Owner{
+    function withdraw() payable public onlyOwner{
+        address to;
+        to.transfer(this.balance)
+    }
+}
+
+ /*Bob calls transfer. As a result, all Ether is sent to the address 0x0 and is lost.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\subsection{strict{|\textunderscore| }balance{|\textunderscore| }equality} 
+\textbf{SWC{\textunderscore }ID:} 
+
+\textbf{Description}:Contracts can behave erroneously when they strictly assume a specific Ether balance. It is always possible to forcibly send ether to a contract (without triggering its fallback function), using selfdestruct, or by mining to the account. In the worst case scenario this could lead to DOS conditions that might render the contract unusable.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+if (address(this).balance == 42 ether ) {
+    /* ... */
+}
+ secure alternative:
+
+if (address(this).balance >= 42 ether ) {
+  /* ... */
 }
 
 \end{ffcode} 
@@ -2038,83 +2089,32 @@ contract Token{
 
 \textbf{Found}: false
 
-\subsection{redundant\textunderscore code} 
-\textbf{SWC \textunderscore ID:} 
+\subsection{byte{|\textunderscore| }array{|\textunderscore| }instead{|\textunderscore| }bytes} 
+\textbf{SWC{\textunderscore }ID:} 
 
-\textbf{Description}:Redundant statements may have no effect.
+\textbf{Description}:Use bytes instead of byte[] for lower gas consumption.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract RedundantStatementsContract {
+/*In the following example, byte array is used:*/ 
 
-    constructor() public {
-        uint; // Elementary Type Name
-        bool; // Elementary Type Name
-        RedundantStatementsContract; // Identifier
-    }
+pragma solidity 0.4.24;
 
-    function test() public returns (uint) {
-        uint; // Elementary Type Name
-        assert; // Identifier
-        test; // Identifier
-        return 777;
-    }
+contract C {
+    byte[] someVariable;
+    ...
 }
 
- /*Each commented line references types/identifiers, but performs no action with them, so no code will be generated for such statements and they can be removed.*/ 
+Alternative:
 
-\end{ffcode} 
-\} 
+pragma solidity 0.4.24;
 
-\} 
-
-\textbf{DASP} : Unknown unknowns
-
-\textbf{Found}: false
-
-\subsection{do\textunderscore while\textunderscore continue} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Prior to version 0.5.0, Solidity compiler handles continue inside do\textendash while loop incorrectly: it ignores while condition.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-/*The following loop is infinite:*/ 
-
-do {
-    continue;
-} while(false);
-
-\end{ffcode} 
-\} 
-
-\} 
-
-\textbf{DASP} : Unknown Unknowns
-
-\textbf{Found}: false
-
-\subsection{assert\textunderscore state\textunderscore change} 
-\textbf{SWC \textunderscore ID:} 
-
-\textbf{Description}:Incorrect use of assert(). See Solidity best practices.
-
-
-\textbf{Example:} 
-\begin{ffcode} 
-
-contract A {
-  uint s\textunderscore a;
-
-  function bad() public {
-    assert((s\textunderscore a += 1) > 10);
-  }
+contract C {
+    bytes someVariable;
+    ...
 }
- /*The assert in bad() increments the state variable s\textunderscore a while checking for the condition.*/ 
 
 \end{ffcode} 
 \} 

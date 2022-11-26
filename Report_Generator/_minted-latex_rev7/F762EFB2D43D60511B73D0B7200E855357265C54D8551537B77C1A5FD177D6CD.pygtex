@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+ /*This code uses incorrect function signature:*/
+
+pragma solidity \PYG{esc}{\textsuperscript} 0.5.1;
+contract Signature \PYGZob{}
+    function callFoo(address addr, uint value) public returns (bool) \PYGZob{}
+        bytes memory data = abi.encodeWithSignature(\PYGZdq{}foo(uint)\PYGZdq{}, value);
+        (bool status, ) = addr.call(data);
+        return status;
+    \PYGZcb{}
+\PYGZcb{}
+
+/*Use \PYGZdq{}foo(uint256)\PYGZdq{} instead.*/
+\end{Verbatim}

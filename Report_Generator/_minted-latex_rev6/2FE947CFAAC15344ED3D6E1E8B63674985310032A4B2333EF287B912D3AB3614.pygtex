@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract TimedCrowdsale
+  event Finished();
+  event notFinished();
+
+  // Sale should finish exactly at January 1, 2019
+  function isSaleFinished() private returns (bool) \PYGZob{}
+    return block.timestamp \PYGZgt{}= 1546300800;
+  \PYGZcb{}
+
+  function run() public \PYGZob{}
+    if (isSaleFinished()) \PYGZob{}
+        emit Finished();
+    \PYGZcb{} else \PYGZob{}
+        emit notFinished();
+    \PYGZcb{}
+  \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Token\PYGZob{}
+    function ownerOf(uint256 \PYG{esc}{\textunderscore} tokenId) external view returns (bool);
+    //...
+\PYGZcb{}
+\end{Verbatim}

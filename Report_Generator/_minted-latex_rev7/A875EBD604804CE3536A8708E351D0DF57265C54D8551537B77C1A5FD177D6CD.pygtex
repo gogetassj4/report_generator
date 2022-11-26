@@ -1,0 +1,5 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+function check(uint a) external returns(bool)\PYGZob{}
+    return (a \PYGZgt{}= a);
+\PYGZcb{}
+\end{Verbatim}

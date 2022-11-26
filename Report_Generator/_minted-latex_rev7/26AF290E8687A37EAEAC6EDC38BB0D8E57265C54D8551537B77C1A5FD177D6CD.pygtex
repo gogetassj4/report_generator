@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+if (address(this).balance == 42 ether ) \PYGZob{}
+    /* ... */
+\PYGZcb{}
+ secure alternative:
+
+if (address(this).balance \PYGZgt{}= 42 ether ) \PYGZob{}
+  /* ... */
+\PYGZcb{}
+\end{Verbatim}

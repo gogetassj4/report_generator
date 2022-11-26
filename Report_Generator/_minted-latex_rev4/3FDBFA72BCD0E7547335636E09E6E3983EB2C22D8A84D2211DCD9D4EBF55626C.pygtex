@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity \PYG{esc}{\textsuperscript} 0.5.0;
+
+contract DepositBox \PYGZob{}
+    mapping(address =\PYGZgt{} uint) balance;
+
+    // Accept deposit
+    function deposit(uint amount) public payable \PYGZob{}
+        require(msg.value == amount, \PYGZsq{}incorrect amount\PYGZsq{});
+        // Should update user balance
+        balance[msg.sender] = amount;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

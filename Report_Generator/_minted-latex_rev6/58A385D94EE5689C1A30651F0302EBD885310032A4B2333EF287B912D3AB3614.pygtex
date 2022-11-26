@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity \PYG{esc}{\textsuperscript} 0.4.0;
+
+contract A\PYGZob{}
+    uint num = 5;
+    constructor(uint x) public\PYGZob{}
+        num += x;
+    \PYGZcb{}
+\PYGZcb{}
+
+contract B is A\PYGZob{}
+    constructor() A(2) public \PYGZob{} /* ... */ \PYGZcb{}
+\PYGZcb{}
+
+contract C is A \PYGZob{}
+    constructor() A(3) public \PYGZob{} /* ... */ \PYGZcb{}
+\PYGZcb{}
+
+contract D is B, C \PYGZob{}
+    constructor() public \PYGZob{} /* ... */ \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

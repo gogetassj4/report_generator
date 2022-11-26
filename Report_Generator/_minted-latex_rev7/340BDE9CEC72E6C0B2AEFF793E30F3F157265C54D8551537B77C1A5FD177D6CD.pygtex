@@ -1,0 +1,16 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract DelegatecallInLoop\PYGZob{}
+
+    mapping (address =\PYGZgt{} uint256) balances;
+
+    function bad(address[] memory receivers) public payable \PYGZob{}
+        for (uint256 i = 0; i \PYGZlt{} receivers.length; i++) \PYGZob{}
+            address(this).delegatecall(abi.encodeWithSignature(\PYGZdq{}addBalance(address)\PYGZdq{}, receivers[i]));
+        \PYGZcb{}
+    \PYGZcb{}
+
+    function addBalance(address a) public payable \PYGZob{}
+        balances[a] += msg.value;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

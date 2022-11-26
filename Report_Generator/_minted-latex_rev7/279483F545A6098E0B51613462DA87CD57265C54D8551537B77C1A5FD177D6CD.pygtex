@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract A \PYGZob{}
+    uint[2][3] bad\PYG{esc}{\textunderscore} arr = [[1, 2], [3, 4], [5, 6]];
+
+    /* Array of arrays passed to abi.encode is vulnerable */
+    function bad() public \PYGZob{}
+        bytes memory b = abi.encode(bad\PYG{esc}{\textunderscore} arr);
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*abi.encode(bad\PYG{esc}{\textunderscore} arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.*/
+\end{Verbatim}

@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+Here is the example of correct pure\PYG{esc}{\textendash} function:
+
+pragma solidity \PYG{esc}{\textsuperscript} 0.4.16;
+
+contract C \PYGZob{}
+    function f(uint a, uint b) pure returns (uint) \PYGZob{}
+        return a * (b + 42) + now;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

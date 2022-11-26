@@ -1,0 +1,8 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract C \PYGZob{}
+  function f() internal returns (uint a) \PYGZob{}
+    assembly \PYGZob{}
+        a := shr(a, 8)
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

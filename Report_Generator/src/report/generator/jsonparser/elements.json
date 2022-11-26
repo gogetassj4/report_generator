@@ -5,7 +5,7 @@
             "bug_type": {
                 "access_control": {
                     "dasp": "Access control",
-                    "description": "Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:\n* Contracts use the deprecated tx.origin to validate callers\n* Handling large authorization logic with lengthy require\n* Making reckless use of delegatecall in proxy libraries or proxy contracts. Delegate calling into untrusted contracts is very dangerous, as the code at the target address can change any storage values of the caller and has full control over the caller's balance.\n* Due to missing or insufficient access controls, malicious parties can withdraw some or all Ether from the contract account.\n* Due to missing or insufficient access controls, malicious parties can self-destruct the contract.\n",
+                    "description": "Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:\n* Contracts use the deprecated tx.origin to validate callers\n* Handling large authorization logic with lengthy require\n* Making reckless use of delegatecall in proxy libraries or proxy contracts. Delegate calling into untrusted contracts is very dangerous, as the code at the target address can change any storage values of the caller and has full control over the caller's balance.\n* Due to missing or insufficient access controls, malicious parties can withdraw some or all Ether from the contract account.\n* Due to missing or insufficient access controls, malicious parties can self{\\textendash}destruct the contract.\n",
                     "example": "contract TestContract is MultiOwnable {\n\n  function withdrawAll(){\n    msg.sender.transfer(this.balance);\n  }\n}\n",
                     "found": true,
                     "reported_by": [
@@ -45,7 +45,7 @@
                 },
                 "arithmetic": {
                     "dasp": "Arithmetic",
-                    "description": "This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .\n* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2^8-1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.\n* Division issues. Some wrong will happen when integer or float numbers are divided by zero.\n* Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).\n",
+                    "description": "This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .\n* Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2{\textsuperscript}8{\\textendash}1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.\n* Division issues. Some wrong will happen when integer or float numbers are divided by zero.\n* Type deduction overflow. In Solidity, when declaring a variable as type var, the compiler uses type deduction to automatically infer the smallest possible type from the first expression that is assigned to the variable. Thus, the deduced type may not be appropriate, and it can incur overflow bugs later (see the example).\n",
                     "example": "Integer overflow/underflow\n/*\n* @source: https://capturetheether.com/challenges/math/token-sale/\n* @author: Steve Marx\n*/\npragma solidity ^0.4.21;\ncontract TokenSaleChallenge {\n    mapping(address => uint256) public balanceOf;\n    uint256 constant PRICE_PER_TOKEN = 1 ether;\n\n    function TokenSaleChallenge(address _player) public payable {\n        require(msg.value == 1 ether);\n    }\n\n    function isComplete() public view returns (bool) {\n        return address(this).balance < 1 ether;\n    }\n\n    function buy(uint256 numTokens) public payable {\n        require(msg.value == numTokens * PRICE_PER_TOKEN);\n\n        balanceOf[msg.sender] += numTokens;\n    }\n}\n\n /*Division issues*/ \ncontract Division {\n\n    /*function unsigned_division(uint32 x, uint32 y) returns (int r) {\n      //if (y == 0) { throw; }\n      r = x / y;\n    }*/\n\n    function signed_division(int x, int y) returns (int) {\n      //if ((y == 0) || ((x == -2**255) && (y == -1))) { throw; }\n      return x / y;\n    }\n\n}\n\n /*Type deduction overflow*/ \ncontract For_Test {\n...\n  function Test () payable public {\n    if ( msg . value > 0.1 ether ) {\n      uint256 multi = 0;\n      uint256 amountToTransfer = 0;\n      for ( var i = 0; i < 2* msg . value ; i ++) {\n        multi = i *2;\n        if ( multi < amountToTransfer ) {\n          break ;\n        amountToTransfer = multi ;\n      }\n      msg.sender.transfer( amountToTransfer );\n    }\n  }\n}\n",
                     "found": true,
                     "reported_by": [
@@ -131,7 +131,7 @@
                 },
                 "benign_reentrancy": {
                     "dasp": "Unknown unknowns",
-                    "description": "Some re-entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.\n",
+                    "description": "Some re{\\textendash}entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.\n",
                     "example": "function callme(){\n  if( ! (msg.sender.call()() ) ){\n    throw;\n  }\n  counter += 1\n}\n\n /*callme() contains a benign reentrancy.*/ \n",
                     "found": false,
                     "reported_by": [],
@@ -139,7 +139,7 @@
                 },
                 "blockhash_current": {
                     "dasp": "Unknown unknowns",
-                    "description": "blockhash function returns a non-zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.\n",
+                    "description": "blockhash function returns a non{\\textendash}zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.\n",
                     "example": "/*In the following example, currentBlockBlockhash function always returns 0:*/ \n\npragma solidity 0.4.25;\n\ncontract MyContract {\n    function currentBlockHash() public view returns(bytes32) {\n        return blockhash(block.number);\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -147,7 +147,7 @@
                 },
                 "builtin_symbol_shadowing": {
                     "dasp": "Unknown unknowns",
-                    "description": "Something wrong may happen when built-in symbols are shadowed by local variables, state variables, functions, modifiers, or events.\n",
+                    "description": "Something wrong may happen when built{\\textendash}in symbols are shadowed by local variables, state variables, functions, modifiers, or events.\n",
                     "example": "pragma solidity ^0.4.24;\n\ncontract Bug {\n    uint now; // Overshadows current time stamp.\n\n    function assert(bool condition) public {\n        // Overshadows built-in symbol for providing assertions.\n    }\n\n    function get_next_expiration(uint earlier_time) private returns (uint) {\n        return now + 259200; // References overshadowed timestamp.\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -163,7 +163,7 @@
                 },
                 "call_without_data": {
                     "dasp": "Unknown unknowns",
-                    "description": "Using low-level call function with no arguments provided.\n",
+                    "description": "Using low{\\textendash}level call function with no arguments provided.\n",
                     "example": " /*In the following example, call function is used for ETH transfer:*/ \npragma solidity 0.4.24;\n\ncontract MyContract {\n\n    function withdraw() {\n        if (msg.sender.call.value(1)()) {\n        /*...*/\n        }\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -179,7 +179,7 @@
                 },
                 "controlled_lowlevel_call": {
                     "dasp": "Unknown Unknowns",
-                    "description": "Low-level call with a user-controlled data field\n",
+                    "description": "Low{\\textendash}level call with a user{\\textendash}controlled data field\n",
                     "example": "address token;\n\nfunction call_token(bytes data){\n  token.call(data);\n}\n\n /*token` points to an ERC20 token. Bob uses call_token to call the transfer function of token to withdraw all tokens held by the contract.*/ \n",
                     "found": true,
                     "reported_by": [
@@ -207,7 +207,7 @@
                 },
                 "dangerous_enum_conversion": {
                     "dasp": "Unknown Unknowns",
-                    "description": "out-of-range enum conversion may occur (solc < 0.4.5).\n",
+                    "description": "out{\\textendash}of{\\textendash}range enum conversion may occur (solc < 0.4.5).\n",
                     "example": "pragma solidity 0.4.2;\ncontract Test{\n  enum E{a}\n  function bug(uint a) public returns(E){\n        return E(a);\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -215,7 +215,7 @@
                 },
                 "dead_code": {
                     "dasp": "Unknown unknowns",
-                    "description": "In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect-free code. This can lead to the introduction of \"dead\" code that does not properly performing an intended action.\n\nFor example, it's easy to miss the trailing parentheses in msg.sender.call.value(xx)(\"\");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead` when they are not invoked.\n",
+                    "description": "In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect{\\textendash}free code. This can lead to the introduction of \"dead\" code that does not properly performing an intended action.\n\nFor example, it's easy to miss the trailing parentheses in msg.sender.call.value(xx)(\"\");, which could lead to a function proceeding without transferring funds to msg.sender. Also, internal functions could be `dead` when they are not invoked.\n",
                     "example": "pragma solidity ^0.5.0;\n\ncontract DepositBox {\n    mapping(address => uint) balance;\n\n    // Accept deposit\n    function deposit(uint amount) public payable {\n        require(msg.value == amount, 'incorrect amount');\n        // Should update user balance\n        balance[msg.sender] = amount;\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -233,7 +233,7 @@
                 },
                 "denial_of_service": {
                     "dasp": "Denial of Services",
-                    "description": "Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:\n* External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.\n* A large number of loops may consume gas, so it is possible that the function exceeds the block gas limit, and transactions calling it will never be confirmed.\n* An inappropriate type inference in the loop (e.g., literal -> uint8) may cause a infinite loop.\n* Recursive external calls may consume a large number of callstacks, which may lead to DoS.\n",
+                    "description": "Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:\n* External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.\n* A large number of loops may consume gas, so it is possible that the function exceeds the block gas limit, and transactions calling it will never be confirmed.\n* An inappropriate type inference in the loop (e.g., literal {\\textendash}> uint8) may cause a infinite loop.\n* Recursive external calls may consume a large number of callstacks, which may lead to DoS.\n",
                     "example": "for (var i = 0; i < array.length; i++) { /* ... */\n",
                     "found": true,
                     "reported_by": [
@@ -286,7 +286,7 @@
                 },
                 "do_while_continue": {
                     "dasp": "Unknown Unknowns",
-                    "description": "Prior to version 0.5.0, Solidity compiler handles continue inside do-while loop incorrectly: it ignores while condition.\n",
+                    "description": "Prior to version 0.5.0, Solidity compiler handles continue inside do{\\textendash}while loop incorrectly: it ignores while condition.\n",
                     "example": "/*The following loop is infinite:*/ \n\ndo {\n    continue;\n} while(false);\n",
                     "found": false,
                     "reported_by": [],
@@ -302,7 +302,7 @@
                 },
                 "extra_gas_in_loops": {
                     "dasp": "Unknown unknowns",
-                    "description": "State variable, .balance, or .length of non-memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.\n",
+                    "description": "State variable, .balance, or .length of non{\\textendash}memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.\n",
                     "example": "/* In the following example, limiter variable is accessed on every for-loop iteration: /* \n\npragma solidity 0.4.25;\n\ncontract NewContract {\n    uint limiter = 100;\n\n    function longLoop() {\n        for(uint i = 0; i < limiter; i++) {\n            /* ... */\n        }\n    }\n}\n",
                     "found": false,
                     "reported_by": [],
@@ -636,7 +636,7 @@
                 },
                 "msg.value_in_loop": {
                     "dasp": "Unknown unknowns",
-                    "description": "It is error-prone to use msg.value inside a loop.\n",
+                    "description": "It is error{\\textendash}prone to use msg.value inside a loop.\n",
                     "example": "contract MsgValueInLoop{\n    mapping (address => uint256) balances;\n\n    function bad(address[] memory receivers) public payable {\n        for (uint256 i=0; i < receivers.length; i++) {\n            balances[receivers[i]] += msg.value;\n        }\n    }\n}\n\n /*msg.value should be tracked through a local variable and decrease its amount on every iteration/usage.*/ \n",
                     "found": false,
                     "reported_by": [],
@@ -684,7 +684,7 @@
                 },
                 "race_condition": {
                     "dasp": "Front Running",
-                    "description": "Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front-running attacks.\n",
+                    "description": "Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front{\\textendash}running attacks.\n",
                     "example": "/* In this example, one can front-run transactions to claim his/her reward before the owner reduces the reward amount.*/ \n\npragma solidity ^0.4.16;\n\ncontract EthTxOrderDependenceMinimal {\n    address public owner;\n    bool public claimed;\n    uint public reward;\n\n    function EthTxOrderDependenceMinimal() public {\n        owner = msg.sender;\n    }\n\n    function setReward() public payable {\n        require (!claimed);\n        require(msg.sender == owner);\n        owner.transfer(reward);\n        reward = msg.value;\n    }\n\n    function claimReward(uint256 submission) {\n        require (!claimed);\n        require(submission < 10);\n        msg.sender.transfer(reward);\n        claimed = true;\n    }\n}\n",
                     "found": true,
                     "reported_by": [
@@ -826,7 +826,7 @@
                 },
                 "right_to_left_char": {
                     "dasp": "Unknown Unknowns",
-                    "description": "Malicious actors can use the Right-To-Left-Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.\n",
+                    "description": "Malicious actors can use the Right{\\textendash}To{\\textendash}Left-Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.\n",
                     "example": "/*\n* @source: https://youtu.be/P_Mtd5Fc_3E\n* @author: Shahar Zini\n*/\npragma solidity ^0.5.0;\n\ncontract GuessTheNumber\n{\n    uint _secretNumber;\n    address payable _owner;\n    event success(string);\nevent wrongNumber(string);\n\n    function guess(uint n) payable public\n    {\n        require(msg.value == 1 ether);\n\n        uint p = address(this).balance;\n        checkAndTransferPrize(/*The prize/*rebmun desseug*/n , p/*\n                /*The user who should benefit */,msg.sender);\n    }\n\n    function checkAndTransferPrize(uint p, uint n, address payable guesser) internal returns(bool)\n    {\n        if(n == _secretNumber)\n        {\n            guesser.transfer(p);\n            emit success(\"You guessed the correct number!\");\n        }\n        else\n        {\n            emit wrongNumber(\"You've made an incorrect guess!\");\n        }\n    }\n  }\n",
                     "found": false,
                     "reported_by": [],
@@ -870,7 +870,7 @@
                 },
                 "storage_ABIEncoderV2_array": {
                     "dasp": "Unknown unknowns",
-                    "description": "solc versions 0.4.7-0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.\n",
+                    "description": "solc versions 0.4.7{\\textendash}0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.\n",
                     "example": "contract A {\n    uint[2][3] bad_arr = [[1, 2], [3, 4], [5, 6]];\n\n    /* Array of arrays passed to abi.encode is vulnerable */\n    function bad() public {\n        bytes memory b = abi.encode(bad_arr);\n    }\n}\n\n /*abi.encode(bad_arr) in a call to bad() will incorrectly encode the array as [[1, 2], [2, 3], [3, 4]] and lead to unintended behavior.*/ \n",
                     "found": false,
                     "reported_by": [],
@@ -878,7 +878,7 @@
                 },
                 "storage_signed_integer_array": {
                     "dasp": "Unknown unknowns",
-                    "description": "solc versions 0.4.7-0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.\n",
+                    "description": "solc versions 0.4.7{\\textendash}0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.\n",
                     "example": "contract A {\n  int[3] ether_balances; // storage signed integer array\n  function bad0() private {\n    // ...\n    ether_balances = [-1, -1, -1];\n    // ...\n  }\n}\n\n /*bad0() uses a (storage-allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.*/ \n",
                     "found": false,
                     "reported_by": [],
@@ -1118,7 +1118,7 @@
                 },
                 "visibility": {
                     "dasp": "Unknown Unknowns",
-                    "description": "The default function visibility level in contracts is public, in interfaces - external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.\nAdditionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.\n",
+                    "description": "The default function visibility level in contracts is public, in interfaces {\\textendash} external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.\nAdditionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.\n",
                     "example": "/*In this example, a specific modifier, such as public, is not used when declaring a function: */ \n\nfunction foo();\n\nPreferred alternatives:\n\nfunction foo() public;\nfunction foo() internal;\n",
                     "found": true,
                     "reported_by": [
@@ -1163,8 +1163,8 @@
                 },
                 "wrong_signature": {
                     "dasp": "Unknown Unknowns",
-                    "description": "In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma - no spaces are used. This means one should use uint256 and int256 instead of uint or int.\n",
-                    "example": " /*This code uses incorrect function signature:*/ \n\npragma solidity ^0.5.1;\ncontract Signature {\n    function callFoo(address addr, uint value) public returns (bool) {\n        bytes memory data = abi.encodeWithSignature(\"foo(uint)\", value);\n        (bool status, ) = addr.call(data);\n        return status;\n    }\n}\n\nUse \"foo(uint256)\" instead.\n",
+                    "description": "In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma {\\textendash} no spaces are used. This means one should use uint256 and int256 instead of uint or int.\n",
+                    "example": " /*This code uses incorrect function signature:*/ \n\npragma solidity ^0.5.1;\ncontract Signature {\n    function callFoo(address addr, uint value) public returns (bool) {\n        bytes memory data = abi.encodeWithSignature(\"foo(uint)\", value);\n        (bool status, ) = addr.call(data);\n        return status;\n    }\n}\n\n/*Use \"foo(uint256)\" instead.*/\n",
                     "found": false,
                     "reported_by": [],
                     "swc_id": []

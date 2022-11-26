@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+/*
+* @source: http://blockchain.unica.it/projects/ethereum\PYG{esc}{\textendash} survey/attacks.htmlsimpledao
+* @author: \PYG{esc}{\textendash}
+* @vulnerable\PYG{esc}{\textunderscore} at\PYG{esc}{\textunderscore} lines: 19
+*/
+
+pragma solidity \PYG{esc}{\textsuperscript} 0.4.2;
+
+contract SimpleDAO \PYGZob{}
+  mapping (address =\PYGZgt{} uint) public credit;
+
+  function donate(address to) payable \PYGZob{}
+    credit[to] += msg.value;
+  \PYGZcb{}
+
+  function withdraw(uint amount) \PYGZob{}
+    if (credit[msg.sender]\PYGZgt{}= amount) \PYGZob{}
+      // \PYGZlt{}yes\PYGZgt{} \PYGZlt{}report\PYGZgt{} REENTRANCY
+      bool res = msg.sender.call.value(amount)();
+      credit[msg.sender]\PYG{esc}{\textendash} =amount;
+    \PYGZcb{}
+  \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

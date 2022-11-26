@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract CostlyOperationsInLoop\PYGZob{}
+
+    uint loop\PYG{esc}{\textunderscore} count = 100;
+    uint state\PYG{esc}{\textunderscore} variable=0;
+
+    function bad() external\PYGZob{}
+        for (uint i=0; i \PYGZlt{} loop\PYG{esc}{\textunderscore} count; i++)\PYGZob{}
+            state\PYG{esc}{\textunderscore} variable++;
+        \PYGZcb{}
+    \PYGZcb{}
+
+    function good() external\PYGZob{}
+      uint local\PYG{esc}{\textunderscore} variable = state\PYG{esc}{\textunderscore} variable;
+      for (uint i=0; i \PYGZlt{} loop\PYG{esc}{\textunderscore} count; i++)\PYGZob{}
+        local\PYG{esc}{\textunderscore} variable++;
+      \PYGZcb{}
+      state\PYG{esc}{\textunderscore} variable = local\PYG{esc}{\textunderscore} variable;
+    \PYGZcb{}
+\PYGZcb{}
+ /*Incrementing state\PYG{esc}{\textunderscore} variable in a loop incurs a lot of gas because of expensive SSTOREs, which might lead to an out\PYG{esc}{\textendash} of\PYG{esc}{\textendash} gas.*/
+\end{Verbatim}

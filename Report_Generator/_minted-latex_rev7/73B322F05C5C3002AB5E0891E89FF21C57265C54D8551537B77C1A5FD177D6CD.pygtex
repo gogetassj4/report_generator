@@ -1,0 +1,20 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity \PYG{esc}{\textsuperscript} 0.4.24;
+
+contract Bug \PYGZob{}
+    uint owner;
+
+    function sensitive\PYG{esc}{\textunderscore} function(address owner) public \PYGZob{}
+        // ...
+        require(owner == msg.sender);
+    \PYGZcb{}
+
+    function alternate\PYG{esc}{\textunderscore} sensitive\PYG{esc}{\textunderscore} function() public \PYGZob{}
+        address owner = msg.sender;
+        // ...
+        require(owner == msg.sender);
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*sensitive\PYG{esc}{\textunderscore} function.owner shadows Bug.owner. As a result, the use of owner in sensitive\PYG{esc}{\textunderscore} function might be incorrect.*/
+\end{Verbatim}

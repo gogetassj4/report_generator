@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract A \PYGZob{}
+  uint s\PYG{esc}{\textunderscore} a;
+
+  function bad() public \PYGZob{}
+    assert((s\PYG{esc}{\textunderscore} a += 1) \PYGZgt{} 10);
+  \PYGZcb{}
+\PYGZcb{}
+ /*The assert in bad() increments the state variable s\PYG{esc}{\textunderscore} a while checking for the condition.*/
+\end{Verbatim}

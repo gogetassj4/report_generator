@@ -1,0 +1,19 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract RedundantStatementsContract \PYGZob{}
+
+    constructor() public \PYGZob{}
+        uint; // Elementary Type Name
+        bool; // Elementary Type Name
+        RedundantStatementsContract; // Identifier
+    \PYGZcb{}
+
+    function test() public returns (uint) \PYGZob{}
+        uint; // Elementary Type Name
+        assert; // Identifier
+        test; // Identifier
+        return 777;
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*Each commented line references types/identifiers, but performs no action with them, so no code will be generated for such statements and they can be removed.*/
+\end{Verbatim}

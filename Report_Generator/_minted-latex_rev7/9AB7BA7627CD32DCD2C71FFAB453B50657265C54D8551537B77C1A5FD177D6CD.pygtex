@@ -1,0 +1,10 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+/*In this example, a specific modifier, such as public, is not used when declaring a function: */
+
+function foo();
+
+Preferred alternatives:
+
+function foo() public;
+function foo() internal;
+\end{Verbatim}

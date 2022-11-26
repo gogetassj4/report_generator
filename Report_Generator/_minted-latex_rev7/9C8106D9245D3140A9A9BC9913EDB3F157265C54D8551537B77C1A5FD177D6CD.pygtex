@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract Contract\PYGZob{}
+    modifier pub1ic() \PYGZob{}
+    \PYGZcb{}
+
+    function doSomething() pub1ic \PYGZob{}
+        require(owner == msg.sender);
+        owner = newOwner;
+    \PYGZcb{}
+\PYGZcb{}
+
+ /*public is a modifier meant to look like a Solidity keyword.*/
+\end{Verbatim}

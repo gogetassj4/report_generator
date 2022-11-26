@@ -1,0 +1,21 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+pragma solidity 0.4.25;
+
+contract Tokensale \PYGZob{}
+    uint public hardcap = 10000 ether;
+
+    function Tokensale() \PYGZob{}\PYGZcb{}
+
+    function fetchCap() public constant returns(uint) \PYGZob{}
+        return hardcap;
+    \PYGZcb{}
+\PYGZcb{}
+
+contract Presale is Tokensale \PYGZob{}
+    //uint hardcap = 1000 ether;
+    //If the hardcap variables were both needed we would have to rename one to fix this.
+    function Presale() Tokensale() \PYGZob{}
+        hardcap = 1000 ether;
+    \PYGZcb{}
+\PYGZcb{}
+\end{Verbatim}

@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+contract A \PYGZob{}
+  int[3] ether\PYGZbs{}textunderscore balances; // storage signed integer array
+  function bad0() private \PYGZob{}
+    // ...
+    ether\PYGZbs{}textunderscore balances = [\PYG{esc}{\textendash} 1, \PYG{esc}{\textendash} 1, \PYG{esc}{\textendash} 1];
+    // ...
+  \PYGZcb{}
+\PYGZcb{}
+
+ /*bad0() uses a (storage\PYG{esc}{\textendash} allocated) signed integer array state variable to store the ether balances of three accounts. 1 is supposed to indicate uninitialized values but the Solidity bug makes these as 1, which could be exploited by the accounts.*/
+\end{Verbatim}
