@@ -129,7 +129,7 @@ class parserTests {
 		    	}
 		    }
 		    
-		    assertNotEquals("hello world", check_val);
+		    assertEquals("hello world", check_val);
 
 		}catch(FileNotFoundException e) {}
 			
