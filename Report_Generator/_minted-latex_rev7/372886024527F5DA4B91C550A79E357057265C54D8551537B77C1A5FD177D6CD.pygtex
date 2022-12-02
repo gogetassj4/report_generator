@@ -1,0 +1,3 @@
+\begin{Verbatim}[commandchars=\\\{\},codes={\catcode`\$=3\catcode`\^=7\catcode`\_=8\relax}]
+[\PYGZob{}\PYGZdq{}checker\PYG{esc}{\textunderscore} id\PYGZdq{}:5,\PYGZdq{}lines\PYGZdq{}:[\PYGZob{}\PYGZdq{}code\PYGZdq{}:\PYGZdq{}      bool res = msg.sender.call.value(amount)();\PYGZbs{}n\PYGZdq{},\PYGZdq{}function\PYG{esc}{\textunderscore} name\PYGZdq{}:\PYGZdq{}\PYGZdq{},\PYGZdq{}line\PYG{esc}{\textunderscore} no\PYGZdq{}:19\PYGZcb{}],\PYGZdq{}tool\PYGZdq{}:\PYGZdq{}metasecurelabs\PYG{esc}{\textendash} 5\PYGZdq{}\PYGZcb{}]
+\end{Verbatim}

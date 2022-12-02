@@ -12,7 +12,7 @@
 
 \section{Introduction} 
 \subsection{dangerous{||\textunderscore|| }enum{||\textunderscore|| }conversion} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:out{\textendash}of{\textendash}range enum conversion may occur (solc < 0.4.5).
 
@@ -37,8 +37,13 @@ contract Test{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{unused{||\textunderscore|| }function{||\textunderscore|| }should{||\textunderscore|| }be{||\textunderscore|| }external} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:A function with public visibility modifier that is not called internally. Changing visibility level to external increases code readability. Moreover, in many cases functions with external visibility modifier spend less gas comparing to functions with public visibility modifier.
 
@@ -78,8 +83,13 @@ contract Token {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":9,"lines":[],"tool":"metasecurelabs|\textendash| 9"},{"checker|\textunderscore| id":9,"lines":[],"tool":"metasecurelabs|\textendash| 9"},{"checker|\textunderscore| id":9,"lines":[],"tool":"metasecurelabs|\textendash| 9"}]
+\end{ffcode} 
 \subsection{access{||\textunderscore|| }control} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [105,106,115]
 
 \textbf{Description}:Access Control issues are common in all programs, not just smart contracts. In fact, it's number 5 on the OWASP top 10. One usually accesses a contract's functionality through its public or external functions. While insecure visibility settings give attackers straightforward ways to access a contract's private values or logic, access control bypasses are sometimes more subtle. These vulnerabilities can occur in the following cases:
 * Contracts use the deprecated tx.origin to validate callers
@@ -108,8 +118,13 @@ contract TestContract is MultiOwnable {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":4,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 4"}]
+\end{ffcode} 
 \subsection{erc20{||\textunderscore|| }event{||\textunderscore|| }not{||\textunderscore|| }indexed} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Events defined by the ERC20 specification that should have some parameters as indexed.
 
@@ -136,8 +151,13 @@ contract ERC20Bad {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{locked{||\textunderscore|| }money} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Contracts programmed to receive ether should implement a way to withdraw it, i.e., call transfer (recommended), send, or call.value at least once..
 
@@ -164,8 +184,13 @@ contract BadMarketPlace {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{arithmetic} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [101]
 
 \textbf{Description}:This bug type consists of various arithmetic bugs: integer overflow/underflow, division issues, .
 * Integer overflow/underflow. An overflow/underflow happens when an arithmetic operation reaches the maximum or minimum size of a type. For instance if a number is stored in the uint8 type, it means that the number is stored in a 8 bits unsigned number ranging from 0 to 2{	extsuperscript}8{\textendash}1. In computer programming, an integer overflow occurs when an arithmetic operation attempts to create a numeric value that is outside of the range that can be represented with a given number of bits either larger than the maximum or lower than the minimum representable value.
@@ -243,8 +268,13 @@ contract For|\textunderscore| Test {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":1,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 1"},{"checker|\textunderscore| id":5,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 5"},{"checker|\textunderscore| id":6,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 6"},{"checker|\textunderscore| id":6,"lines":[{"code":"      credit[msg.sender]|\textendash| =amount;\n","function|\textunderscore| name":"","line|\textunderscore| no":20}],"tool":"metasecurelabs|\textendash| 6"},{"checker|\textunderscore| id":7,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 7"}]
+\end{ffcode} 
 \subsection{incorrect{||\textunderscore|| }shift{||\textunderscore|| }in{||\textunderscore|| }assembly} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The values in a shift operation could be reversed (in a wrong order)
 
@@ -268,8 +298,13 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{multiple{||\textunderscore|| }constructor{||\textunderscore|| }schemes} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Multiple constructor definitions in the same contract (using new and old schemes).
 
@@ -302,8 +337,13 @@ contract A {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{local{||\textunderscore|| }variable{||\textunderscore|| }shadowing} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Something wrong may happen when local variables shadowing state variables or other local variables.
 
@@ -339,8 +379,13 @@ contract Bug {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{redundant{||\textunderscore|| }code} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Redundant statements may have no effect.
 
@@ -375,8 +420,13 @@ contract RedundantStatementsContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{should{||\textunderscore|| }be{||\textunderscore|| }view} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:In Solidity, functions that do not read from the state or modify it can be declared as view.
 
@@ -401,8 +451,13 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{arbitrary{||\textunderscore|| }from{||\textunderscore|| }in{||\textunderscore|| }transferFrom} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Something wrong happens when msg.sender is not used as `from` in transferFrom.
 
@@ -425,8 +480,13 @@ function a(address from, address to, uint256 amount) public {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{func{||\textunderscore|| }modifying{||\textunderscore|| }storage{||\textunderscore|| }array{||\textunderscore|| }by{||\textunderscore|| }value} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Arrays passed to a function that expects reference to a storage array.
 
@@ -462,8 +522,13 @@ contract Memory {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{dead{||\textunderscore|| }code} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [135]
 
 \textbf{Description}:In Solidity, it's possible to write code that does not produce the intended effects. Currently, the solidity compiler will not return a warning for effect{\textendash}free code. This can lead to the introduction of "dead" code that does not properly performing an intended action.
 
@@ -495,8 +560,45 @@ contract DepositBox {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
+\subsection{incorrect{||\textunderscore|| }using{||\textunderscore|| }balance{||\textunderscore|| }and{||\textunderscore|| }msg{||\textunderscore|| }value} 
+\textbf{SWC{|\textunderscore| }ID:} []
+
+\textbf{Description}:this.balance will include the value sent by msg.value, which might lead to incorrect computation.
+
+
+\textbf{Example:} 
+\begin{ffcode} 
+
+contract Bug{
+  function buy() public payable{
+    uint minted = msg.value * (1000 / address(this).balance);
+    // ...
+  }
+}
+
+ /*buy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.*/ 
+
+\end{ffcode} 
+\} 
+
+\} 
+
+\textbf{DASP} : Unknown unknowns
+
+\textbf{Found}: false
+
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{short{||\textunderscore|| }addresses} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:MISSING
 
@@ -515,8 +617,13 @@ MISSING
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{blockhash{||\textunderscore|| }current} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:blockhash function returns a non{\textendash}zero value only for 256 last blocks. Besides, it always returns 0 for the current block, i.e. blockhash(block.number) always equals to 0.
 
@@ -543,8 +650,13 @@ contract MyContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{msg.value{||\textunderscore|| }in{||\textunderscore|| }loop} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:It is error{\textendash}prone to use msg.value inside a loop.
 
@@ -573,8 +685,13 @@ contract MsgValueInLoop{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{reentrancy} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [107]
 
 \textbf{Description}:One of the major dangers of calling external contracts is that they can take over the control flow. In the reentrancy attack (a.k.a. recursive call attack), a malicious contract calls back into the calling contract before the first invocation of the function is finished. This may cause the different invocations of the function to interact in undesirable ways.
 
@@ -615,8 +732,13 @@ contract SimpleDAO {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":1,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 1"},{"checker|\textunderscore| id":5,"lines":[{"code":"      credit[msg.sender]|\textendash| =amount;\n","function|\textunderscore| name":"","line|\textunderscore| no":20}],"tool":"metasecurelabs|\textendash| 5"},{"checker|\textunderscore| id":4,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 4"},{"checker|\textunderscore| id":6,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 6"},{"checker|\textunderscore| id":7,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 7"},{"checker|\textunderscore| id":8,"lines":[{"code":"      // <yes> <report> REENTRANCY\n","function|\textunderscore| name":"","line|\textunderscore| no":18}],"tool":"metasecurelabs|\textendash| 8"},{"checker|\textunderscore| id":9,"lines":[{"code":"      credit[msg.sender]|\textendash| =amount;\n","function|\textunderscore| name":"","line|\textunderscore| no":20},{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 9"}]
+\end{ffcode} 
 \subsection{visibility} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [100,108]
 
 \textbf{Description}:The default function visibility level in contracts is public, in interfaces {\textendash} external,  and the state variable default visibility level is internal. In contracts, the fallback function can be external or public. In interfaces, all the functions should be declared as external. Explicitly define function visibility to prevent confusion.
 Additionally, the visibility of state variables could be a problem. labeling the visibility explicitly makes it easier to catch incorrect assumptions about who can access the variable.
@@ -643,8 +765,13 @@ function foo() internal;
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":10,"lines":[{"code":"functiondonate(addressto)payable{credit[to]+=msg.value;}","function|\textunderscore| name":"","line|\textunderscore| no":12}],"tool":"metasecurelabs|\textendash| 10"},{"checker|\textunderscore| id":10,"lines":[{"code":"functionwithdraw(uintamount){if(credit[msg.sender]>=amount){boolres=msg.sender.call.value(amount)();credit[msg.sender]|\textendash| =amount;}}","function|\textunderscore| name":"","line|\textunderscore| no":16}],"tool":"metasecurelabs|\textendash| 10"},{"checker|\textunderscore| id":10,"lines":[{"code":"functionqueryCredit(addressto)returns(uint){returncredit[to];}","function|\textunderscore| name":"","line|\textunderscore| no":24}],"tool":"metasecurelabs|\textendash| 10"}]
+\end{ffcode} 
 \subsection{array{||\textunderscore|| }length{||\textunderscore|| }manipulation} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [124]
 
 \textbf{Description}:The length of the dynamic array is changed directly. In the following case, the appearance of gigantic arrays is possible and it can lead to a storage overlap attack (collisions with other data in storage).
 
@@ -674,8 +801,13 @@ contract dataStorage {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{denial{||\textunderscore|| }of{||\textunderscore|| }service} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [113,128]
 
 \textbf{Description}:Denial of service (DoS) is deadly in the world of Ethereum: while other types of applications can eventually recover, smart contracts can be taken offline forever by just one of these attacks. DoS can happen in the following cases:
 * External calls can fail accidentally or deliberately, which can cause a DoS condition in the contract. Particularly, DoS would happen if there is a loop where external calls are not isolated.
@@ -698,8 +830,13 @@ for (var i = 0; i < array.length; i++) { /* ... */
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":6,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 6"},{"checker|\textunderscore| id":7,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 7"}]
+\end{ffcode} 
 \subsection{uninitialized{||\textunderscore|| }state{||\textunderscore|| }variable} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Some unexpected error may happen when state variables are not uninitialized.
 
@@ -724,8 +861,13 @@ contract Uninitialized{
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":4,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 4"},{"checker|\textunderscore| id":4,"lines":[{"code":"      credit[msg.sender]|\textendash| =amount;\n","function|\textunderscore| name":"","line|\textunderscore| no":20}],"tool":"metasecurelabs|\textendash| 4"},{"checker|\textunderscore| id":4,"lines":[{"code":"    return credit[to];\n","function|\textunderscore| name":"","line|\textunderscore| no":25}],"tool":"metasecurelabs|\textendash| 4"},{"checker|\textunderscore| id":4,"lines":[{"code":"  mapping (address => uint) public credit;\n","function|\textunderscore| name":"","line|\textunderscore| no":10}],"tool":"metasecurelabs|\textendash| 4"},{"checker|\textunderscore| id":4,"lines":[{"code":"    if (credit[msg.sender]>= amount) {\n","function|\textunderscore| name":"","line|\textunderscore| no":17}],"tool":"metasecurelabs|\textendash| 4"}]
+\end{ffcode} 
 \subsection{unchecked{||\textunderscore|| }calls} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [104]
 
 \textbf{Description}:The return value of a message call is not checked. Execution will resume even if the called contract throws an exception. If the call fails accidentally or an attacker forces the call to fail, this may cause unexpected behaviour in the subsequent program logic.
 
@@ -756,8 +898,13 @@ function callchecked(address callee) public {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":1,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 1"},{"checker|\textunderscore| id":5,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 5"},{"checker|\textunderscore| id":8,"lines":[{"code":"      // <yes> <report> REENTRANCY\n","function|\textunderscore| name":"","line|\textunderscore| no":18}],"tool":"metasecurelabs|\textendash| 8"}]
+\end{ffcode} 
 \subsection{unused{||\textunderscore|| }retval} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The return value of an external call is not stored in a local or state variable.
 
@@ -783,8 +930,13 @@ contract MyConc{
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":4,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 4"}]
+\end{ffcode} 
 \subsection{wrong{||\textunderscore|| }signature} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:In Solidity, the function signature is defined as the canonical expression of the basic prototype without data location specifier, i.e. the function name with the parenthesised list of parameter types. Parameter types are split by a single comma {\textendash} no spaces are used. This means one should use uint256 and int256 instead of uint or int.
 
@@ -814,8 +966,13 @@ contract Signature {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{constant{||\textunderscore|| }state{||\textunderscore|| }variable} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
 
@@ -853,8 +1010,13 @@ contract D is B, C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{incorrect{||\textunderscore|| }modifier} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:If a modifier does not execute |\textunderscore|  or revert, the execution of the function will return the default value, which can be misleading for the caller.
 
@@ -880,8 +1042,13 @@ function get() myModif returns(uint){}
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{deprecated{||\textunderscore|| }standards} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [111,118]
 
 \textbf{Description}:Several functions and operators in Solidity are deprecated. Using them leads to reduced code quality. With new major versions of the Solidity compiler, deprecated functions and operators may result in side effects and compile errors.
   Deprecated              Alternative
@@ -931,8 +1098,13 @@ contract BreakThisHash {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{state{||\textunderscore|| }variable{||\textunderscore|| }shadowing} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [119]
 
 \textbf{Description}:Solidity allows for ambiguous naming of state variables when inheritance is used. Contract A with a variable x could inherit contract B that also has a state variable x defined. This would result in two separate versions of x, one of them being accessed from contract A and the other one from contract B. In more complex contract systems this condition could go unnoticed and subsequently lead to security issues.
 
@@ -969,8 +1141,13 @@ contract Presale is Tokensale {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{benign{||\textunderscore|| }reentrancy} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Some re{\textendash}entrancy bugs have no adverse effect since its exploitation would have the same effect as two consecutive calls.
 
@@ -996,8 +1173,13 @@ function callme(){
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{using{||\textunderscore|| }send} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The send function is called inside checks instead of using transfer. The recommended way to perform checked ether payments is addr.transfer(x), which automatically throws an exception if the transfer is unsuccessful.
 
@@ -1025,8 +1207,13 @@ addr.transfer(42 ether);*/
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{race{||\textunderscore|| }condition} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [114]
 
 \textbf{Description}:Since miners always get rewarded via gas fees for running code on behalf of externally owned addresses (EOA), users can specify higher fees to have their transactions mined more quickly. Since the Ethereum blockchain is public, everyone can see the contents of others' pending transactions. This means if a given user is revealing the solution to a puzzle or other valuable secret, a malicious user can steal the solution and copy their transaction with higher fees to preempt the original solution. If developers of smart contracts are not careful, this situation can lead to practical and devastating front{\textendash}running attacks.
 
@@ -1071,35 +1258,47 @@ contract EthTxOrderDependenceMinimal {
 
 \textbf{Found}: true
 
-\subsection{uninitialized{||\textunderscore|| }func{||\textunderscore|| }pointer} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
 
-\textbf{Description}:this.balance will include the value sent by msg.value, which might lead to incorrect computation.
+[{"checker|\textunderscore| id":8,"lines":[{"code":"      // <yes> <report> REENTRANCY\n","function|\textunderscore| name":"","line|\textunderscore| no":18}],"tool":"metasecurelabs|\textendash| 8"},{"checker|\textunderscore| id":8,"lines":[{"code":"      // <yes> <report> REENTRANCY\n","function|\textunderscore| name":"","line|\textunderscore| no":18}],"tool":"metasecurelabs|\textendash| 8"}]
+\end{ffcode} 
+\subsection{uninitialized{||\textunderscore|| }func{||\textunderscore|| }pointer} 
+\textbf{SWC{|\textunderscore| }ID:} []
+
+\textbf{Description}:solc versions 0.4.5|\textendash| 0.4.26 and 0.5.0|\textendash| 0.5.8 contain a compiler bug leading to unexpected behavior when calling uninitialized function pointers in constructors.
 
 
 \textbf{Example:} 
 \begin{ffcode} 
 
-contract Bug{
-  function buy() public payable{
-    uint minted = msg.value * (1000 / address(this).balance);
-    // ...
+contract bad0 {
+
+  constructor() public {
+    /* Uninitialized function pointer */
+    function(uint256) internal returns(uint256) a;
+    a(10);
   }
 }
 
- /*buy is meant to compute a price that changes a ratio over the contract's balance. .balance will include msg.value and lead to an incorrect price computation.*/ 
+The call to a(10) will lead to unexpected behavior because function pointer a is not initialized in the constructor.
 
 \end{ffcode} 
 \} 
 
 \} 
 
-\textbf{DASP} : Unknown unknowns
+\textbf{DASP} : Unknown Unknowns
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{modifier{||\textunderscore|| }like{||\textunderscore|| }Sol{||\textunderscore|| }keyword} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:A contract may contain modifier that looks similar to Solidity keyword
 
@@ -1128,8 +1327,13 @@ contract Contract{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{incorrect{||\textunderscore|| }ERC721{||\textunderscore|| }interface} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Incorrect return values for ERC721 functions. A contract compiled with solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
 
@@ -1151,8 +1355,13 @@ contract Token{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{incorrect{||\textunderscore|| }ERC20{||\textunderscore|| }interface} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Incorrect return values for ERC20 functions. A contract compiled with Solidity > 0.4.22 interacting with these functions will fail to execute them, as the return value is missing.
 
@@ -1176,8 +1385,13 @@ contract Token{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{del{||\textunderscore|| }structure{||\textunderscore|| }containing{||\textunderscore|| }mapping} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:A deletion in a structure containing a mapping will not delete the mapping (see the Solidity documentation). The remaining data may be used to compromise the contract.
 
@@ -1204,8 +1418,13 @@ function remove() internal{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{use{||\textunderscore|| }after{||\textunderscore|| }delete} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Using values of variables after they have been explicitly deleted may lead to unexpected behavior or compromise.
 
@@ -1230,8 +1449,13 @@ function f() public {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{function{||\textunderscore|| }declared{||\textunderscore|| }return{||\textunderscore|| }but{||\textunderscore|| }no{||\textunderscore|| }return} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Function doesn't initialize return value. As result default value will be returned.
 
@@ -1260,8 +1484,13 @@ contract NewContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{controlled{||\textunderscore|| }lowlevel{||\textunderscore|| }call} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Low{\textendash}level call with a user{\textendash}controlled data field
 
@@ -1286,8 +1515,13 @@ function call|\textunderscore| token(bytes data){
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":5,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 5"}]
+\end{ffcode} 
 \subsection{address{||\textunderscore|| }hardcoded} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The contract contains unknown address. This address might be used for some malicious activity. Please check hardcoded address and it's usage.
 
@@ -1316,8 +1550,13 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{divide{||\textunderscore|| }before{||\textunderscore|| }multiply} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Solidity operates only with integers. Thus, if the division is done before the multiplication, the rounding errors can increase dramatically. Vulnerability type by SmartDec classification: Precision issues.
 
@@ -1348,8 +1587,13 @@ contract MyContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{reused{||\textunderscore|| }base{||\textunderscore|| }constructors} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:There is a conflict if the same base constructor is called with arguments from two different locations in the same inheritance hierarchy.
 
@@ -1387,8 +1631,13 @@ contract D is B, C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{unused{||\textunderscore|| }state{||\textunderscore|| }variables} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [131]
 
 \textbf{Description}:Unused variables are allowed in Solidity and they do not pose a direct security issue. It is best practice though to avoid them as they can:
 * cause an increase in computations (and unnecessary gas consumption)
@@ -1445,8 +1694,13 @@ function call(int a) public {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{do{||\textunderscore|| }while{||\textunderscore|| }continue} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Prior to version 0.5.0, Solidity compiler handles continue inside do{\textendash}while loop incorrectly: it ignores while condition.
 
@@ -1469,8 +1723,13 @@ do {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{builtin{||\textunderscore|| }symbol{||\textunderscore|| }shadowing} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Something wrong may happen when built{\textendash}in symbols are shadowed by local variables, state variables, functions, modifiers, or events.
 
@@ -1501,8 +1760,13 @@ contract Bug {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{ignore} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Other trivial bug types.
 
@@ -1520,8 +1784,13 @@ contract Bug {
 
 \textbf{Found}: true
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[{"checker|\textunderscore| id":8,"lines":[{"code":"\n","function|\textunderscore| name":"","line|\textunderscore| no":23},{"code":"contract SimpleDAO {\n","function|\textunderscore| name":"","line|\textunderscore| no":9},{"code":"\n","function|\textunderscore| name":"","line|\textunderscore| no":11},{"code":"\n","function|\textunderscore| name":"","line|\textunderscore| no":15}],"tool":"metasecurelabs|\textendash| 8"},{"checker|\textunderscore| id":9,"lines":[{"code":"pragma solidity |\textsuperscript| 0.4.2;\n","function|\textunderscore| name":"","line|\textunderscore| no":7}],"tool":"metasecurelabs|\textendash| 9"},{"checker|\textunderscore| id":9,"lines":[],"tool":"metasecurelabs|\textendash| 9"},{"checker|\textunderscore| id":9,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 9"},{"checker|\textunderscore| id":10,"lines":[{"code":"call.value(amount)()","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 10"},{"checker|\textunderscore| id":10,"lines":[{"code":"|\textsuperscript| ","function|\textunderscore| name":"","line|\textunderscore| no":7}],"tool":"metasecurelabs|\textendash| 10"},{"checker|\textunderscore| id":10,"lines":[{"code":"call.value(amount)()","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 10"},{"checker|\textunderscore| id":11,"lines":[{"code":"  mapping (address => uint) public credit;\n","function|\textunderscore| name":"","line|\textunderscore| no":10}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  function donate(address to) payable {\n","function|\textunderscore| name":"","line|\textunderscore| no":12}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"    credit[to] += msg.value;\n","function|\textunderscore| name":"","line|\textunderscore| no":13}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  }\n","function|\textunderscore| name":"","line|\textunderscore| no":14}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  function withdraw(uint amount) {\n","function|\textunderscore| name":"","line|\textunderscore| no":16}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"    if (credit[msg.sender]>= amount) {\n","function|\textunderscore| name":"","line|\textunderscore| no":17}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"      bool res = msg.sender.call.value(amount)();\n","function|\textunderscore| name":"","line|\textunderscore| no":19}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"      credit[msg.sender]|\textendash| =amount;\n","function|\textunderscore| name":"","line|\textunderscore| no":20}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"    }\n","function|\textunderscore| name":"","line|\textunderscore| no":21}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  }\n","function|\textunderscore| name":"","line|\textunderscore| no":22}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  function queryCredit(address to) returns (uint){\n","function|\textunderscore| name":"","line|\textunderscore| no":24}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"    return credit[to];\n","function|\textunderscore| name":"","line|\textunderscore| no":25}],"tool":"metasecurelabs|\textendash| 11"},{"checker|\textunderscore| id":11,"lines":[{"code":"  }\n","function|\textunderscore| name":"","line|\textunderscore| no":26}],"tool":"metasecurelabs|\textendash| 11"}]
+\end{ffcode} 
 \subsection{uninitialized{||\textunderscore|| }storage{||\textunderscore|| }pointer} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [109]
 
 \textbf{Description}:An uninitialized storage variable will act as a reference to the first state variable, and can override a critical variable.
 
@@ -1552,8 +1821,13 @@ contract Uninitialized{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{should{||\textunderscore|| }be{||\textunderscore|| }pure} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:In Solidity, function that do not read from the state or modify it can be declared as pure.
 
@@ -1580,8 +1854,13 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{pre{||\textunderscore|| }declare{||\textunderscore|| }usage{||\textunderscore|| }of{||\textunderscore|| }local} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Using a variable before the declaration is stepped over (either because it is later declared, or declared in another scope).
 
@@ -1617,8 +1896,13 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{storage{||\textunderscore|| }ABIEncoderV2{||\textunderscore|| }array} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:solc versions 0.4.7{\textendash}0.5.9 contain a compiler bug leading to incorrect ABI encoder usage.
 
@@ -1646,8 +1930,13 @@ contract A {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{costly{||\textunderscore|| }ops{||\textunderscore|| }in{||\textunderscore|| }loop} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Costly operations inside a loop might waste gas, so optimizations are justified.
 
@@ -1685,8 +1974,13 @@ contract CostlyOperationsInLoop{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{msg.value{||\textunderscore|| }equals{||\textunderscore|| }zero} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The msg.value == 0 condition check is meaningless in most cases.
 
@@ -1705,8 +1999,13 @@ msg.value == 0
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{overpowered{||\textunderscore|| }role} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:This function is callable only from one address. Therefore, the system depends heavily on this address. In this case, there are scenarios that may lead to undesirable consequences for investors, e.g. if the private key of this address becomes compromised.
 
@@ -1746,8 +2045,13 @@ contract Crowdsale {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{storage{||\textunderscore|| }signed{||\textunderscore|| }integer{||\textunderscore|| }array} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:solc versions 0.4.7{\textendash}0.5.10 contain a compiler bug leading to incorrect values in signed integer arrays.
 
@@ -1775,8 +2079,13 @@ contract A {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{useless{||\textunderscore|| }compare} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:A variable compared to itself is probably an error as it will always return true for ==, >=, <= and always false for <, > and !=. In addition, some comparison are also tautologies or contradictions.
 
@@ -1797,8 +2106,13 @@ function check(uint a) external returns(bool){
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{extra{||\textunderscore|| }gas{||\textunderscore|| }in{||\textunderscore|| }loops} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:State variable, .balance, or .length of non{\textendash}memory array is used in the condition of for or while loop. In this case, every iteration of loop consumes extra gas.
 
@@ -1829,8 +2143,13 @@ contract NewContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{payable{||\textunderscore|| }func{||\textunderscore|| }using{||\textunderscore|| }delegatecall{||\textunderscore|| }in{||\textunderscore|| }loop} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:The same msg.value amount may be incorrectly accredited multiple times when using delegatecall inside a loop in a payable function.
 
@@ -1862,8 +2181,13 @@ contract DelegatecallInLoop{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{right{||\textunderscore|| }to{||\textunderscore|| }left{||\textunderscore|| }char} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [130]
 
 \textbf{Description}:Malicious actors can use the Right{\textendash}To{\textendash}Left|\textendash| Override unicode character to force RTL text rendering and confuse users as to the real intent of a contract.
 
@@ -1916,8 +2240,13 @@ event wrongNumber(string);
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{assert{||\textunderscore|| }state{||\textunderscore|| }change} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [110]
 
 \textbf{Description}:Incorrect use of assert(). See Solidity best practices.
 
@@ -1943,8 +2272,13 @@ contract A {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{pausable{||\textunderscore|| }modifier{||\textunderscore|| }absence} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:ERC20 balance/allowance is modified without whenNotPaused modifier (in pausable contract).x
 
@@ -1969,8 +2303,13 @@ function buggyTransfer(address to, uint256 value) external returns (bool){
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{call{||\textunderscore|| }without{||\textunderscore|| }data} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Using low{\textendash}level call function with no arguments provided.
 
@@ -1999,8 +2338,13 @@ contract MyContract {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{time{||\textunderscore|| }manipulation} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [116]
 
 \textbf{Description}:From locking a token sale to unlocking funds at a specific time for a game, contracts sometimes need to rely on the current time. This is usually done via block.timestamp or its alias now in Solidity. But where does that value come from? From the miners! Because a transaction's miner has leeway in reporting the time at which the mining occurred, good smart contracts will avoid relying strongly on the time advertised.
 
@@ -2035,8 +2379,13 @@ contract TimedCrowdsale
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{uninitialized{||\textunderscore|| }local{||\textunderscore|| }variable} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Some unexpected error may happen when local variables are not uninitialized.
 
@@ -2062,8 +2411,13 @@ contract Uninitialized is Owner{
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{strict{||\textunderscore|| }balance{||\textunderscore|| }equality} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} [132]
 
 \textbf{Description}:Contracts can behave erroneously when they strictly assume a specific Ether balance. It is always possible to forcibly send ether to a contract (without triggering its fallback function), using selfdestruct, or by mining to the account. In the worst case scenario this could lead to DOS conditions that might render the contract unusable.
 
@@ -2089,8 +2443,13 @@ if (address(this).balance >= 42 ether ) {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \subsection{byte{||\textunderscore|| }array{||\textunderscore|| }instead{||\textunderscore|| }bytes} 
-\textbf{SWC{|\textunderscore| }ID:} 
+\textbf{SWC{|\textunderscore| }ID:} []
 
 \textbf{Description}:Use bytes instead of byte[] for lower gas consumption.
 
@@ -2125,4 +2484,9 @@ contract C {
 
 \textbf{Found}: false
 
+\textbf{Reported by checker}: 
+\begin{ffcode} 
+
+[]
+\end{ffcode} 
 \end{document}
