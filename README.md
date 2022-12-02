@@ -29,5 +29,8 @@
     - To test, open command prompt and try running ```pdflatex <filename.tex>```. The PDF will be generated in the project directory.
 
 
-Once the Project has been imported and the above setup has been completed, run the ```Parser_Inner.java``` file. The generated latex file will be ```latex_rev7.tex```. Open command prompt, run ```pdflatex latex_rev7.tex -shell-escape```. The PDF file will be generated in your project directory itself.
+Once the Project has been imported and the above setup has been completed, make sure to configure the path to ```elements.json``` in your local system in the ```Parser_Inner.java``` and then run the ```Parser_Inner.java``` file. The generated latex file will be ```latex_rev7.tex```. Open command prompt, run ```pdflatex latex_rev7.tex -shell-escape```. The PDF file will be generated in your project directory itself.
 
+### Junit Testing
+
+- For the Junit Testing setup, kindly refer to the Appendix Section of the FinalDocumentation.pdf, which is included in the main branch.
