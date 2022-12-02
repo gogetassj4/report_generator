@@ -1,14 +1,13 @@
 ## Setup :
 
-- Clone the Project to your local and follow the below steps .
-
-#### Eclipse
-
-- Install Eclipse or any Java IDE .
+- Clone the Project to your local and follow the below steps to configure the JDK.
 - Configue the JDK path by going to Environment Variables . Eg : 
             ```JAVA_HOME = C:\Program Files\Java\jdk1.8.0_202```
-- Once that's done, import the project that you cloned from git repo by following the below steps:
-    - In Eclipse, ```File -> Import -> General -> Existing Projects into Workspace```.
+- Open command prompt and go the file path where ```Parser_Inner.java``` exists inside the project :
+    - ```C:\Users\jyoth\Documents\SE_Project\report_generator\Report_Generator\src\report\generator\jsonparser\Parser_Inner.java```
+- Compile using ```javac Parser_Inner.java```.
+- Once it compiles, to run the code execute ```java Parser_Inner.java```.
+- Make sure to configure the gson jar for which Eclipse IDE is required, before executing ```Parser_Inner.java``` from command line.
 
 ### Json Parser for extracting json elements 
 
@@ -33,4 +32,4 @@ Once the Project has been imported and the above setup has been completed, make 
 
 ### Junit Testing
 
-- For the Junit Testing setup, kindly refer to the Appendix Section of the FinalDocumentation.pdf, which is included in the main branch.
+- For the Junit Testing setup, kindly refer to the Appendix Section of the FinalDocumentation.pdf, which is included in the main branch and readme.md file inside tests folder inside the project.
